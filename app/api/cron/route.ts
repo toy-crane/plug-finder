@@ -55,7 +55,7 @@ const searchParams = new URLSearchParams(params);
 // Append serviceKey without encoding
 const queryString = `${searchParams.toString()}&serviceKey=${serviceKey}&dataType=JSON`;
 
-export async function GET() {
+const getOfficialStations = async () => {
   let stations: OfficialStation[] = []; // stations를 여기서 선언 및 초기화
   try {
     const response = await fetch(`${url}?${queryString}`);
@@ -70,5 +70,10 @@ export async function GET() {
     console.error("Error:", error);
     throw error;
   }
+  return stations;
+};
+
+export async function GET() {
+  const stations = await getOfficialStations();
   return Response.json({ stations: stations.splice(0, 10) });
 }
