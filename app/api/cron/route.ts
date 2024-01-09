@@ -110,7 +110,7 @@ const getTransFormedData = (stations: OfficialStation[]) => {
 
 const upsertStations = async (stations: TransFormedStation[]) => {
   const insertData = stations.map((station) => ({
-    slug: station.statNm.replace(/\s/g, "-"),
+    slug: `${station.statNm.replace(/\s/g, "_")}_${station.statId}`,
     address: station.addr,
     available: station.limitYn === "Y",
     available_detail: station.limitDetail,
