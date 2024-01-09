@@ -11,18 +11,33 @@ export interface Database {
     Tables: {
       chargers: {
         Row: {
+          charger_type: string
           created_at: string
+          external_charger_id: string
+          external_station_id: string
           id: string
+          method: string | null
+          output: string | null
           station_id: string
         }
         Insert: {
+          charger_type: string
           created_at?: string
+          external_charger_id: string
+          external_station_id: string
           id?: string
+          method?: string | null
+          output?: string | null
           station_id: string
         }
         Update: {
+          charger_type?: string
           created_at?: string
+          external_charger_id?: string
+          external_station_id?: string
           id?: string
+          method?: string | null
+          output?: string | null
           station_id?: string
         }
         Relationships: [
@@ -53,6 +68,7 @@ export interface Database {
           org_id: string
           org_name: string
           parking_free: boolean
+          slug: string
           station_name: string
           usable_time: string | null
           z_code: string
@@ -75,6 +91,7 @@ export interface Database {
           org_id: string
           org_name: string
           parking_free: boolean
+          slug: string
           station_name: string
           usable_time?: string | null
           z_code: string
@@ -97,6 +114,7 @@ export interface Database {
           org_id?: string
           org_name?: string
           parking_free?: boolean
+          slug?: string
           station_name?: string
           usable_time?: string | null
           z_code?: string
@@ -109,7 +127,12 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      insert_or_update_stations_and_chargers: {
+        Args: {
+          data: Json
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

@@ -1,4 +1,4 @@
-import { Database, Tables } from "@/types/generated";
+import { Database } from "@/types/generated";
 import { createClient } from "@supabase/supabase-js";
 
 type OfficialStation = {
@@ -110,6 +110,7 @@ const getTransFormedData = (stations: OfficialStation[]) => {
 
 const upsertStations = async (stations: TransFormedStation[]) => {
   const insertData = stations.map((station) => ({
+    slug: station.statNm.replace(/\s/g, "-"),
     address: station.addr,
     available: station.limitYn === "Y",
     available_detail: station.limitDetail,
@@ -128,13 +129,20 @@ const upsertStations = async (stations: TransFormedStation[]) => {
     usable_time: station.useTime,
     z_code: station.zcode,
     zs_code: station.zscode,
+    chargers: station.chargers.map((charger) => ({
+      external_charger_id: charger.chgerId,
+      method: charger.method,
+      output: charger.output,
+      external_station_id: charger.statId,
+      charger_type: charger.chgerType,
+    })),
   }));
 
-  // 여기에서 중복 데이터 한번 걸러야 함
-  const response = await supabase.from("stations").upsert(insertData, {
-    onConflict: "station_name, external_station_id",
-    ignoreDuplicates: false,
-  });
+  const response = await supabase.rpc(
+    "insert_or_update_stations_and_chargers",
+    { data: { stations: insertData } }
+  );
+
   if (response.error) {
     throw response.error;
   }
@@ -144,7 +152,6 @@ const upsertStations = async (stations: TransFormedStation[]) => {
 export async function GET() {
   const stations = await getOfficialStations();
   const transformedStations = getTransFormedData(stations);
-  const st = await upsertStations(transformedStations);
-
+  await upsertStations(transformedStations);
   return Response.json({ stations: transformedStations });
 }
