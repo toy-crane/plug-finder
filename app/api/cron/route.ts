@@ -1,3 +1,5 @@
+import { createClient } from "@supabase/supabase-js";
+
 type OfficialStation = {
   resultCode: string;
   resultMsg: string;
@@ -36,6 +38,11 @@ type OfficialStation = {
   delDetail: string | null;
   trafficYn: string;
 };
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 // Set your API key here
 const serviceKey =
