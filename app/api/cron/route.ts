@@ -21,11 +21,11 @@ type OfficialStation = {
   busiNm: string;
   busiCall: string;
   stat: string;
-  statUpdDt: Date;
-  lastTsdt: Date | null;
-  lastTedt: Date | null;
-  nowTsdt: Date | null;
-  output: number | null;
+  statUpdDt: string | null;
+  lastTsdt: string | null;
+  lastTedt: string | null;
+  nowTsdt: string | null;
+  output: string;
   method: string | null;
   zcode: string;
   zscode: string;
@@ -40,6 +40,18 @@ type OfficialStation = {
   trafficYn: string;
 };
 
+interface Charger {
+  chgerId: string;
+  statId: string;
+  output: string | null;
+  method: string | null;
+  chgerType: string;
+}
+
+type TransFormedStation = OfficialStation & {
+  chargers: Charger[];
+};
+
 const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -52,7 +64,7 @@ const serviceKey =
 // API endpoint for getting charger information
 const url = "http://apis.data.go.kr/B552584/EvCharger/getChargerInfo";
 const params = {
-  numOfRows: "9999",
+  numOfRows: "100",
   pageNo: "1",
   zscode: "46110",
 };
@@ -81,7 +93,22 @@ const getOfficialStations = async () => {
   return stations;
 };
 
-const upsertStations = async (stations: OfficialStation[]) => {
+// 중복 데이터를 거르고, chargers를 분리
+const getTransFormedData = (stations: OfficialStation[]) => {
+  const transformedData: Record<string, TransFormedStation> = {};
+  stations.forEach((item) => {
+    if (!transformedData[item.statId]) {
+      transformedData[item.statId] = { ...item, chargers: [] };
+    }
+    transformedData[item.statId].chargers.push({
+      ...item,
+    });
+  });
+  const output: TransFormedStation[] = Object.values(transformedData);
+  return output;
+};
+
+const upsertStations = async (stations: TransFormedStation[]) => {
   const insertData = stations.map((station) => ({
     address: station.addr,
     available: station.limitYn === "Y",
@@ -116,8 +143,8 @@ const upsertStations = async (stations: OfficialStation[]) => {
 
 export async function GET() {
   const stations = await getOfficialStations();
-  const st = await upsertStations(stations.splice(0, 10));
-  console.log(st);
+  const transformedStations = getTransFormedData(stations);
+  const st = await upsertStations(transformedStations);
 
-  return Response.json({ stations: stations.splice(0, 10) });
+  return Response.json({ stations: transformedStations });
 }
