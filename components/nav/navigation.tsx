@@ -1,7 +1,7 @@
 "use client;";
 
-import Logo from "./logo";
-import SearchBar from "./search-bar";
+import Logo from "../../app/(route)/(home)/_components/logo";
+import SearchBar from "../../app/(route)/(home)/_components/search-bar";
 
 const Navigation = () => {
   return (
