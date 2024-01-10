@@ -1,8 +1,10 @@
 import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
+import { getChargerTypeDescription } from "@/constants/chager-type";
 import { getDistrictDescription } from "@/constants/districts";
 import { getRegionDescription } from "@/constants/regions";
 import createSupabaseBrowerClient from "@/supabase/client";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
+import { get } from "http";
 import type { Metadata, ResolvingMetadata } from "next";
 
 // static 페이지 revalidation을 판단함
@@ -44,6 +46,8 @@ export async function generateMetadata(
       station.station_name
     } 전기차 충전소`;
     const description = `
+    충전 방식 - ${getChargerTypeDescription(station.charger_type)} \n
+    충전기 이용방식 - ${station.method} 사용 \n
     주소 - ${station.address} \n 
     사용 가능시간 - ${station.usable_time} \n 
     운영 기관 - ${station.org_name} \n
