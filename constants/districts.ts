@@ -1,4 +1,4 @@
-enum Districts {
+export enum Districts {
   // 서울특별시
   JongnoGu = 11110,
   JungGuSeoul = 11140,

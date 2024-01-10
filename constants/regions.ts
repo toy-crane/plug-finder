@@ -1,4 +1,4 @@
-enum Regions {
+export enum Regions {
   Seoul = 11,
   Busan = 26,
   Daegu = 27,
