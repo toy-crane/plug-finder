@@ -49,6 +49,7 @@ interface Charger {
 }
 
 type TransFormedStation = OfficialStation & {
+  displayStatNm: string;
   chargers: Charger[];
 };
 
@@ -96,9 +97,17 @@ const getOfficialStations = async () => {
 // 중복 데이터를 거르고, chargers를 분리
 const getTransFormedData = (stations: OfficialStation[]) => {
   const transformedData: Record<string, TransFormedStation> = {};
+  const nameCount = new Map<string, number>();
+
   stations.forEach((item) => {
+    let count = nameCount.get(item.statNm) || 0;
+    nameCount.set(item.statNm, count + 1);
+
+    const displayStatNm =
+      count > 0 ? `${item.statNm} ${count + 1}` : item.statNm;
+
     if (!transformedData[item.statId]) {
-      transformedData[item.statId] = { ...item, chargers: [] };
+      transformedData[item.statId] = { ...item, chargers: [], displayStatNm };
     }
     transformedData[item.statId].chargers.push({
       ...item,
@@ -129,6 +138,7 @@ const upsertStations = async (stations: TransFormedStation[]) => {
     usable_time: station.useTime,
     z_code: station.zcode,
     zs_code: station.zscode,
+    display_station_name: station.displayStatNm,
     chargers: station.chargers.map((charger) => ({
       external_charger_id: charger.chgerId,
       method: charger.method,

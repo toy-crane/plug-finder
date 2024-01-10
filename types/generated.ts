@@ -11,7 +11,7 @@ export interface Database {
     Tables: {
       chargers: {
         Row: {
-          charger_type: string
+          charger_type: string | null
           created_at: string
           external_charger_id: string
           external_station_id: string
@@ -21,7 +21,7 @@ export interface Database {
           station_id: string
         }
         Insert: {
-          charger_type: string
+          charger_type?: string | null
           created_at?: string
           external_charger_id: string
           external_station_id: string
@@ -31,7 +31,7 @@ export interface Database {
           station_id: string
         }
         Update: {
-          charger_type?: string
+          charger_type?: string | null
           created_at?: string
           external_charger_id?: string
           external_station_id?: string
@@ -57,6 +57,7 @@ export interface Database {
           available_detail: string | null
           created_at: string
           detail_location: string | null
+          display_station_name: string
           external_station_id: string
           id: string
           is_deleted: boolean
@@ -80,6 +81,7 @@ export interface Database {
           available_detail?: string | null
           created_at?: string
           detail_location?: string | null
+          display_station_name: string
           external_station_id: string
           id?: string
           is_deleted?: boolean
@@ -103,6 +105,7 @@ export interface Database {
           available_detail?: string | null
           created_at?: string
           detail_location?: string | null
+          display_station_name?: string
           external_station_id?: string
           id?: string
           is_deleted?: boolean

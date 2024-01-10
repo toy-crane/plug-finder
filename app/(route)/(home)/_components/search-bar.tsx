@@ -69,8 +69,11 @@ const SearchBar = () => {
           {loading && <CommandLoading>loading....</CommandLoading>}
           <CommandGroup heading="충전소 이름">
             {items.map((item) => (
-              <CommandItem key={`word-${item}`} value={item.station_name}>
-                {item.station_name}
+              <CommandItem
+                key={`word-${item}`}
+                value={item.display_station_name}
+              >
+                {item.display_station_name}
               </CommandItem>
             ))}
           </CommandGroup>
