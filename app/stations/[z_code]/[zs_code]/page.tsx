@@ -1,3 +1,4 @@
+import { getDistrictDescription } from "@/constants/districts";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import Link from "next/link";
 
@@ -15,16 +16,21 @@ const Page = async ({ params }: Props) => {
   // 404 페이지 에러 추가
   const stations = response.data;
   return (
-    <div className="flex flex-col">
-      {stations.map((st) => (
-        <Link
-          key={st.id}
-          href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}
-        >
-          {st.station_name}
-        </Link>
-      ))}
-    </div>
+    <>
+      <h1 className="text-[48px]">
+        {getDistrictDescription(parseInt(params.zs_code))}
+      </h1>
+      <div className="flex flex-col">
+        {stations.map((st) => (
+          <Link
+            key={st.id}
+            href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}
+          >
+            {st.station_name}
+          </Link>
+        ))}
+      </div>
+    </>
   );
 };
 
