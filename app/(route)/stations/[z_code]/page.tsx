@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getRegionDescription } from "@/constants/regions";
 import { Tables } from "@/types/generated";
 import { getDistrictDescription } from "@/constants/districts";
+import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
 
 interface Props {
   params: { z_code: string };
@@ -38,6 +39,12 @@ const Page = async ({ params }: Props) => {
   // 섹션 출력
   return (
     <div className="flex flex-col">
+      <BreadcrumbNavigation
+        trail={[
+          { title: "전국", link: "/stations" },
+          { title: getRegionDescription(z_code), link: `/stations/${z_code}` },
+        ]}
+      />
       <h1 className="text-[48px]">{getRegionDescription(z_code)}</h1>
       <div className="flex flex-wrap">
         {Object.entries(groupedStations).map(([zs_code, stations]) => (

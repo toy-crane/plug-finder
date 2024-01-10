@@ -1,4 +1,6 @@
+import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
 import { getDistrictDescription } from "@/constants/districts";
+import { getRegionDescription } from "@/constants/regions";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import Link from "next/link";
 
@@ -7,6 +9,7 @@ interface Props {
 }
 
 const Page = async ({ params }: Props) => {
+  const { z_code, zs_code } = params;
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase
     .from("stations")
@@ -17,6 +20,16 @@ const Page = async ({ params }: Props) => {
   const stations = response.data;
   return (
     <>
+      <BreadcrumbNavigation
+        trail={[
+          { title: "전국", link: "/stations" },
+          { title: getRegionDescription(z_code), link: `/stations/${z_code}` },
+          {
+            title: getDistrictDescription(zs_code),
+            link: `/stations/${z_code}/${zs_code}`,
+          },
+        ]}
+      />
       <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
       <div className="flex flex-col">
         {stations.map((st) => (
