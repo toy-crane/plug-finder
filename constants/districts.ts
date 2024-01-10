@@ -511,9 +511,9 @@ const districtDescriptions: { [key in Districts]: string } = {
   [Districts.Seogwipo]: "서귀포시",
 };
 
-export function getDistrictDescription(code: number): string {
+export function getDistrictDescription(code: string): string {
   if (code in Districts) {
-    return districtDescriptions[code as Districts];
+    return districtDescriptions[parseInt(code) as Districts];
   } else {
     // 여기서는 잘못된 코드에 대한 처리를 할 수 있습니다.
     // 예를 들어, 오류를 반환하거나 기본값을 제공할 수 있습니다.

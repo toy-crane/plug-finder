@@ -44,7 +44,7 @@ const Page = async ({ params }: Props) => {
           <div key={zs_code}>
             <h2 className="text-[36px]">
               <Link href={`/stations/${z_code}/${zs_code}`}>
-                {getDistrictDescription(parseInt(zs_code))}
+                {getDistrictDescription(zs_code)}
               </Link>
             </h2>
             <div className="flex flex-col">

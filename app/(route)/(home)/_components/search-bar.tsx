@@ -88,7 +88,7 @@ const SearchBar = () => {
                 }
               >
                 {`${getRegionDescription(item.z_code)}
-                  ${getDistrictDescription(parseInt(item.zs_code))}
+                  ${getDistrictDescription(item.zs_code)}
                   ${item.display_station_name}
                 `}
               </CommandItem>

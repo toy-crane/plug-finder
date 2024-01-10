@@ -17,9 +17,7 @@ const Page = async ({ params }: Props) => {
   const stations = response.data;
   return (
     <>
-      <h1 className="text-[48px]">
-        {getDistrictDescription(parseInt(params.zs_code))}
-      </h1>
+      <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
       <div className="flex flex-col">
         {stations.map((st) => (
           <Link
