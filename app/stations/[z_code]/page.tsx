@@ -1,5 +1,6 @@
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import Link from "next/link";
+import { getRegionDescription } from "@/constants/regions";
 
 interface Props {
   params: { z_code: string };
@@ -16,6 +17,9 @@ const Page = async ({ params }: Props) => {
   const stations = response.data;
   return (
     <div className="flex flex-col">
+      <h1 className="text-[48px]">
+        {getRegionDescription(parseInt(params.z_code))}
+      </h1>
       {stations.map((st) => (
         <Link
           key={st.id}
