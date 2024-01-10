@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import createSupabaseBrowerClient from "@/supabase/client";
 import { Tables } from "@/types/generated";
 import { CommandLoading } from "cmdk";
+import { Loader2, SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
@@ -28,7 +29,7 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<Station[]>([]);
   const [search, setSearch] = useState("");
-  const [keyword] = useDebounce(search, 1000);
+  const [keyword] = useDebounce(search, 500);
 
   useEffect(() => {
     async function getItems() {
@@ -60,40 +61,51 @@ const SearchBar = () => {
         )}
         onClick={() => setOpen(true)}
       >
-        <span className="hidden lg:inline-flex">
-          주소 또는 충전소 이름을 입력해주세요.
+        <span className="hidden lg:inline-flex lg:items-center">
+          <SearchIcon className="w-4 h-4 mr-2" /> 주소 또는 충전소 이름을
+          입력해주세요.
         </span>
-        <span className="inline-flex lg:hidden">충전소 또는 주소 입력</span>
+        <span className="inline-flex lg:hidden items-center">
+          <SearchIcon className="w-4 h-4 mr-2" /> 충전소 또는 주소 입력
+        </span>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
         <CommandInput
           placeholder=" 주소 또는 충전소 이름을 입력해주세요."
           value={search}
           onValueChange={setSearch}
         />
         <CommandList>
-          <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
-          {loading && <CommandLoading>loading....</CommandLoading>}
-          <CommandGroup heading="충전소 이름">
-            {items.map((item) => (
-              <CommandItem
-                key={`word-${item.id}`}
-                value={item.display_station_name}
-                onSelect={() =>
-                  runCommand(() =>
-                    router.push(
-                      `/stations/${item.z_code}/${item.zs_code}/${item.slug}`
+          {loading && (
+            <CommandLoading>
+              <div className="flex justify-center items-center py-8">
+                <Loader2 className="h-6 w-6 animate-spin" />
+              </div>
+            </CommandLoading>
+          )}
+          <>
+            <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
+            <CommandGroup heading="충전소 이름">
+              {items.map((item) => (
+                <CommandItem
+                  key={`word-${item.id}`}
+                  value={item.display_station_name}
+                  onSelect={() =>
+                    runCommand(() =>
+                      router.push(
+                        `/stations/${item.z_code}/${item.zs_code}/${item.slug}`
+                      )
                     )
-                  )
-                }
-              >
-                {`${getRegionDescription(item.z_code)}
-                  ${getDistrictDescription(item.zs_code)}
-                  ${item.display_station_name}
-                `}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+                  }
+                >
+                  {`${getRegionDescription(item.z_code)}
+                ${getDistrictDescription(item.zs_code)}
+                ${item.display_station_name}
+              `}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </>
         </CommandList>
       </CommandDialog>
     </>
