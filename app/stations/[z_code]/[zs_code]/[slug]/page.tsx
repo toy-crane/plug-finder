@@ -2,12 +2,15 @@ import createSupabaseBrowerClient from "@/supabase/client";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 
 interface Props {
-  params: { slug: string };
+  params: { slug: string; z_code: string; zs_code: string };
 }
 
 export async function generateStaticParams() {
   const supabase = createSupabaseBrowerClient();
-  const response = await supabase.from("stations").select("slug");
+  const response = await supabase
+    .from("stations")
+    .select("slug, z_code, zs_code");
+  console.log(response);
   if (response.error) throw response.error;
   return response.data;
 }
