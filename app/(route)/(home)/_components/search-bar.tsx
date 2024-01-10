@@ -10,16 +10,20 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { getDistrictDescription } from "@/constants/districts";
+import { getRegionDescription } from "@/constants/regions";
 import { cn } from "@/lib/utils";
 import createSupabaseBrowerClient from "@/supabase/client";
 import { Tables } from "@/types/generated";
 import { CommandLoading } from "cmdk";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 type Station = Tables<"stations">;
 
 const SearchBar = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<Station[]>([]);
@@ -42,7 +46,10 @@ const SearchBar = () => {
     getItems();
   }, [keyword]);
 
-  console.log(loading, search);
+  const runCommand = useCallback((command: () => unknown) => {
+    setOpen(false);
+    command();
+  }, []);
 
   return (
     <>
@@ -72,8 +79,18 @@ const SearchBar = () => {
               <CommandItem
                 key={`word-${item}`}
                 value={item.display_station_name}
+                onSelect={() =>
+                  runCommand(() =>
+                    router.push(
+                      `/stations/${item.z_code}/${item.zs_code}/${item.slug}`
+                    )
+                  )
+                }
               >
-                {item.display_station_name}
+                {`${getRegionDescription(parseInt(item.z_code))}
+                  ${getDistrictDescription(parseInt(item.zs_code))}
+                  ${item.display_station_name}
+                `}
               </CommandItem>
             ))}
           </CommandGroup>
