@@ -10,7 +10,6 @@ export async function generateStaticParams() {
   const response = await supabase
     .from("stations")
     .select("slug, z_code, zs_code");
-  console.log(response);
   if (response.error) throw response.error;
   return response.data;
 }

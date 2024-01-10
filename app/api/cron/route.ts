@@ -64,9 +64,9 @@ const serviceKey =
 // API endpoint for getting charger information
 const url = "http://apis.data.go.kr/B552584/EvCharger/getChargerInfo";
 const params = {
-  numOfRows: "100",
+  numOfRows: "1000",
   pageNo: "1",
-  zscode: "46110",
+  zcode: "46",
 };
 
 // Create a URLSearchParams object from the params object
