@@ -13,7 +13,7 @@ export const chargerType = {
 type ChargerType = typeof chargerType;
 type ChargerCode = keyof ChargerType;
 
-function getChargerTypeDescription(code: string): string | undefined {
+export function getChargerTypeDescription(code: string): string | undefined {
   const parsedCode = parseInt(code, 10);
   if (!isNaN(parsedCode) && chargerType.hasOwnProperty(parsedCode)) {
     return chargerType[parsedCode as ChargerCode];
