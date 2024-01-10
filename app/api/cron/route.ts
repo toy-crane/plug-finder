@@ -65,9 +65,10 @@ const serviceKey =
 // API endpoint for getting charger information
 const url = "http://apis.data.go.kr/B552584/EvCharger/getChargerInfo";
 const params = {
-  numOfRows: "1000",
+  numOfRows: "9999",
   pageNo: "1",
-  zcode: "46",
+  zcode: "42",
+  // zscode: "42190",
 };
 
 // Create a URLSearchParams object from the params object
@@ -139,6 +140,8 @@ const upsertStations = async (stations: TransFormedStation[]) => {
     z_code: station.zcode,
     zs_code: station.zscode,
     display_station_name: station.displayStatNm,
+    charger_type: station.chgerType,
+    method: station.method,
     chargers: station.chargers.map((charger) => ({
       external_charger_id: charger.chgerId,
       method: charger.method,
