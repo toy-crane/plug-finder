@@ -11,7 +11,7 @@ const Logo = () => {
       width={48}
       height={48}
       alt="Logo"
-      className="align-middle"
+      className="align-middle cursor-pointer"
       onClick={() => router.push("/")}
     />
   );
