@@ -40,9 +40,9 @@ const regionDescriptions: { [key in Regions]: string } = {
   [Regions.GangwonSpecial]: "강원특별자치도",
 };
 
-export function getRegionDescription(code: number): string {
+export function getRegionDescription(code: string): string {
   if (code in Regions) {
-    return regionDescriptions[code as Regions];
+    return regionDescriptions[parseInt(code) as Regions];
   } else {
     // 여기서는 잘못된 코드에 대한 처리를 할 수 있습니다.
     // 예를 들어, 오류를 반환하거나 기본값을 제공할 수 있습니다.

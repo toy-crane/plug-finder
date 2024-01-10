@@ -38,7 +38,7 @@ const Page = async ({ params }: Props) => {
   // 섹션 출력
   return (
     <div className="flex flex-col">
-      <h1 className="text-[48px]">{getRegionDescription(parseInt(z_code))}</h1>
+      <h1 className="text-[48px]">{getRegionDescription(z_code)}</h1>
       <div className="flex flex-wrap">
         {Object.entries(groupedStations).map(([zs_code, stations]) => (
           <div key={zs_code}>

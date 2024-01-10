@@ -2,9 +2,9 @@ import { Regions, getRegionDescription } from "@/constants/regions";
 import Link from "next/link";
 
 const Page = () => {
-  const regionCodes = Object.keys(Regions)
-    .filter((_) => typeof Regions[_ as any] !== "number")
-    .map((_) => parseInt(_));
+  const regionCodes = Object.keys(Regions).filter(
+    (_) => typeof Regions[_ as any] !== "number"
+  );
 
   return (
     <div>

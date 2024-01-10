@@ -77,7 +77,7 @@ const SearchBar = () => {
           <CommandGroup heading="충전소 이름">
             {items.map((item) => (
               <CommandItem
-                key={`word-${item}`}
+                key={`word-${item.id}`}
                 value={item.display_station_name}
                 onSelect={() =>
                   runCommand(() =>
@@ -87,7 +87,7 @@ const SearchBar = () => {
                   )
                 }
               >
-                {`${getRegionDescription(parseInt(item.z_code))}
+                {`${getRegionDescription(item.z_code)}
                   ${getDistrictDescription(parseInt(item.zs_code))}
                   ${item.display_station_name}
                 `}
