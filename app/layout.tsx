@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     },
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
-  metadataBase: new URL("https://www.plug-finder.app"),
+  metadataBase: new URL("https://plug-finder.app"),
   alternates: {
     canonical: "/",
   },
