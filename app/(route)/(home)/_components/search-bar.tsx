@@ -32,7 +32,7 @@ const SearchBar = () => {
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder=" 주소 또는 충전소 이름을 입력해주세요." />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
           <CommandGroup heading="충전소 이름">
             <CommandItem>Calendar</CommandItem>
             <CommandItem>Search Emoji</CommandItem>
