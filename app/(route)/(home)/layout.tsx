@@ -1,5 +1,12 @@
 const Layout = (props: { children: React.ReactNode }) => {
-  return <main className="content-grid min-h-screen">{props.children}</main>;
+  return (
+    <>
+      <header className="content-grid">
+        <nav>Hello</nav>
+      </header>
+      <main className="content-grid min-h-screen">{props.children}</main>
+    </>
+  );
 };
 
 export default Layout;
