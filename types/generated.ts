@@ -55,7 +55,6 @@ export interface Database {
           address: string
           available: boolean
           available_detail: string | null
-          charger_type: string
           created_at: string
           detail_location: string | null
           display_station_name: string
@@ -65,7 +64,6 @@ export interface Database {
           is_deleted_detail: string | null
           lat: number
           lng: number
-          method: string
           note: string | null
           org_contact: string | null
           org_id: string
@@ -81,7 +79,6 @@ export interface Database {
           address: string
           available: boolean
           available_detail?: string | null
-          charger_type: string
           created_at?: string
           detail_location?: string | null
           display_station_name: string
@@ -91,7 +88,6 @@ export interface Database {
           is_deleted_detail?: string | null
           lat: number
           lng: number
-          method: string
           note?: string | null
           org_contact?: string | null
           org_id: string
@@ -107,7 +103,6 @@ export interface Database {
           address?: string
           available?: boolean
           available_detail?: string | null
-          charger_type?: string
           created_at?: string
           detail_location?: string | null
           display_station_name?: string
@@ -117,7 +112,6 @@ export interface Database {
           is_deleted_detail?: string | null
           lat?: number
           lng?: number
-          method?: string
           note?: string | null
           org_contact?: string | null
           org_id?: string
