@@ -24,7 +24,6 @@ export async function generateMetadata(
   }
 
   const stationCount = response.count;
-  console.log(stationCount, z_code, zs_code);
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];

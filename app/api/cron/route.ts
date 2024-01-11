@@ -66,9 +66,12 @@ interface Charger {
   chgerType: string;
 }
 
-type TransFormedStation = OfficialStation & {
-  displayStatNm: string;
+type AddChargerStation = OfficialStation & {
   chargers: Charger[];
+};
+
+type AddDiplayNameStation = AddChargerStation & {
+  displayStatNm: string;
 };
 
 const supabase = createClient<Database>(
@@ -113,30 +116,52 @@ const getOfficialStations = async () => {
   return stations;
 };
 
-// 중복 데이터를 거르고, chargers를 분리
-const getTransFormedData = (stations: OfficialStation[]) => {
-  const transformedData: Record<string, TransFormedStation> = {};
-  const nameCount = new Map<string, number>();
-
-  stations.forEach((item) => {
-    let count = nameCount.get(item.statNm) || 0;
-    nameCount.set(item.statNm, count + 1);
-
-    const displayStatNm =
-      count > 0 ? `${item.statNm} ${count + 1}` : item.statNm;
-
-    if (!transformedData[item.statId]) {
-      transformedData[item.statId] = { ...item, chargers: [], displayStatNm };
-    }
-    transformedData[item.statId].chargers.push({
-      ...item,
-    });
+const addChargers = (stations: OfficialStation[]) => {
+  const transformedData: Record<string, AddChargerStation> = {};
+  stations.forEach((station) => {
+    const statId = station.statId;
+    const chargers = transformedData[statId]?.chargers || [];
+    chargers.push(station);
+    transformedData[statId] = {
+      ...station,
+      chargers,
+    };
   });
-  const output: TransFormedStation[] = Object.values(transformedData);
-  return output;
+  return Object.values(transformedData);
 };
 
-const upsertStations = async (stations: TransFormedStation[]) => {
+function addDisplayStatNm(stations: AddChargerStation[]) {
+  const statNmToStatIds: Record<string, string[]> = {};
+
+  // 각 statNm별로 statId 수집
+  stations.forEach((station) => {
+    if (!statNmToStatIds[station.statNm]) {
+      statNmToStatIds[station.statNm] = [];
+    }
+    statNmToStatIds[station.statNm].push(station.statId);
+  });
+
+  // 각 statNm별로 statId 정렬
+  for (const statNm in statNmToStatIds) {
+    statNmToStatIds[statNm].sort();
+  }
+
+  // 새로운 객체 배열을 생성하여 반환
+  return stations.map((station) => {
+    const sortedStatIds = statNmToStatIds[station.statNm];
+    const index = sortedStatIds.indexOf(station.statId);
+    const isSingle = sortedStatIds.length === 1;
+    const displayStatNm = isSingle
+      ? station.statNm
+      : `${station.statNm} ${index + 1}`;
+    return {
+      ...station,
+      displayStatNm: displayStatNm,
+    };
+  });
+}
+
+const upsertStations = async (stations: AddDiplayNameStation[]) => {
   const insertData = stations.map((station) => ({
     slug: `${station.statNm.replace(/\s/g, "_")}_${station.statId}`,
     address: station.addr,
@@ -181,7 +206,8 @@ const upsertStations = async (stations: TransFormedStation[]) => {
 
 export async function GET() {
   const stations = await getOfficialStations();
-  const transformedStations = getTransFormedData(stations);
-  await upsertStations(transformedStations);
-  return Response.json({ stations: transformedStations });
+  const addChargerStations = addChargers(stations);
+  const addDisplayNameStations = addDisplayStatNm(addChargerStations);
+  await upsertStations(addDisplayNameStations);
+  return Response.json({ stations: addDisplayNameStations });
 }
