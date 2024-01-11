@@ -11,33 +11,33 @@ export interface Database {
     Tables: {
       chargers: {
         Row: {
-          charger_type: string | null
+          charger_type: string
           created_at: string
           external_charger_id: string
           external_station_id: string
           id: string
-          method: string | null
-          output: string | null
+          method: string
+          output: string
           station_id: string
         }
         Insert: {
-          charger_type?: string | null
+          charger_type: string
           created_at?: string
           external_charger_id: string
           external_station_id: string
           id?: string
-          method?: string | null
-          output?: string | null
+          method: string
+          output: string
           station_id: string
         }
         Update: {
-          charger_type?: string | null
+          charger_type?: string
           created_at?: string
           external_charger_id?: string
           external_station_id?: string
           id?: string
-          method?: string | null
-          output?: string | null
+          method?: string
+          output?: string
           station_id?: string
         }
         Relationships: [
