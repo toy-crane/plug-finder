@@ -81,12 +81,13 @@ const Page = async ({ params }: Props) => {
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase
     .from("stations")
-    .select("*")
+    .select("*, chargers(*)")
     .eq("slug", slug)
     .single();
   if (response.error) throw response.error;
   // 404 페이지 에러 추가
-  const stations = response.data;
+  const station = response.data;
+  const chargers = station.chargers;
   return (
     <div>
       <BreadcrumbNavigation
@@ -98,12 +99,39 @@ const Page = async ({ params }: Props) => {
             link: `/stations/${z_code}/${zs_code}`,
           },
           {
-            title: stations.station_name,
+            title: station.station_name,
             link: `/stations/${z_code}/${zs_code}/${slug}`,
           },
         ]}
       />
-      {stations.station_name}
+      <div className="flex flex-col gap-4">
+        <div>
+          <div>{station.station_name}</div>
+          <div>
+            사용 가능 여부: {station.available ? "사용 가능" : "사용 불가"}
+          </div>
+          <div>
+            사용 제한 사유: {station.available_detail ?? "사용 제한 사유 없음"}
+          </div>
+          <div>운영 회사: {station.org_name}</div>
+          <div>고객센터: {station.org_contact}</div>
+          <div>사용 가능 시간: {station.usable_time}</div>
+          <div>
+            주차비: {station.parking_free ? "주차비 없음" : "주차비 있음"}
+          </div>
+        </div>
+        <div>
+          {chargers.map((charger) => (
+            <div key={charger.id} className="flex gap-2">
+              <div>
+                충전 타입: {getChargerTypeDescription(charger.charger_type)}
+              </div>
+              <div>충전 방식: {charger.method}</div>
+              <div>충전 속도: {charger.output}kW</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
