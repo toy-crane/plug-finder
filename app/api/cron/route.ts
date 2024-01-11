@@ -9,13 +9,14 @@ function correctZCode(zcode: string): string {
 }
 
 function correctZsCode(zcode: string, zscode: string): string {
-  if (zscode.length === 3) {
-    return zcode.toString() + zscode;
+  const trimedZscode = zscode.trim();
+  if (trimedZscode.length === 3) {
+    return zcode.toString() + trimedZscode;
   }
-  if (zscode.startsWith("42")) {
-    return "51" + zscode.slice(2);
+  if (trimedZscode.startsWith("42")) {
+    return "51" + trimedZscode.slice(2);
   }
-  return zscode;
+  return trimedZscode;
 }
 
 type OfficialStation = {
