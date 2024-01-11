@@ -140,7 +140,7 @@ const upsertStations = async (stations: TransFormedStation[]) => {
   const insertData = stations.map((station) => ({
     slug: `${station.statNm.replace(/\s/g, "_")}_${station.statId}`,
     address: station.addr,
-    available: station.limitYn === "Y",
+    available: station.limitYn === "N",
     available_detail: station.limitDetail,
     detail_location: station.location === "null" ? undefined : station.location,
     external_station_id: station.statId,
