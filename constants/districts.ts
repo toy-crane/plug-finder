@@ -115,24 +115,24 @@ export enum Districts {
   GapyeongGun = 41820,
   YangpyeongGun = 41830,
   // 강원도
-  ChuncheonSi = 42110,
-  WonjuSi = 42130,
-  GangneungSi = 42150,
-  DonghaeSi = 42170,
-  TaebaekSi = 42190,
-  SokchoSi = 42210,
-  SamcheokSi = 42230,
-  HongcheonGun = 42720,
-  HoengseongGun = 42730,
-  YeongwolGun = 42750,
-  PyeongchangGun = 42760,
-  JeongseonGun = 42770,
-  CheorwonGun = 42780,
-  HwacheonGun = 42790,
-  YangguGun = 42800,
-  InjeGun = 42810,
-  GoseongGunGangwon = 42820,
-  YangyangGun = 42830,
+  ChuncheonSi = 51110,
+  WonjuSi = 51130,
+  GangneungSi = 51150,
+  DonghaeSi = 51170,
+  TaebaekSi = 51190,
+  SokchoSi = 51210,
+  SamcheokSi = 51230,
+  HongcheonGun = 51720,
+  HoengseongGun = 51730,
+  YeongwolGun = 51750,
+  PyeongchangGun = 51760,
+  JeongseonGun = 51770,
+  CheorwonGun = 51780,
+  HwacheonGun = 51790,
+  YangguGun = 51800,
+  InjeGun = 51810,
+  GoseongGunGangwon = 51820,
+  YangyangGun = 51830,
   // 충청북도
   CheongjuSi = 43110,
   ChungjuSi = 43130,
@@ -515,10 +515,6 @@ export function getDistrictDescription(code: string): string {
   if (code in Districts) {
     return districtDescriptions[parseInt(code) as Districts];
   } else {
-    // 여기서는 잘못된 코드에 대한 처리를 할 수 있습니다.
-    // 예를 들어, 오류를 반환하거나 기본값을 제공할 수 있습니다.
-    throw new Error("Invalid region code");
-    // 또는 기본값 반환
-    // return '알 수 없는 지역';
+    return "등록되지 않은 지역";
   }
 }

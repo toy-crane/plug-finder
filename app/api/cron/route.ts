@@ -1,6 +1,23 @@
 import { Database } from "@/types/generated";
 import { createClient } from "@supabase/supabase-js";
 
+function correctZCode(zcode: string): string {
+  if (zcode === "42") {
+    return "51";
+  }
+  return zcode;
+}
+
+function correctZsCode(zcode: string, zscode: string): string {
+  if (zscode.length === 3) {
+    return zcode.toString() + zscode;
+  }
+  if (zscode.startsWith("42")) {
+    return "51" + zscode.slice(2);
+  }
+  return zscode;
+}
+
 type OfficialStation = {
   resultCode: string;
   resultMsg: string;
@@ -137,8 +154,8 @@ const upsertStations = async (stations: TransFormedStation[]) => {
     parking_free: station.parkingFree === "Y",
     station_name: station.statNm,
     usable_time: station.useTime,
-    z_code: station.zcode,
-    zs_code: station.zscode,
+    z_code: correctZCode(station.zcode),
+    zs_code: correctZsCode(station.zcode, station.zscode),
     display_station_name: station.displayStatNm,
     charger_type: station.chgerType,
     method: station.method,

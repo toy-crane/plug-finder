@@ -8,7 +8,6 @@ export enum Regions {
   Ulsan = 31,
   Sejong = 36,
   Gyeonggi = 41,
-  Gangwon = 42,
   Chungbuk = 43,
   Chungnam = 44,
   Jeonbuk = 45,
@@ -29,7 +28,6 @@ const regionDescriptions: { [key in Regions]: string } = {
   [Regions.Ulsan]: "울산광역시",
   [Regions.Sejong]: "세종특별자치시",
   [Regions.Gyeonggi]: "경기도",
-  [Regions.Gangwon]: "강원도",
   [Regions.Chungbuk]: "충청북도",
   [Regions.Chungnam]: "충청남도",
   [Regions.Jeonbuk]: "전라북도",
@@ -37,7 +35,7 @@ const regionDescriptions: { [key in Regions]: string } = {
   [Regions.Gyeongbuk]: "경상북도",
   [Regions.Gyeongnam]: "경상남도",
   [Regions.Jeju]: "제주특별자치도",
-  [Regions.GangwonSpecial]: "강원특별자치도",
+  [Regions.GangwonSpecial]: "강원도",
 };
 
 export function getRegionDescription(code: string): string {
