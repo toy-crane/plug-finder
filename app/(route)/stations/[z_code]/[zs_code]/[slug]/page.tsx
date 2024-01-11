@@ -118,7 +118,7 @@ const Page = async ({ params }: Props) => {
             link: `/stations/${z_code}/${zs_code}`,
           },
           {
-            title: station.station_name,
+            title: station.display_station_name,
             link: `/stations/${z_code}/${zs_code}/${slug}`,
           },
         ]}

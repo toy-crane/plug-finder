@@ -89,7 +89,7 @@ const Page = async ({ params }: Props) => {
             key={st.id}
             href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}
           >
-            {st.station_name}
+            {st.display_station_name}
           </Link>
         ))}
       </div>
