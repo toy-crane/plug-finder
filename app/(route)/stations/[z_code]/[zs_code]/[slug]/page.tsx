@@ -4,7 +4,6 @@ import { getDistrictDescription } from "@/constants/districts";
 import { getRegionDescription } from "@/constants/regions";
 import createSupabaseBrowerClient from "@/supabase/client";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
-import { get } from "http";
 import type { Metadata, ResolvingMetadata } from "next";
 
 // static 페이지 revalidation을 판단함
@@ -13,6 +12,15 @@ export const revalidate = 60;
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
 }
+
+const groupByCharger = (
+  chargers: { charger_type: string }[]
+): Record<string, number> => {
+  return chargers.reduce((acc, charger) => {
+    acc[charger.charger_type] = (acc[charger.charger_type] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+};
 
 export async function generateStaticParams() {
   const supabase = createSupabaseBrowerClient();
@@ -29,12 +37,22 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const supabase = await createSupabaseServerClientReadOnly();
   const slug = decodeURIComponent(params.slug);
-  const query = supabase.from("stations").select(`*`).eq("slug", slug).single();
-  const result = await query;
-  if (result.error) {
-    throw Error(result.error.message);
+  const response = await supabase
+    .from("stations")
+    .select("*, chargers(charger_type)")
+    .order("charger_type", { ascending: false, referencedTable: "chargers" })
+    .eq("slug", slug)
+    .single();
+  if (response.error) {
+    throw Error(response.error.message);
   }
-  const station = result.data;
+  const station = response.data;
+  const chargers = station.chargers;
+  const chargerGroup = groupByCharger(chargers);
+  const chargerDescription = Object.entries(chargerGroup).map(
+    ([chargerType, count]) =>
+      `${getChargerTypeDescription(chargerType)}: ${count}대`
+  );
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
@@ -46,9 +64,8 @@ export async function generateMetadata(
       station.station_name
     } 전기차 충전소`;
     const description = `
-    충전 방식 - ${getChargerTypeDescription(station.charger_type)} \n
-    충전기 이용방식 - ${station.method} 사용 \n
     주소 - ${station.address} \n 
+    충전기 수 - ${chargerDescription} \n
     사용 가능시간 - ${station.usable_time} \n 
     운영 기관 - ${station.org_name} \n
     운영 기관 연락처 - ${station.org_contact} \n
@@ -82,12 +99,17 @@ const Page = async ({ params }: Props) => {
   const response = await supabase
     .from("stations")
     .select("*, chargers(*)")
+    .order("charger_type", { ascending: false, referencedTable: "chargers" })
     .eq("slug", slug)
     .single();
+
   if (response.error) throw response.error;
+
   // 404 페이지 에러 추가
   const station = response.data;
   const chargers = station.chargers;
+  const chargerGroup = groupByCharger(chargers);
+
   return (
     <div>
       <BreadcrumbNavigation
@@ -118,6 +140,13 @@ const Page = async ({ params }: Props) => {
           <div>사용 가능 시간: {station.usable_time}</div>
           <div>
             주차비: {station.parking_free ? "주차비 없음" : "주차비 있음"}
+          </div>
+          <div className="flex gap-2">
+            {Object.entries(chargerGroup).map(([chargerType, count]) => (
+              <div key={chargerType}>
+                {getChargerTypeDescription(chargerType)}: {count}대
+              </div>
+            ))}
           </div>
         </div>
         <div>

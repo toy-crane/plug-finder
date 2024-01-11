@@ -85,8 +85,8 @@ const url = "http://apis.data.go.kr/B552584/EvCharger/getChargerInfo";
 const params = {
   numOfRows: "9999",
   pageNo: "1",
-  zcode: "42",
-  // zscode: "42190",
+  // zcode: "42",
+  zscode: "51190",
 };
 
 // Create a URLSearchParams object from the params object
