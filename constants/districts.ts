@@ -518,3 +518,7 @@ export function getDistrictDescription(code: string): string {
     return "등록되지 않은 지역";
   }
 }
+
+export const districtCodes = Object.keys(Districts).filter(
+  (_) => typeof Districts[_ as any] !== "number"
+);

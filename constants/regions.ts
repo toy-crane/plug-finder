@@ -49,3 +49,7 @@ export function getRegionDescription(code: string): string {
     // return '알 수 없는 지역';
   }
 }
+
+export const regionCodes = Object.keys(Regions).filter(
+  (_) => typeof Regions[_ as any] !== "number"
+);
