@@ -16,11 +16,15 @@ export async function generateMetadata(
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase
     .from("stations")
-    .select("*", { count: "exact" });
+    .select("*", { count: "exact" })
+    .eq("zs_code", zs_code)
+    .eq("z_code", z_code);
   if (response.error) {
     throw Error(response.error.message);
   }
+
   const stationCount = response.count;
+  console.log(stationCount, z_code, zs_code);
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
@@ -32,7 +36,7 @@ export async function generateMetadata(
     const description = `
       ${getDistrictDescription(
         zs_code
-      )}에는 ${stationCount}개가 설치되어 있습니다.
+      )}에는 ${stationCount}개의 충전소가 있습니다.
       보다 자세한 정보가 궁금하다면? 플러그 파인더 홈페이지에서 확인하세요.
     `;
     return {
