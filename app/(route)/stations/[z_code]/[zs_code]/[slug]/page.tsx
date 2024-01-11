@@ -6,9 +6,6 @@ import createSupabaseBrowerClient from "@/supabase/client";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import type { Metadata, ResolvingMetadata } from "next";
 
-// static 페이지 revalidation을 판단함
-export const revalidate = 60;
-
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
 }
