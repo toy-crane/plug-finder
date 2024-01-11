@@ -5,6 +5,7 @@ import { getRegionDescription } from "@/constants/regions";
 import createSupabaseBrowerClient from "@/supabase/client";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import type { Metadata, ResolvingMetadata } from "next";
+import Charger from "./_components/charger";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -148,13 +149,7 @@ const Page = async ({ params }: Props) => {
         </div>
         <div>
           {chargers.map((charger) => (
-            <div key={charger.id} className="flex gap-2">
-              <div>
-                충전 타입: {getChargerTypeDescription(charger.charger_type)}
-              </div>
-              <div>충전 방식: {charger.method}</div>
-              <div>충전 속도: {charger.output}kW</div>
-            </div>
+            <Charger key={charger.id} charger={charger} />
           ))}
         </div>
       </div>
