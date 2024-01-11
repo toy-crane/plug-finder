@@ -10,9 +10,9 @@ export async function GET() {
     new URL("../../../assets/font/Pretendard-ExtraBold.otf", import.meta.url)
   ).then((res) => res.arrayBuffer());
 
-  const imageData = await fetch(
+  const imageData = (await fetch(
     new URL("../../../assets/logo/logo-outlined.png", import.meta.url)
-  ).then((res) => res.arrayBuffer());
+  ).then((res) => res.arrayBuffer())) as string;
 
   return new ImageResponse(
     (
