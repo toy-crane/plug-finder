@@ -522,3 +522,6 @@ export function getDistrictDescription(code: string): string {
 export const districtCodes = Object.keys(Districts).filter(
   (_) => typeof Districts[_ as any] !== "number"
 );
+
+export const getDistrictCodesInRegion = (z_code: string) =>
+  districtCodes.filter((code) => code.startsWith(z_code));
