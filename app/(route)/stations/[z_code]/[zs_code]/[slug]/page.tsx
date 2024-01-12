@@ -8,6 +8,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import Charger from "./_components/charger";
 import { Suspense } from "react";
 import NearStations from "./_components/near-stations";
+import StationMap from "./_components/station-map";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -126,6 +127,7 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
+      <StationMap station={station} />
       <div className="flex flex-col gap-4">
         <div>
           <div>{station.station_name}</div>
