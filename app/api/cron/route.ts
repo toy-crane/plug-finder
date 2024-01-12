@@ -184,6 +184,7 @@ const upsertStations = async (stations: AddDiplayNameStation[]) => {
     z_code: correctZCode(station.zcode),
     zs_code: correctZsCode(station.zcode, station.zscode),
     display_station_name: station.displayStatNm,
+    charger_type: station.chgerType,
     chargers: station.chargers.map((charger) => ({
       external_charger_id: charger.chgerId,
       method: charger.method,
