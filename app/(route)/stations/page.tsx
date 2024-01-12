@@ -1,3 +1,4 @@
+import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
 import { Regions, getRegionDescription } from "@/constants/regions";
 import Link from "next/link";
 
@@ -8,6 +9,7 @@ const Page = () => {
 
   return (
     <div>
+      <BreadcrumbNavigation trail={[{ title: "전국", link: "/stations" }]} />
       {regionCodes.map((code) => (
         <div key={code}>
           <Link href={`/stations/${code}`}>{getRegionDescription(code)}</Link>
