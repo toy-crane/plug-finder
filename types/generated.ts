@@ -64,6 +64,7 @@ export interface Database {
           is_deleted_detail: string | null
           lat: number
           lng: number
+          location: unknown
           note: string | null
           org_contact: string | null
           org_id: string
@@ -88,6 +89,7 @@ export interface Database {
           is_deleted_detail?: string | null
           lat: number
           lng: number
+          location: unknown
           note?: string | null
           org_contact?: string | null
           org_id: string
@@ -112,6 +114,7 @@ export interface Database {
           is_deleted_detail?: string | null
           lat?: number
           lng?: number
+          location?: unknown
           note?: string | null
           org_contact?: string | null
           org_id?: string
@@ -135,6 +138,38 @@ export interface Database {
           data: Json
         }
         Returns: undefined
+      }
+      nearby_stations: {
+        Args: {
+          lat: number
+          lng: number
+          max_results: number
+        }
+        Returns: {
+          address: string
+          available: boolean
+          available_detail: string | null
+          created_at: string
+          detail_location: string | null
+          display_station_name: string
+          external_station_id: string
+          id: string
+          is_deleted: boolean
+          is_deleted_detail: string | null
+          lat: number
+          lng: number
+          location: unknown
+          note: string | null
+          org_contact: string | null
+          org_id: string
+          org_name: string
+          parking_free: boolean
+          slug: string
+          station_name: string
+          usable_time: string | null
+          z_code: string
+          zs_code: string
+        }[]
       }
     }
     Enums: {

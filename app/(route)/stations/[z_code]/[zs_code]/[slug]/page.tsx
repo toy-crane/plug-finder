@@ -7,6 +7,7 @@ import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import type { Metadata, ResolvingMetadata } from "next";
 import Charger from "./_components/charger";
 import { Suspense } from "react";
+import NearStations from "./_components/near-stations";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -147,6 +148,11 @@ const Page = async ({ params }: Props) => {
               </div>
             ))}
           </div>
+        </div>
+        <div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <NearStations station={station} />
+          </Suspense>
         </div>
         <div className="flex flex-col">
           {chargers.map((charger) => (
