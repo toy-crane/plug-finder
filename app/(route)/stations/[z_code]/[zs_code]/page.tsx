@@ -18,7 +18,8 @@ export async function generateMetadata(
     .from("stations")
     .select("*", { count: "exact" })
     .eq("zs_code", zs_code)
-    .eq("z_code", z_code);
+    .eq("z_code", z_code)
+    .order("display_station_name", { ascending: true });
   if (response.error) {
     throw Error(response.error.message);
   }
