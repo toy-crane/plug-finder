@@ -4,6 +4,7 @@ import { getRegionDescription } from "@/constants/regions";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
+import RegionMap from "./_components/region-map";
 
 interface Props {
   params: { z_code: string; zs_code: string };
@@ -71,6 +72,16 @@ const Page = async ({ params }: Props) => {
   if (response.error) throw response.error;
   // 404 페이지 에러 추가
   const stations = response.data;
+  const markers = stations.map((st) => ({
+    position: { lat: st.lat, lng: st.lng },
+    text: st.station_name,
+    to: `/stations/${st.z_code}/${st.zs_code}/${st.slug}`,
+  }));
+
+  if (stations.length === 0) {
+    return;
+  }
+
   return (
     <>
       <BreadcrumbNavigation
@@ -83,6 +94,7 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
+      <RegionMap markers={markers} center={markers[0].position} />
       <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
       <div className="flex flex-col">
         {stations.map((st) => (
