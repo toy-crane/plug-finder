@@ -24,7 +24,7 @@ const Marker = ({
           >
             <Icons.EvCharger className="w-8 h-8 fill-[#9b45c3] transition-transform duration-150 group-hover:scale-125" />
           </Button>
-          <span className="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-150 text-slate-700 font-semibold bg-slate-50 p-1 select-none group-hover:z-20">
+          <span className="text-xs text-slate-700 font-semibold bg-slate-50 p-1 select-none group-hover:z-20">
             {text}
           </span>
         </div>
