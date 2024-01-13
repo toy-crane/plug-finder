@@ -81,25 +81,25 @@ const supabase = createClient<Database>(
 );
 
 // Set your API key here
-const serviceKey =
-  "KZ2gsvilf6x8JPRU61b%2Frh%2BzkLv5YiCpEF%2Fm%2F0bTRJttrEnFaps5QmeWFQi9qb%2BIIKtLGpCmC57B%2Fw4Jpio9PA%3D%3D";
+const serviceKey = process.env.NEXT_PUBLIC_EV_API_KEY;
 
 // API endpoint for getting charger information
 const url = "http://apis.data.go.kr/B552584/EvCharger/getChargerInfo";
-const params = {
-  numOfRows: "9999",
-  pageNo: "1",
-  // zcode: "42",
-  zscode: "51190",
-};
-
-// Create a URLSearchParams object from the params object
-const searchParams = new URLSearchParams(params);
-
-// Append serviceKey without encoding
-const queryString = `${searchParams.toString()}&serviceKey=${serviceKey}&dataType=JSON`;
 
 const getOfficialStations = async () => {
+  const params = {
+    numOfRows: "9999",
+    pageNo: "1",
+    // zcode: "42",
+    zscode: "51190",
+  };
+
+  // Create a URLSearchParams object from the params object
+  const searchParams = new URLSearchParams(params);
+
+  // Append serviceKey without encoding
+  const queryString = `${searchParams.toString()}&serviceKey=${serviceKey}&dataType=JSON`;
+
   let stations: OfficialStation[] = []; // stations를 여기서 선언 및 초기화
   try {
     const response = await fetch(`${url}?${queryString}`);
