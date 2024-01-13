@@ -58,7 +58,7 @@ async function fetchChargerStatus(params: ChargerStatusRequestParams) {
     return data.items.item[0];
   } catch (error) {
     console.error("Error:", error);
-    throw error;
+    return null;
   }
 }
 
@@ -75,7 +75,7 @@ const Charger = async ({
     stationId,
   });
 
-  const lastChargedDate = charger.lastTsdt
+  const lastChargedDate = charger?.lastTsdt
     ? getDate(charger.lastTsdt)
     : undefined;
 
@@ -84,7 +84,10 @@ const Charger = async ({
       <div>충전 타입: {getChargerTypeDescription(chargerType)}</div>
       <div>충전 방식: {method}</div>
       <div>충전 속도: {output}kW</div>
-      <div>충전기 상태: {getStatusDescription(charger.stat)}</div>
+      <div>
+        충전기 상태:{" "}
+        {charger ? getStatusDescription(charger.stat) : "알 수 없음"}
+      </div>
       {lastChargedDate && (
         <div>
           마지막 충전 시간:

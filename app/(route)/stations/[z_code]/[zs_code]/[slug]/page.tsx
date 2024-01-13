@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import NearStations from "./_components/near-stations";
 import Map from "@/components/map";
 import { notFound } from "next/navigation";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
