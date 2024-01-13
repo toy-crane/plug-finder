@@ -1,5 +1,6 @@
 import { Database } from "@/types/generated";
 import { createClient } from "@supabase/supabase-js";
+import { NextRequest } from "next/server";
 
 function correctZCode(zcode: string): string {
   if (zcode === "42") {
@@ -205,7 +206,13 @@ const upsertStations = async (stations: AddDiplayNameStation[]) => {
   return response.data;
 };
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response("Unauthorized", {
+      status: 401,
+    });
+  }
   const stations = await getOfficialStations();
   const addChargerStations = addChargers(stations);
   const addDisplayNameStations = addDisplayStatNm(addChargerStations);
