@@ -8,8 +8,8 @@ import type { Metadata, ResolvingMetadata } from "next";
 import Charger from "./_components/charger";
 import { Suspense } from "react";
 import NearStations from "./_components/near-stations";
-import StationMap from "./_components/station-map";
 import Map from "@/components/map";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -45,9 +45,15 @@ export async function generateMetadata(
     .order("charger_type", { ascending: false, referencedTable: "chargers" })
     .eq("slug", slug)
     .single();
+
   if (response.error) {
-    throw Error(response.error.message);
+    if (response.error.code === "PGRST116") {
+      notFound();
+    } else {
+      throw Error(response.error.message);
+    }
   }
+
   const station = response.data;
   const chargers = station.chargers;
   const chargerGroup = groupByCharger(chargers);
@@ -105,7 +111,13 @@ const Page = async ({ params }: Props) => {
     .eq("slug", slug)
     .single();
 
-  if (response.error) throw response.error;
+  if (response.error) {
+    if (response.error.code === "PGRST116") {
+      notFound();
+    } else {
+      throw Error(response.error.message);
+    }
+  }
 
   // 404 페이지 에러 추가
   const station = response.data;
