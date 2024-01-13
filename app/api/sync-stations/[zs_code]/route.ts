@@ -2,6 +2,8 @@ import { Database } from "@/types/generated";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 function correctZCode(zcode: string): string {
   if (zcode === "42") {
     return "51";
@@ -86,12 +88,11 @@ const serviceKey = process.env.NEXT_PUBLIC_EV_API_KEY;
 // API endpoint for getting charger information
 const url = "http://apis.data.go.kr/B552584/EvCharger/getChargerInfo";
 
-const getOfficialStations = async () => {
+const getOfficialStations = async ({ zsCode }: { zsCode: string }) => {
   const params = {
     numOfRows: "9999",
     pageNo: "1",
-    // zcode: "42",
-    zscode: "51190",
+    zscode: zsCode,
   };
 
   // Create a URLSearchParams object from the params object
@@ -208,16 +209,16 @@ const upsertStations = async (stations: AddDiplayNameStation[]) => {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { z_code: string } }
+  { params }: { params: { zs_code: string } }
 ) {
-  const zCode = params.z_code;
+  const zsCode = params.zs_code;
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", {
       status: 401,
     });
   }
-  const stations = await getOfficialStations();
+  const stations = await getOfficialStations({ zsCode });
   const addChargerStations = addChargers(stations);
   const addDisplayNameStations = addDisplayStatNm(addChargerStations);
   await upsertStations(addDisplayNameStations);
