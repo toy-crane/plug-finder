@@ -9,6 +9,7 @@ import Charger from "./_components/charger";
 import { Suspense } from "react";
 import NearStations from "./_components/near-stations";
 import StationMap from "./_components/station-map";
+import Map from "@/components/map";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -110,6 +111,13 @@ const Page = async ({ params }: Props) => {
   const station = response.data;
   const chargers = station.chargers;
   const chargerGroup = groupByCharger(chargers);
+  const markers = [
+    {
+      position: { lat: station.lat, lng: station.lng },
+      text: station.station_name,
+      to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
+    },
+  ];
 
   return (
     <div>
@@ -127,7 +135,7 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
-      <StationMap station={station} />
+      <Map markers={markers} center={markers[0].position} />
       <div className="flex flex-col gap-4">
         <div>
           <div>{station.station_name}</div>

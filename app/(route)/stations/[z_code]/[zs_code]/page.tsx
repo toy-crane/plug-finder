@@ -4,7 +4,7 @@ import { getRegionDescription } from "@/constants/regions";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
-import Map from "../../../../../components/map";
+import Map from "@/components/map";
 
 interface Props {
   params: { z_code: string; zs_code: string };
