@@ -38,7 +38,8 @@ const SearchBar = () => {
       const response = await supabase
         .from("stations")
         .select("*")
-        .like("station_name", `%${keyword}%`);
+        .like("station_name", `%${keyword}%`)
+        .limit(100);
       if (response.error) throw response.error;
       const data = response.data;
       setItems(data);
@@ -85,7 +86,7 @@ const SearchBar = () => {
           )}
           <>
             <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
-            <CommandGroup heading="충전소 이름">
+            <CommandGroup>
               {items.map((item) => (
                 <CommandItem
                   key={`word-${item.id}`}
