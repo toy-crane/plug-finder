@@ -1,7 +1,6 @@
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 
 import { Button } from "../ui/button";
-import { Check } from "lucide-react";
 import { Icons } from "../icons";
 
 const Marker = ({
