@@ -4,7 +4,7 @@ import { getRegionDescription } from "@/constants/regions";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
-import RegionMap from "./_components/region-map";
+import Map from "../../../../../components/map";
 
 interface Props {
   params: { z_code: string; zs_code: string };
@@ -94,7 +94,7 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
-      <RegionMap markers={markers} center={markers[0].position} />
+      <Map markers={markers} center={markers[0].position} />
       <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
       <div className="flex flex-col">
         {stations.map((st) => (

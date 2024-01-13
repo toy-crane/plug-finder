@@ -1,7 +1,7 @@
 "use client";
 import Marker from "@/components/map/marker";
 import { useRouter } from "next/navigation";
-import { Map } from "react-kakao-maps-sdk";
+import { Map as KakaoMap } from "react-kakao-maps-sdk";
 
 type Props = {
   markers: {
@@ -12,10 +12,10 @@ type Props = {
   center: { lat: number; lng: number };
 };
 
-const RegionMap = ({ markers, center }: Props) => {
+const Map = ({ markers, center }: Props) => {
   const router = useRouter();
   return (
-    <Map
+    <KakaoMap
       className="mb-2 round-md"
       center={center}
       style={{
@@ -33,8 +33,8 @@ const RegionMap = ({ markers, center }: Props) => {
           onClick={() => router.push(marker.to)}
         />
       ))}
-    </Map>
+    </KakaoMap>
   );
 };
 
-export default RegionMap;
+export default Map;
