@@ -5,12 +5,11 @@ import { getRegionDescription } from "@/constants/regions";
 import createSupabaseBrowerClient from "@/supabase/client";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import type { Metadata, ResolvingMetadata } from "next";
-import Charger from "./_components/charger";
 import { Suspense } from "react";
 import NearStations from "./_components/near-stations";
 import Map from "@/components/map";
 import { notFound } from "next/navigation";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+import Chargers from "./_components/chargers";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -178,18 +177,12 @@ const Page = async ({ params }: Props) => {
           </Suspense>
         </div>
         <div className="flex flex-col">
-          {chargers.map((charger) => (
-            <Suspense key={charger.id} fallback={<div>Loading...</div>}>
-              <Charger
-                key={charger.id}
-                chargerType={charger.charger_type}
-                stationId={charger.external_station_id}
-                chargerId={charger.external_charger_id}
-                method={charger.method}
-                output={charger.output}
-              />
-            </Suspense>
-          ))}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Chargers
+              chargers={chargers}
+              stationId={station.external_station_id}
+            />
+          </Suspense>
         </div>
       </div>
     </div>
