@@ -142,7 +142,7 @@ const Page = async ({ params }: Props) => {
             link: `/stations/${z_code}/${zs_code}`,
           },
           {
-            title: station.display_station_name.split(" ")[2],
+            title: station.display_station_name.split(" ").slice(2).join(" "),
             link: `/stations/${z_code}/${zs_code}/${slug}`,
           },
         ]}
