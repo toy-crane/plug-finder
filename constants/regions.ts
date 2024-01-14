@@ -44,6 +44,7 @@ export function getRegionDescription(code: string): string {
   } else {
     // 여기서는 잘못된 코드에 대한 처리를 할 수 있습니다.
     // 예를 들어, 오류를 반환하거나 기본값을 제공할 수 있습니다.
+    console.error("Invalid region code", code);
     throw new Error("Invalid region code");
     // 또는 기본값 반환
     // return '알 수 없는 지역';

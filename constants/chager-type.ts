@@ -18,5 +18,6 @@ export function getChargerTypeDescription(code: string): string | undefined {
   if (!isNaN(parsedCode) && chargerType.hasOwnProperty(parsedCode)) {
     return chargerType[parsedCode as ChargerCode];
   }
-  throw new Error("Invalid region code");
+  console.error("Invalid charger type code", code);
+  throw new Error("Invalid charger code");
 }
