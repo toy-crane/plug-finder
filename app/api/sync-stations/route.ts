@@ -1,6 +1,10 @@
+import { districtCodes, getDistrictDescription } from "@/constants/districts";
 import { Database } from "@/types/generated";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest } from "next/server";
+import Bottleneck from "bottleneck";
+import { add } from "date-fns";
+import { getRegionDescription } from "@/constants/regions";
 
 export const dynamic = "force-dynamic";
 
@@ -100,10 +104,12 @@ const getOfficialStations = async ({ zsCode }: { zsCode: string }) => {
 
   // Append serviceKey without encoding
   const queryString = `${searchParams.toString()}&serviceKey=${serviceKey}&dataType=JSON`;
+  const requestUrl = `${url}?${queryString}`;
+  console.log(requestUrl);
 
   let stations: OfficialStation[] = []; // stations를 여기서 선언 및 초기화
   try {
-    const response = await fetch(`${url}?${queryString}`);
+    const response = await fetch(requestUrl);
     const responseBody = await response.text(); // Get the response body as text
 
     if (response.status !== 200) {
@@ -154,8 +160,12 @@ function addDisplayStatNm(stations: AddChargerStation[]) {
     const index = sortedStatIds.indexOf(station.statId);
     const isSingle = sortedStatIds.length === 1;
     const displayStatNm = isSingle
-      ? station.statNm
-      : `${station.statNm} ${index + 1}`;
+      ? `${getRegionDescription(station.zcode)} ${getDistrictDescription(
+          station.zscode
+        )} ${station.statNm}`
+      : `${getRegionDescription(station.zcode)} ${getDistrictDescription(
+          station.zscode
+        )}  ${station.statNm} ${index + 1}`;
     return {
       ...station,
       displayStatNm: displayStatNm,
@@ -207,20 +217,31 @@ const upsertStations = async (stations: AddDiplayNameStation[]) => {
   return response.data;
 };
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { zs_code: string } }
-) {
-  const zsCode = params.zs_code;
+export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", {
       status: 401,
     });
   }
-  const stations = await getOfficialStations({ zsCode });
-  const addChargerStations = addChargers(stations);
-  const addDisplayNameStations = addDisplayStatNm(addChargerStations);
-  await upsertStations(addDisplayNameStations);
-  return Response.json({ stations: addDisplayNameStations });
+
+  const limiter = new Bottleneck({
+    maxConcurrent: 1, // 동시에 5개의 작업만 실행
+  });
+
+  const promises = districtCodes.map((zsCode) =>
+    limiter.schedule(async () => {
+      if (!zsCode.startsWith("51190")) return [];
+      const stations = await getOfficialStations({ zsCode });
+      const addChargerStations = addChargers(stations);
+      const addDisplayNameStations = addDisplayStatNm(addChargerStations);
+      await upsertStations(addDisplayNameStations);
+      return stations;
+    })
+  );
+
+  const result = await Promise.all(promises);
+  const flatResult = result.flat();
+
+  return Response.json({ stations: flatResult, count: flatResult.length });
 }
