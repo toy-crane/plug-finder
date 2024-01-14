@@ -15,6 +15,7 @@
     "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.39.2",
     "@vercel/analytics": "^1.1.1",
+    "bottleneck": "^2.19.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
