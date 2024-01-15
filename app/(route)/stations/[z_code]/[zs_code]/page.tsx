@@ -1,13 +1,26 @@
 import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
-import { getDistrictDescription } from "@/constants/districts";
+import {
+  getDistrictDescription,
+  getDistrictPosition,
+} from "@/constants/districts";
 import { getRegionDescription } from "@/constants/regions";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import Map from "@/components/map";
+import StationsMap from "@/components/map/stations-map";
 
 interface Props {
   params: { z_code: string; zs_code: string };
+  searchParams?: {
+    minLng: string;
+    minLat: string;
+    maxLng: string;
+    maxLat: string;
+    lng: string;
+    lat: string;
+    level: string;
+  };
 }
 
 export async function generateMetadata(
@@ -62,7 +75,19 @@ export async function generateMetadata(
   }
 }
 
-const Page = async ({ params }: Props) => {
+const getDefaultBounds = (position: { lat: number; lng: number }) => {
+  const { lat, lng } = position;
+  const lngLevel = 0.1;
+  const latLevel = 0.05;
+  return {
+    minLng: lng - lngLevel,
+    maxLng: lng + lngLevel,
+    minLat: lat - latLevel,
+    maxLat: lat + latLevel,
+  };
+};
+
+const Page = async ({ params, searchParams }: Props) => {
   const { z_code, zs_code } = params;
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase
@@ -72,11 +97,30 @@ const Page = async ({ params }: Props) => {
   if (response.error) throw response.error;
   // 404 페이지 에러 추가
   const stations = response.data;
-  const markers = stations.map((st) => ({
-    position: { lat: st.lat, lng: st.lng },
-    text: st.station_name,
-    to: `/stations/${st.z_code}/${st.zs_code}/${st.slug}`,
-  }));
+
+  const position = {
+    lat: searchParams?.lat
+      ? Number(searchParams.lat)
+      : getDistrictPosition(zs_code).lat,
+    lng: searchParams?.lng
+      ? Number(searchParams.lng)
+      : getDistrictPosition(zs_code).lng,
+  };
+
+  const bounds = {
+    minLng: searchParams?.minLng
+      ? Number(searchParams.minLng)
+      : getDefaultBounds(position).minLng,
+    maxLng: searchParams?.maxLng
+      ? Number(searchParams.maxLng)
+      : getDefaultBounds(position).maxLng,
+    minLat: searchParams?.minLat
+      ? Number(searchParams.minLat)
+      : getDefaultBounds(position).minLat,
+    maxLat: searchParams?.maxLat
+      ? Number(searchParams.maxLat)
+      : getDefaultBounds(position).maxLat,
+  };
 
   if (stations.length === 0) {
     return;
@@ -94,7 +138,7 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
-      <Map markers={markers} center={markers[0].position} />
+      <StationsMap position={position} bounds={bounds} level={6} />
       <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
       <div className="flex flex-col">
         {stations.map((st) => (

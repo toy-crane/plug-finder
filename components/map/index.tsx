@@ -19,8 +19,9 @@ const Map = ({ markers, center }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const handlePosition = (map: kakao.maps.Map) => {
+  const handleMove = (map: kakao.maps.Map) => {
     const bound = map.getBounds();
+    const level = map.getLevel();
     const params = new URLSearchParams(searchParams);
     params.set("lng", String(map.getCenter().getLng()));
     params.set("lat", String(map.getCenter().getLat()));
@@ -28,12 +29,6 @@ const Map = ({ markers, center }: Props) => {
     params.set("minLat", String(bound.getSouthWest().getLat()));
     params.set("maxLng", String(bound.getNorthEast().getLng()));
     params.set("maxLat", String(bound.getNorthEast().getLat()));
-    router.replace(`${pathname}?${params.toString()}`);
-  };
-
-  const handleZoom = (map: kakao.maps.Map) => {
-    const level = map.getLevel();
-    const params = new URLSearchParams(searchParams);
     params.set("level", String(level));
     router.replace(`${pathname}?${params.toString()}`);
   };
@@ -41,8 +36,8 @@ const Map = ({ markers, center }: Props) => {
   return (
     <KakaoMap
       className="mb-2 round-md"
-      onDragEnd={handlePosition}
-      onZoomChanged={handleZoom}
+      onDragEnd={handleMove}
+      onZoomChanged={handleMove}
       center={center}
       ref={mapRef}
       style={{

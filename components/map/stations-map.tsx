@@ -15,10 +15,10 @@ type Props = {
 const StationsMap = async ({ bounds, position, level }: Props) => {
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase.rpc("stations_in_view", {
-    min_long: bounds?.minLng,
-    min_lat: bounds?.minLat,
-    max_long: bounds?.maxLng,
-    max_lat: bounds?.maxLat,
+    min_long: bounds.minLng,
+    min_lat: bounds.minLat,
+    max_long: bounds.maxLng,
+    max_lat: bounds.maxLat,
   });
   if (response.error) {
     throw Error(response.error.message);
@@ -32,6 +32,7 @@ const StationsMap = async ({ bounds, position, level }: Props) => {
     text: station.station_name,
     to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
   }));
+
   return <Map markers={markers} center={position} />;
 };
 
