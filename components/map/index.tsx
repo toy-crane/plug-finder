@@ -20,11 +20,14 @@ const Map = ({ markers, center }: Props) => {
   const pathname = usePathname();
 
   const handlePosition = (map: kakao.maps.Map) => {
-    const lng = map.getCenter().getLng();
-    const lat = map.getCenter().getLat();
+    const bound = map.getBounds();
     const params = new URLSearchParams(searchParams);
-    params.set("lng", String(lng));
-    params.set("lat", String(lat));
+    params.set("lng", String(map.getCenter().getLng()));
+    params.set("lat", String(map.getCenter().getLat()));
+    params.set("minLng", String(bound.getSouthWest().getLng()));
+    params.set("minLat", String(bound.getSouthWest().getLat()));
+    params.set("maxLng", String(bound.getNorthEast().getLng()));
+    params.set("maxLat", String(bound.getNorthEast().getLat()));
     router.replace(`${pathname}?${params.toString()}`);
   };
 
@@ -34,22 +37,6 @@ const Map = ({ markers, center }: Props) => {
     params.set("level", String(level));
     router.replace(`${pathname}?${params.toString()}`);
   };
-
-  useEffect(() => {
-    if (mapRef.current) {
-      const bounds = mapRef.current.getBounds();
-      const minLng = bounds.getSouthWest().getLng();
-      const minLat = bounds.getSouthWest().getLat();
-      const maxLng = bounds.getNorthEast().getLng();
-      const maxLat = bounds.getNorthEast().getLat();
-      const params = new URLSearchParams(searchParams);
-      params.set("minLng", String(minLng));
-      params.set("minLat", String(minLat));
-      params.set("maxLng", String(maxLng));
-      params.set("maxLat", String(maxLat));
-      router.replace(`${pathname}?${params.toString()}`);
-    }
-  });
 
   return (
     <KakaoMap
