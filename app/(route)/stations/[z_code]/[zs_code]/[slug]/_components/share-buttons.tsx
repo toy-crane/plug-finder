@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { siteConfig } from "@/config/site";
 import { Tables } from "@/types/generated";
 import Link from "next/link";
 
@@ -18,6 +19,13 @@ const ShareButtons = ({ station }: Props) => {
           href={`tmap://route?goalname=${station.address}&rGoX=${station.lng}&rGoY=${station.lat}`}
         >
           TMAP으로 경로 전송
+        </Link>
+      </Button>
+      <Button asChild>
+        <Link
+          href={`nmap://navigation?dname=${station.address}&dlng=${station.lng}&dlat=${station.lat}&appname=${siteConfig.url}`}
+        >
+          Naver Map으로 경로 전송
         </Link>
       </Button>
       <Button
