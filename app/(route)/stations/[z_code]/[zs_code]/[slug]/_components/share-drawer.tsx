@@ -33,7 +33,7 @@ type Props = {
 const ShareButtons = ({ station }: Props) => {
   const { toast } = useToast();
   return (
-    <div className="flex gap-2 flex-col">
+    <div className="flex gap-2 flex-col mb-4">
       <Button
         variant="ghost"
         onClick={async () => {
@@ -92,9 +92,7 @@ export function ShareDrawer({ station }: Props) {
         <Button variant="outline">공유하기</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>공유하기</DrawerTitle>
-        </DrawerHeader>
+        <DrawerHeader className="text-left"></DrawerHeader>
         <ShareButtons station={station} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
