@@ -28,11 +28,6 @@ const ShareButtons = ({ station }: Props) => {
           Naver Map으로 경로 전송
         </Link>
       </Button>
-      <Button asChild>
-        <Link href={`kakaomap://look?p=${station.lat},${station.lng}`}>
-          카카오 맵으로 경로 전송
-        </Link>
-      </Button>
       <Button
         onClick={async () => {
           await navigator.clipboard.writeText(`${window.location.href}`);
