@@ -23,6 +23,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Tables } from "@/types/generated";
 import { siteConfig } from "@/config/site";
 import Link from "next/link";
+import { Icons } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 type Props = {
   station: Tables<"stations">;
@@ -49,6 +51,7 @@ const ShareButtons = ({ station }: Props) => {
         <Link
           href={`tmap://route?goalname=${station.address}&rGoX=${station.lng}&rGoY=${station.lat}`}
         >
+          <Icons.TMap className="mr-1.5 w-6 h-6" />
           TMAP으로 경로 전송
         </Link>
       </Button>
@@ -56,6 +59,7 @@ const ShareButtons = ({ station }: Props) => {
         <Link
           href={`nmap://navigation?dname=${station.address}&dlng=${station.lng}&dlat=${station.lat}&appname=${siteConfig.url}`}
         >
+          <Icons.Naver className="mr-1.5 w-6 h-6" />
           Naver Map으로 경로 전송
         </Link>
       </Button>
