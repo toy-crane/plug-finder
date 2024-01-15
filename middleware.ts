@@ -10,8 +10,6 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname + request.nextUrl.search
   );
 
-  console.log("middleware called");
-
   const response = NextResponse.next({
     request: {
       headers: requestHeaders,
