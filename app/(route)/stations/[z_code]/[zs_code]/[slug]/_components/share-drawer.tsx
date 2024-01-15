@@ -94,7 +94,7 @@ export function ShareDrawer({ station }: Props) {
         <ShareButtons station={station} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">닫기</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

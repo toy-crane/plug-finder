@@ -10,7 +10,6 @@ import NearStations from "./_components/near-stations";
 import Map from "@/components/map";
 import { notFound } from "next/navigation";
 import Chargers from "./_components/chargers";
-import ShareButtons from "./_components/share-buttons";
 import ShareDrawer from "./_components/share-drawer";
 
 interface Props {
