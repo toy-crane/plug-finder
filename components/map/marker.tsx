@@ -3,6 +3,7 @@ import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const Marker = ({
   position,
@@ -15,11 +16,16 @@ const Marker = ({
   text?: string;
   onClick: () => void;
 }) => {
-  const zIndex = selected ? 20 : 10;
+  const [isHovered, setIsHovered] = useState(false);
+  const zIndex = selected || isHovered ? 20 : 10;
   return (
     <>
       <CustomOverlayMap position={position} zIndex={zIndex}>
-        <div className={cn("flex flex-col items-center group relative")}>
+        <div
+          className={cn("flex flex-col items-center group relative")}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <Button
             variant="ghost"
             className="rounded-full p-0 hover:bg-transparent"
@@ -34,8 +40,9 @@ const Marker = ({
           </Button>
           <span
             className={cn(
-              "text-xs text-slate-700 bg-slate-50 p-1 select-none group-hover:z-20 hidden group-hover:font-bold group-hover:block",
+              "text-xs text-slate-700 bg-slate-50 p-1 select-none hidden",
               "top-[50%] left-[50%] translate-x-[-50%] absolute mt-6",
+              "group-hover:font-bold group-hover:block",
               selected && "font-bold text-sm block"
             )}
           >
