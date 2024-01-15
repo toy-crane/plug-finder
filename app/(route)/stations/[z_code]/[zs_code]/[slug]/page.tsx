@@ -164,7 +164,7 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
-      <Map markers={markers} center={currentStationPosition} />
+      <Map markers={markers} center={currentStationPosition} level={3} />
       <div className="flex flex-col gap-4">
         <div>
           <div>{currentStation.station_name}</div>
