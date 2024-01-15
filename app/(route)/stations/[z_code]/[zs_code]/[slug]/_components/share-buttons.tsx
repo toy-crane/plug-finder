@@ -29,7 +29,7 @@ const ShareButtons = ({ station }: Props) => {
         </Link>
       </Button>
       <Button asChild>
-        <Link href={`kakaomap://route?ep=${station.lat},${station.lng}&by=CAR`}>
+        <Link href={`kakaomap://look?p=${station.lat},${station.lng}`}>
           카카오 맵으로 경로 전송
         </Link>
       </Button>
