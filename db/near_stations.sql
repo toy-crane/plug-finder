@@ -1,33 +1,23 @@
-CREATE OR REPLACE FUNCTION nearby_stations(lat FLOAT, long FLOAT, max_results INT)
-RETURNS TABLE (
-    id UUID, 
-    station_name TEXT, 
-    lat FLOAT, 
-    long FLOAT, 
-    dist_meters FLOAT,
-    z_code TEXT,
-    zs_code TEXT,
-    charger_type TEXT,
-    slug TEXT
+
+create or replace function nearby_stations(
+    latitude float, 
+    longitude float, 
+    max_results integer
 )
-LANGUAGE SQL
-AS $$
-  SELECT 
-    id, 
-    station_name, 
-    ST_Y(location::geometry) AS lat, 
-    ST_X(location::geometry) AS long, 
-    ST_Distance(location, ST_Point(long, lat)::geography) AS dist_meters,
-    z_code,
-    zs_code,
-    charger_type,
-    slug
-  FROM 
-    public.stations
-  WHERE 
-    location IS NOT NULL
-  ORDER BY 
-    location <-> ST_Point(long, lat)::geography
-  LIMIT 
-    max_results;
+returns table (
+    id public.stations.id%TYPE, 
+    station_name public.stations.station_name%TYPE, 
+    dist_meters float,
+    z_code public.stations.z_code%TYPE,
+    zs_code public.stations.zs_code%TYPE,
+    charger_type public.stations.charger_type%TYPE,
+    slug public.stations.slug%TYPE
+)
+language sql
+as $$
+  select id, station_name, st_distance(location, st_point(longitude, latitude)::geography) as dist_meters, z_code, zs_code, charger_type, slug
+  from public.stations
+  order by location <-> st_point(longitude, latitude)::geography
+  limit max_results;
 $$;
+

@@ -10,14 +10,14 @@ type Props = {
 const NearStations = async ({ station }: Props) => {
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase.rpc("nearby_stations", {
-    lat: station.lat,
-    long: station.lng,
+    latitude: station.lat,
+    longitude: station.lng,
     max_results: 11,
   });
   console.log({
     lat: station.lat,
     lng: station.lng,
-    max_results: 11,
+    max_results: 10,
   });
   if (response.error) throw response.error;
   const nearStations = response.data.filter((st) => st.id !== station.id);
