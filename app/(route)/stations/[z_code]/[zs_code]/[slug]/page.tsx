@@ -119,17 +119,31 @@ const Page = async ({ params }: Props) => {
     }
   }
 
+  const regionStationResponse = await supabase
+    .from("stations")
+    .select("*")
+    .eq("zs_code", zs_code);
+
+  if (regionStationResponse.error) {
+    throw Error(regionStationResponse.error.message);
+  }
+
+  const regionStations = regionStationResponse.data;
+
   // 404 페이지 에러 추가
-  const station = response.data;
-  const chargers = station.chargers;
+  const currentStation = response.data;
+  const currentStationPosition = {
+    lat: currentStation.lat,
+    lng: currentStation.lng,
+  };
+  const chargers = currentStation.chargers;
   const chargerGroup = groupByCharger(chargers);
-  const markers = [
-    {
-      position: { lat: station.lat, lng: station.lng },
-      text: station.station_name,
-      to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
-    },
-  ];
+  const markers = regionStations.map((station) => ({
+    position: { lat: station.lat, lng: station.lng },
+    text: station.station_name,
+    to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
+    selected: station.id === currentStation.id,
+  }));
 
   return (
     <div>
@@ -142,26 +156,32 @@ const Page = async ({ params }: Props) => {
             link: `/stations/${z_code}/${zs_code}`,
           },
           {
-            title: station.display_station_name.split(" ").slice(2).join(" "),
+            title: currentStation.display_station_name
+              .split(" ")
+              .slice(2)
+              .join(" "),
             link: `/stations/${z_code}/${zs_code}/${slug}`,
           },
         ]}
       />
-      <Map markers={markers} center={markers[0].position} />
+      <Map markers={markers} center={currentStationPosition} />
       <div className="flex flex-col gap-4">
         <div>
-          <div>{station.station_name}</div>
+          <div>{currentStation.station_name}</div>
           <div>
-            사용 가능 여부: {station.available ? "사용 가능" : "사용 불가"}
+            사용 가능 여부:{" "}
+            {currentStation.available ? "사용 가능" : "사용 불가"}
           </div>
           <div>
-            사용 제한 사유: {station.available_detail ?? "사용 제한 사유 없음"}
+            사용 제한 사유:{" "}
+            {currentStation.available_detail ?? "사용 제한 사유 없음"}
           </div>
-          <div>운영 회사: {station.org_name}</div>
-          <div>고객센터: {station.org_contact}</div>
-          <div>사용 가능 시간: {station.usable_time}</div>
+          <div>운영 회사: {currentStation.org_name}</div>
+          <div>고객센터: {currentStation.org_contact}</div>
+          <div>사용 가능 시간: {currentStation.usable_time}</div>
           <div>
-            주차비: {station.parking_free ? "주차비 없음" : "주차비 있음"}
+            주차비:{" "}
+            {currentStation.parking_free ? "주차비 없음" : "주차비 있음"}
           </div>
           <div className="flex gap-2">
             {Object.entries(chargerGroup).map(([chargerType, count]) => (
@@ -173,14 +193,14 @@ const Page = async ({ params }: Props) => {
         </div>
         <div>
           <Suspense fallback={<div>Loading...</div>}>
-            <NearStations station={station} />
+            <NearStations station={currentStation} />
           </Suspense>
         </div>
         <div className="flex flex-col">
           <Suspense fallback={<div>Loading...</div>}>
             <Chargers
               chargers={chargers}
-              stationId={station.external_station_id}
+              stationId={currentStation.external_station_id}
             />
           </Suspense>
         </div>

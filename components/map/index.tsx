@@ -9,6 +9,7 @@ type Props = {
     position: { lat: number; lng: number };
     text: string;
     to: string;
+    selected?: boolean;
   }[];
   center: { lat: number; lng: number };
 };
@@ -49,10 +50,9 @@ const Map = ({ markers, center }: Props) => {
     >
       {markers.map((marker) => (
         <Marker
-          position={marker.position}
-          key={marker.to}
-          text={marker.text}
           onClick={() => router.push(marker.to)}
+          {...marker}
+          key={marker.to}
         />
       ))}
     </KakaoMap>

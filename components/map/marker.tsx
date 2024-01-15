@@ -2,28 +2,43 @@ import { CustomOverlayMap } from "react-kakao-maps-sdk";
 
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
+import { cn } from "@/lib/utils";
 
 const Marker = ({
   position,
   text,
+  selected = false,
   onClick,
 }: {
   position: { lat: number; lng: number };
+  selected?: boolean;
   text?: string;
   onClick: () => void;
 }) => {
+  const zIndex = selected ? 20 : 10;
   return (
     <>
-      <CustomOverlayMap position={position} zIndex={10}>
-        <div className="flex flex-col items-center group relative">
+      <CustomOverlayMap position={position} zIndex={zIndex}>
+        <div className={cn("flex flex-col items-center group relative")}>
           <Button
             variant="ghost"
             className="rounded-full p-0 hover:bg-transparent"
             onClick={onClick}
           >
-            <Icons.EvCharger className="w-8 h-8 fill-[#9b45c3] transition-transform duration-150 group-hover:scale-125 group-hover:fill-[#e06bff]" />
+            <Icons.EvCharger
+              className={cn(
+                "w-8 h-8  transition-transform duration-150 group-hover:scale-125 group-hover:fill-[#e06bff]",
+                selected ? "fill-[#e06bff]" : "fill-[#9b45c3]"
+              )}
+            />
           </Button>
-          <span className="text-xs text-slate-700 bg-slate-50 p-1 select-none group-hover:z-20 group-hover:font-bold">
+          <span
+            className={cn(
+              "text-xs text-slate-700 bg-slate-50 p-1 select-none group-hover:z-20 hidden group-hover:font-bold group-hover:block",
+              "top-[50%] left-[50%] translate-x-[-50%] absolute mt-6",
+              selected && "font-bold text-sm block"
+            )}
+          >
             {text}
           </span>
         </div>
