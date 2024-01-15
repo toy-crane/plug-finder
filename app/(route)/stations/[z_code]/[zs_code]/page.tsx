@@ -126,6 +126,13 @@ const Page = async ({ params, searchParams }: Props) => {
     return;
   }
 
+  const markers = stations.map((station) => ({
+    position: { lat: station.lat, lng: station.lng },
+    text: station.station_name,
+    to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
+    selected: false,
+  }));
+
   return (
     <>
       <BreadcrumbNavigation
@@ -138,7 +145,7 @@ const Page = async ({ params, searchParams }: Props) => {
           },
         ]}
       />
-      <StationsMap position={position} bounds={bounds} level={6} />
+      <Map markers={markers} center={getDistrictPosition(zs_code)} />
       <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
       <div className="flex flex-col">
         {stations.map((st) => (

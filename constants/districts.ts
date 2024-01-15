@@ -646,10 +646,16 @@ const DistrictPositions: { [key in Districts]: { lat: number; lng: number } } =
     [Districts.SokchoSi]: { lat: 38.207, lng: 128.591 },
     [Districts.SamcheokSi]: { lat: 37.446, lng: 129.165 },
     [Districts.HongcheonGun]: { lat: 37.691, lng: 127.888 },
-    [Districts.HoengseongGun]: { lat: 37.488, lng: 128.21 },
+    [Districts.HoengseongGun]: {
+      lat: 37.48907352394319,
+      lng: 127.98372372616326,
+    },
     [Districts.YeongwolGun]: { lat: 37.183, lng: 128.467 },
     [Districts.PyeongchangGun]: { lat: 37.37, lng: 128.39 },
-    [Districts.JeongseonGun]: { lat: 37.327, lng: 128.719 },
+    [Districts.JeongseonGun]: {
+      lat: 37.38055953067456,
+      lng: 128.66310261090516,
+    },
     [Districts.CheorwonGun]: { lat: 38.145, lng: 127.304 },
     [Districts.HwacheonGun]: { lat: 38.108, lng: 127.706 },
     [Districts.YangguGun]: { lat: 38.105, lng: 127.989 },
