@@ -10,6 +10,7 @@ import NearStations from "./_components/near-stations";
 import Map from "@/components/map";
 import { notFound } from "next/navigation";
 import Chargers from "./_components/chargers";
+import ShareButtons from "./_components/share-buttons";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -191,6 +192,7 @@ const Page = async ({ params }: Props) => {
             ))}
           </div>
         </div>
+        <ShareButtons station={currentStation} />
         <div>
           <Suspense fallback={<div>Loading...</div>}>
             <NearStations station={currentStation} />
