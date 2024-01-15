@@ -175,6 +175,23 @@ export interface Database {
           zs_code: string
         }[]
       }
+      stations_in_view: {
+        Args: {
+          min_lat: number
+          min_long: number
+          max_lat: number
+          max_long: number
+        }
+        Returns: {
+          id: string
+          station_name: string
+          lat: number
+          lng: number
+          z_code: string
+          zs_code: string
+          slug: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

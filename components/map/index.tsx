@@ -1,6 +1,7 @@
 "use client";
 import Marker from "@/components/map/marker";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { Map as KakaoMap } from "react-kakao-maps-sdk";
 
 type Props = {
@@ -14,10 +15,49 @@ type Props = {
 
 const Map = ({ markers, center }: Props) => {
   const router = useRouter();
+  const mapRef = useRef<kakao.maps.Map>(null);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const handlePosition = (map: kakao.maps.Map) => {
+    const lng = map.getCenter().getLng();
+    const lat = map.getCenter().getLat();
+    const params = new URLSearchParams(searchParams);
+    params.set("lng", String(lng));
+    params.set("lat", String(lat));
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  const handleZoom = (map: kakao.maps.Map) => {
+    const level = map.getLevel();
+    const params = new URLSearchParams(searchParams);
+    params.set("level", String(level));
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    if (mapRef.current) {
+      const bounds = mapRef.current.getBounds();
+      const minLng = bounds.getSouthWest().getLng();
+      const minLat = bounds.getSouthWest().getLat();
+      const maxLng = bounds.getNorthEast().getLng();
+      const maxLat = bounds.getNorthEast().getLat();
+      const params = new URLSearchParams(searchParams);
+      params.set("minLng", String(minLng));
+      params.set("minLat", String(minLat));
+      params.set("maxLng", String(maxLng));
+      params.set("maxLat", String(maxLat));
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  });
+
   return (
     <KakaoMap
       className="mb-2 round-md"
+      onDragEnd={handlePosition}
+      onZoomChanged={handleZoom}
       center={center}
+      ref={mapRef}
       style={{
         // 지도의 크기
         width: "100%",
@@ -28,7 +68,7 @@ const Map = ({ markers, center }: Props) => {
       {markers.map((marker) => (
         <Marker
           position={marker.position}
-          key={marker.text}
+          key={marker.to}
           text={marker.text}
           onClick={() => router.push(marker.to)}
         />
