@@ -15,15 +15,15 @@ const Marker = ({
   return (
     <>
       <CustomOverlayMap position={position} zIndex={10}>
-        <div className="flex flex-col items-center gap-1 group relative">
+        <div className="flex flex-col items-center group relative">
           <Button
             variant="ghost"
             className="rounded-full p-0 hover:bg-transparent"
             onClick={onClick}
           >
-            <Icons.EvCharger className="w-8 h-8 fill-[#9b45c3] transition-transform duration-150 group-hover:scale-125" />
+            <Icons.EvCharger className="w-8 h-8 fill-[#9b45c3] transition-transform duration-150 group-hover:scale-125 group-hover:fill-[#e06bff]" />
           </Button>
-          <span className="text-xs text-slate-700 font-semibold bg-slate-50 p-1 select-none group-hover:z-20">
+          <span className="text-xs text-slate-700 bg-slate-50 p-1 select-none group-hover:z-20 group-hover:font-bold">
             {text}
           </span>
         </div>
