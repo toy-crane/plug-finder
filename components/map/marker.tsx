@@ -34,15 +34,15 @@ const Marker = ({
             <Icons.EvCharger
               className={cn(
                 "w-8 h-8  transition-transform duration-150 group-hover:scale-125 group-hover:fill-[#e06bff]",
-                selected ? "fill-[#e06bff]" : "fill-[#9b45c3]"
+                selected ? "fill-[#e06bff] scale-125" : "fill-[#9b45c3]"
               )}
             />
           </Button>
           <span
             className={cn(
-              "text-xs text-slate-700 bg-slate-50 p-1 select-none hidden",
-              "top-[50%] left-[50%] translate-x-[-50%] absolute mt-6",
-              "group-hover:font-bold group-hover:block",
+              "text-xs text-slate-700 bg-slate-50 p-1 select-none blcok",
+              "top-[50%] left-[50%] translate-x-[-50%] absolute mt-5",
+              "group-hover:font-extrabold",
               selected && "font-bold text-sm block"
             )}
           >
