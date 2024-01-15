@@ -13,7 +13,7 @@ type Props = {
 const ShareButtons = ({ station }: Props) => {
   const { toast } = useToast();
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1 flex-col">
       <Button asChild>
         <Link
           href={`tmap://route?goalname=${station.address}&rGoX=${station.lng}&rGoY=${station.lat}`}
@@ -26,6 +26,11 @@ const ShareButtons = ({ station }: Props) => {
           href={`nmap://navigation?dname=${station.address}&dlng=${station.lng}&dlat=${station.lat}&appname=${siteConfig.url}`}
         >
           Naver Map으로 경로 전송
+        </Link>
+      </Button>
+      <Button asChild>
+        <Link href={`kakaomap://route?ep=${station.lat},${station.lng}&by=CAR`}>
+          카카오 맵으로 경로 전송
         </Link>
       </Button>
       <Button
