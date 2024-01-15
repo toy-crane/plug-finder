@@ -14,11 +14,6 @@ const NearStations = async ({ station }: Props) => {
     longitude: station.lng,
     max_results: 11,
   });
-  console.log({
-    lat: station.lat,
-    lng: station.lng,
-    max_results: 10,
-  });
   if (response.error) throw response.error;
   const nearStations = response.data.filter((st) => st.id !== station.id);
 
