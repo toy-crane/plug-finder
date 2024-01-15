@@ -145,34 +145,19 @@ export interface Database {
       nearby_stations: {
         Args: {
           lat: number
-          lng: number
+          long: number
           max_results: number
         }
         Returns: {
-          address: string
-          available: boolean
-          available_detail: string | null
-          charger_type: string
-          created_at: string
-          detail_location: string | null
-          display_station_name: string
-          external_station_id: string
           id: string
-          is_deleted: boolean
-          is_deleted_detail: string | null
-          lat: number
-          lng: number
-          location: unknown
-          note: string | null
-          org_contact: string | null
-          org_id: string
-          org_name: string
-          parking_free: boolean
-          slug: string
           station_name: string
-          usable_time: string | null
+          lat: number
+          long: number
+          dist_meters: number
           z_code: string
           zs_code: string
+          charger_type: string
+          slug: string
         }[]
       }
       stations_in_view: {

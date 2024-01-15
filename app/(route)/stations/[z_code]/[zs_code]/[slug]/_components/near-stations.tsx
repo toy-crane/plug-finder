@@ -11,6 +11,11 @@ const NearStations = async ({ station }: Props) => {
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase.rpc("nearby_stations", {
     lat: station.lat,
+    long: station.lng,
+    max_results: 11,
+  });
+  console.log({
+    lat: station.lat,
     lng: station.lng,
     max_results: 11,
   });
@@ -23,7 +28,8 @@ const NearStations = async ({ station }: Props) => {
       {nearStations.map((st) => (
         <div key={st.id}>
           <Link href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}>
-            {st.station_name} ({getChargerTypeDescription(st.charger_type)})
+            {st.station_name} ({getChargerTypeDescription(st.charger_type)}){" "}
+            {st.dist_meters.toFixed(0)}m
           </Link>
         </div>
       ))}
