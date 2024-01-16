@@ -10,6 +10,9 @@ import Link from "next/link";
 import Map from "@/components/map";
 import StationsMap from "@/components/map/stations-map";
 import { getChargerTypeDescription } from "@/constants/chager-type";
+import { Share, ShareIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import ShareButton from "./_component/share-button";
 
 interface Props {
   params: { z_code: string; zs_code: string };
@@ -148,9 +151,12 @@ const Page = async ({ params, searchParams }: Props) => {
       />
       <Map markers={markers} center={getDistrictPosition(zs_code)} />
       <section className="mb-14">
-        <h1 className="text-3xl my-6 font-semibold md:text-5xl">
-          {getDistrictDescription(params.zs_code)} 전기차 충전소
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl my-6 font-semibold md:text-5xl">
+            {getDistrictDescription(params.zs_code)} 전기차 충전소
+          </h1>
+          <ShareButton />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {stations.map((st) => (
             <Link
