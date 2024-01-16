@@ -1,5 +1,6 @@
 "use client";
 import Marker from "@/components/map/marker";
+import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Map as KakaoMap, MarkerClusterer } from "react-kakao-maps-sdk";
@@ -13,9 +14,10 @@ type Props = {
   }[];
   center: { lat: number; lng: number };
   level?: number;
+  className?: string;
 };
 
-const Map = ({ markers, center, level }: Props) => {
+const Map = ({ markers, center, level, className }: Props) => {
   const router = useRouter();
   const mapRef = useRef<kakao.maps.Map>(null);
   const searchParams = useSearchParams();
@@ -37,7 +39,7 @@ const Map = ({ markers, center, level }: Props) => {
 
   return (
     <KakaoMap
-      className="mb-2 round-md"
+      className={cn("mb-2 round-md", className)}
       onDragEnd={handleMove}
       onZoomChanged={handleMove}
       center={center}

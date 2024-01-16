@@ -139,7 +139,6 @@ const Page = async ({ params }: Props) => {
     lng: currentStation.lng,
   };
   const chargers = currentStation.chargers;
-  const chargerGroup = groupByCharger(chargers);
   const markers = regionStations.map((station) => ({
     position: { lat: station.lat, lng: station.lng },
     text: station.station_name,
@@ -166,21 +165,16 @@ const Page = async ({ params }: Props) => {
           },
         ]}
       />
-      <Map markers={markers} center={currentStationPosition} level={3} />
-      <StationDetail station={currentStation} />
-      <div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <NearStations station={currentStation} />
-        </Suspense>
-      </div>
-      <div className="flex flex-col">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Chargers
-            chargers={chargers}
-            stationId={currentStation.external_station_id}
-          />
-        </Suspense>
-      </div>
+      <Map
+        markers={markers}
+        center={currentStationPosition}
+        level={3}
+        className="mb-8"
+      />
+      <StationDetail station={currentStation} className="mb-8" />
+      <Suspense fallback={<div>Loading...</div>}>
+        <NearStations station={currentStation} className="mb-14" />
+      </Suspense>
     </div>
   );
 };

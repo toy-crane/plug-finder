@@ -1,8 +1,6 @@
-"use client";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -11,10 +9,8 @@ import { getChargerTypeDescription } from "@/constants/chager-type";
 import { cn } from "@/lib/utils";
 import { Tables } from "@/types/generated";
 import ShareDrawer from "./share-drawer";
-
-type Props = {
-  station: Tables<"stations">;
-};
+import { Suspense } from "react";
+import Chargers from "./chargers";
 
 type CardProps = React.ComponentProps<typeof Card> & {
   station: Tables<"stations"> & {
@@ -65,8 +61,13 @@ const StationDetail = ({ station, className, ...props }: CardProps) => {
             </div>
           </div>
         </div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Chargers
+            chargers={station.chargers}
+            stationId={station.external_station_id}
+          />
+        </Suspense>
       </CardContent>
-      <CardFooter></CardFooter>
     </Card>
   );
 };
