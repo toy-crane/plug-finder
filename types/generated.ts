@@ -70,6 +70,7 @@ export interface Database {
           org_contact: string | null
           org_id: string
           org_name: string
+          output: string
           parking_free: boolean
           slug: string
           station_name: string
@@ -96,6 +97,7 @@ export interface Database {
           org_contact?: string | null
           org_id: string
           org_name: string
+          output: string
           parking_free: boolean
           slug: string
           station_name: string
@@ -122,6 +124,7 @@ export interface Database {
           org_contact?: string | null
           org_id?: string
           org_name?: string
+          output?: string
           parking_free?: boolean
           slug?: string
           station_name?: string
@@ -147,47 +150,6 @@ export interface Database {
           latitude: number
           longitude: number
           max_results: number
-        }
-        Returns: {
-          id: string
-          station_name: string
-          dist_meters: number
-          z_code: string
-          zs_code: string
-          charger_type: string
-          slug: string
-        }[]
-      }
-      nearby_stations2: {
-        Args: {
-          lat: number
-          lng: number
-        }
-        Returns: {
-          id: string
-          name: string
-          lat: number
-          long: number
-          dist_meters: number
-        }[]
-      }
-      nearby_stations3: {
-        Args: {
-          latitude: number
-          longitude: number
-        }
-        Returns: {
-          id: string
-          name: string
-          lat: number
-          long: number
-          dist_meters: number
-        }[]
-      }
-      nearby_stations4: {
-        Args: {
-          latitude: number
-          longitude: number
         }
         Returns: {
           id: string

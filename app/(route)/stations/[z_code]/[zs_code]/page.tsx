@@ -171,12 +171,12 @@ const Page = async ({ params, searchParams }: Props) => {
                     {st.address}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {getChargerTypeDescription(st.charger_type)} /{" "}
-                    {st.chargers.length}대
+                    {getChargerTypeDescription(st.charger_type)} / {st.output}{" "}
+                    kW
                   </p>
                 </div>
               </div>
-              <div className="self-center">3/{st.chargers.length} 이용가능</div>
+              <div className="self-center text-xl">{st.chargers.length}대</div>
             </Link>
           ))}
         </div>
