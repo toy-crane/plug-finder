@@ -25,6 +25,7 @@ import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
+import { Share } from "lucide-react";
 
 type Props = {
   station: Tables<"stations">;
@@ -75,7 +76,9 @@ export function ShareDrawer({ station }: Props) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">공유하기</Button>
+          <Button variant="ghost" size="icon">
+            <Share />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -89,7 +92,9 @@ export function ShareDrawer({ station }: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">공유하기</Button>
+        <Button variant="ghost" size="icon">
+          <Share />
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left"></DrawerHeader>

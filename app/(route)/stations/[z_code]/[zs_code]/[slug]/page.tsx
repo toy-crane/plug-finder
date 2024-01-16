@@ -11,6 +11,7 @@ import Map from "@/components/map";
 import { notFound } from "next/navigation";
 import Chargers from "./_components/chargers";
 import ShareDrawer from "./_components/share-drawer";
+import StationDetail from "./_components/station-detail";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -166,46 +167,19 @@ const Page = async ({ params }: Props) => {
         ]}
       />
       <Map markers={markers} center={currentStationPosition} level={3} />
-      <div className="flex flex-col gap-4">
-        <div>
-          <div>{currentStation.station_name}</div>
-          <div>
-            사용 가능 여부:{" "}
-            {currentStation.available ? "사용 가능" : "사용 불가"}
-          </div>
-          <div>
-            사용 제한 사유:{" "}
-            {currentStation.available_detail ?? "사용 제한 사유 없음"}
-          </div>
-          <div>운영 회사: {currentStation.org_name}</div>
-          <div>고객센터: {currentStation.org_contact}</div>
-          <div>사용 가능 시간: {currentStation.usable_time}</div>
-          <div>
-            주차비:{" "}
-            {currentStation.parking_free ? "주차비 없음" : "주차비 있음"}
-          </div>
-          <div className="flex gap-2">
-            {Object.entries(chargerGroup).map(([chargerType, count]) => (
-              <div key={chargerType}>
-                {getChargerTypeDescription(chargerType)}: {count}대
-              </div>
-            ))}
-          </div>
-        </div>
-        <ShareDrawer station={currentStation} />
-        <div>
-          <Suspense fallback={<div>Loading...</div>}>
-            <NearStations station={currentStation} />
-          </Suspense>
-        </div>
-        <div className="flex flex-col">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Chargers
-              chargers={chargers}
-              stationId={currentStation.external_station_id}
-            />
-          </Suspense>
-        </div>
+      <StationDetail station={currentStation} />
+      <div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <NearStations station={currentStation} />
+        </Suspense>
+      </div>
+      <div className="flex flex-col">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Chargers
+            chargers={chargers}
+            stationId={currentStation.external_station_id}
+          />
+        </Suspense>
       </div>
     </div>
   );
