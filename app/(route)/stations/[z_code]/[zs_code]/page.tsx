@@ -9,6 +9,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import Map from "@/components/map";
 import StationsMap from "@/components/map/stations-map";
+import { getChargerTypeDescription } from "@/constants/chager-type";
 
 interface Props {
   params: { z_code: string; zs_code: string };
@@ -92,7 +93,7 @@ const Page = async ({ params, searchParams }: Props) => {
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase
     .from("stations")
-    .select("*")
+    .select("*, chargers(*)")
     .eq("zs_code", params.zs_code);
   if (response.error) throw response.error;
   // 404 페이지 에러 추가
@@ -146,17 +147,34 @@ const Page = async ({ params, searchParams }: Props) => {
         ]}
       />
       <Map markers={markers} center={getDistrictPosition(zs_code)} />
-      <h1 className="text-[48px]">{getDistrictDescription(params.zs_code)}</h1>
-      <div className="flex flex-col">
-        {stations.map((st) => (
-          <Link
-            key={st.id}
-            href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}
-          >
-            {st.display_station_name.split(" ").slice(2).join(" ")}
-          </Link>
-        ))}
-      </div>
+      <section className="mb-14">
+        <h1 className="text-5xl my-6">
+          {getDistrictDescription(params.zs_code)} 전기차 충전소
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+          {stations.map((st) => (
+            <Link
+              href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}
+              className="flex justify-between space-x-4 cursor-pointer p-2 rounded-md hover:bg-stone-50"
+              key={st.id}
+            >
+              <div className="flex flex-col gap-1">
+                <h2 className="text-xl">{st.station_name}</h2>
+                <div>
+                  <p className="text-sm font-medium leading-none">
+                    {st.address}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {getChargerTypeDescription(st.charger_type)} /{" "}
+                    {st.chargers.length}대
+                  </p>
+                </div>
+              </div>
+              <div className="self-center">3/{st.chargers.length} 이용가능</div>
+            </Link>
+          ))}
+        </div>
+      </section>
     </>
   );
 };
