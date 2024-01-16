@@ -159,7 +159,7 @@ const Page = async ({ params, searchParams }: Props) => {
               key={st.id}
             >
               <div className="flex flex-col gap-1">
-                <h2 className="text-xl">{st.station_name}</h2>
+                <h2 className="text-2xl">{st.station_name}</h2>
                 <div>
                   <p className="text-sm font-medium leading-none">
                     {st.address}
