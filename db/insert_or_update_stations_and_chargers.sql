@@ -10,7 +10,7 @@ BEGIN
             station_name, external_station_id, address, detail_location, lat, lng, location,
             org_id, org_name, org_contact, z_code, parking_free, note, available,
             available_detail, is_deleted, is_deleted_detail, zs_code, usable_time, slug, display_station_name,
-            charger_type
+            charger_type, output
         )
         VALUES (
             station_data->>'station_name', station_data->>'external_station_id', station_data->>'address',
@@ -22,7 +22,8 @@ BEGIN
             (station_data->>'is_deleted')::BOOLEAN, station_data->>'is_deleted_detail',
             station_data->>'zs_code', station_data->>'usable_time', station_data->>'slug',
             station_data->>'display_station_name',
-            station_data->>'charger_type'
+            station_data->>'charger_type',
+            station_data->>'output'
         )
         ON CONFLICT (external_station_id)
         DO UPDATE SET
@@ -33,7 +34,7 @@ BEGIN
             available = EXCLUDED.available, available_detail = EXCLUDED.available_detail, 
             is_deleted = EXCLUDED.is_deleted, is_deleted_detail = EXCLUDED.is_deleted_detail,
             zs_code = EXCLUDED.zs_code, usable_time = EXCLUDED.usable_time, slug = EXCLUDED.slug, display_station_name = EXCLUDED.display_station_name,
-            charger_type = EXCLUDED.charger_type
+            charger_type = EXCLUDED.charger_type, output = EXCLUDED.output
         RETURNING id INTO new_station_id; -- 새로운 또는 기존 station ID를 반환
 
         -- 'chargers' 데이터 upsert
