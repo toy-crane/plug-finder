@@ -23,7 +23,10 @@ const BreadcrumbNavigation = ({ trail }: Props) => {
               >
                 <Link
                   href={crumb.link}
-                  className={cn(isLast && "font-semibold underline")}
+                  className={cn(
+                    isLast &&
+                      "font-semibold underline overflow-hidden whitespace-nowrap overflow-ellipsis max-w-24 md:max-w-full"
+                  )}
                 >
                   {crumb.title}
                 </Link>
