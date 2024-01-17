@@ -46,7 +46,7 @@ async function fetchChargersStatus(params: ChargerStatusRequestParams) {
   const queryParams = new URLSearchParams({
     dataType: "JSON",
     statId: params.stationId,
-    numOfRows: "9999",
+    numOfRows: "100",
     pageNo: "1",
   }).toString();
   try {
