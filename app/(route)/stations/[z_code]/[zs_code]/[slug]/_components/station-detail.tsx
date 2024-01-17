@@ -1,10 +1,9 @@
 import { getChargerTypeDescription } from "@/constants/chager-type";
 import { Tables } from "@/types/generated";
-import { Suspense } from "react";
-import Chargers from "./chargers";
 import Label from "./label";
 import { Separator } from "@/components/ui/separator";
 import ShareDrawer from "./share-drawer";
+import { cn } from "@/lib/utils";
 
 type CardProps = {
   station: Tables<"stations"> & {
@@ -16,7 +15,7 @@ type CardProps = {
 const StationDetail = ({ station, className, ...props }: CardProps) => {
   return (
     <>
-      <section className="flex flex-col gap-4">
+      <section className={cn("flex flex-col gap-4", className)}>
         <div className="flex justify-between items-center my-2">
           <div>
             <h1 className="text-3xl font-semibold md:text-5xl mb-1">
@@ -60,12 +59,6 @@ const StationDetail = ({ station, className, ...props }: CardProps) => {
             )}
           </div>
           <Separator />
-          <Suspense fallback={<div>Loading...</div>}>
-            <Chargers
-              chargers={station.chargers}
-              stationId={station.external_station_id}
-            />
-          </Suspense>
         </div>
       </section>
     </>

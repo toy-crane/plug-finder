@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import NearStations from "./_components/near-stations";
 import Map from "@/components/map";
 import { notFound } from "next/navigation";
-import Chargers from "./_components/chargers";
+import ChargersDetail from "./_components/chargers-detail";
 import ShareDrawer from "./_components/share-drawer";
 import StationDetail from "./_components/station-detail";
 
@@ -172,6 +172,13 @@ const Page = async ({ params }: Props) => {
         className="mb-4"
       />
       <StationDetail station={currentStation} className="mb-8" />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChargersDetail
+          chargers={currentStation.chargers}
+          stationId={currentStation.external_station_id}
+          className="mb-4"
+        />
+      </Suspense>
       <Suspense fallback={<div>Loading...</div>}>
         <NearStations station={currentStation} className="mb-14" />
       </Suspense>

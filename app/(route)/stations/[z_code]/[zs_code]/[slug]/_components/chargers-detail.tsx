@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
 type Charger = Tables<"chargers">;
 type ChargerStatus = {
@@ -29,6 +30,7 @@ type ChargerStatus = {
 type Props = {
   chargers: Charger[];
   stationId: string;
+  className?: string;
 };
 
 type ChargerStatusRequestParams = {
@@ -69,14 +71,15 @@ async function fetchChargersStatus(params: ChargerStatusRequestParams) {
   }
 }
 
-const Chargers = async ({ chargers, stationId }: Props) => {
+const ChargersDetail = async ({ chargers, stationId, className }: Props) => {
   unstable_noStore();
   const chargersStatus = await fetchChargersStatus({
     stationId,
   });
 
   return (
-    <>
+    <section className={cn(className)}>
+      <h2 className="text-2xl font-semibold md:text-2xl mb-1">충전기 정보</h2>
       <Table>
         <TableHeader>
           <TableRow>
@@ -117,8 +120,8 @@ const Chargers = async ({ chargers, stationId }: Props) => {
           })}
         </TableBody>
       </Table>
-    </>
+    </section>
   );
 };
 
-export default Chargers;
+export default ChargersDetail;
