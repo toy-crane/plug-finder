@@ -232,12 +232,12 @@ export async function GET(request: NextRequest) {
 
   const promises = districtCodes.map((zsCode) =>
     limiter.schedule(async () => {
-      if (
-        !["26", "27", "28", "29", "30"].some((code) => zsCode.startsWith(code))
-      )
-        return [];
       const stations = await getOfficialStations({ zsCode });
-      const addChargerStations = addChargers(stations);
+      const filterStations = stations.filter(
+        (station) =>
+          station.zscode === zsCode || station.zcode === zsCode.slice(0, 2)
+      );
+      const addChargerStations = addChargers(filterStations);
       const addDisplayNameStations = addDisplayStatNm(addChargerStations);
       await upsertStations(addDisplayNameStations);
       return stations;
@@ -247,5 +247,5 @@ export async function GET(request: NextRequest) {
   const result = await Promise.all(promises);
   const flatResult = result.flat();
 
-  return Response.json({ stations: flatResult, count: flatResult.length });
+  return Response.json({ result: "success", count: flatResult.length });
 }
