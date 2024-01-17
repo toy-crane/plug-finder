@@ -83,10 +83,10 @@ const ChargersDetail = async ({ chargers, stationId, className }: Props) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>충전 타입</TableHead>
-            <TableHead>충전 속도</TableHead>
-            <TableHead>충전기 상태</TableHead>
-            <TableHead className="text-center">마지막 충전시간</TableHead>
+            <TableHead className="px-2">타입</TableHead>
+            <TableHead className="px-2">속도</TableHead>
+            <TableHead className="px-2">상태</TableHead>
+            <TableHead className="text-center px-2">마지막 충전시간</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -99,16 +99,16 @@ const ChargersDetail = async ({ chargers, stationId, className }: Props) => {
               : undefined;
             return (
               <TableRow key={ch.id}>
-                <TableCell className="font-medium">
+                <TableCell className="px-2">
                   {getChargerTypeDescription(ch.charger_type)}
                 </TableCell>
-                <TableCell>{ch.output}kW</TableCell>
-                <TableCell>
+                <TableCell className="px-2">{ch.output}kW</TableCell>
+                <TableCell className="px-2">
                   {chargerStatus
                     ? getStatusDescription(chargerStatus.stat)
                     : "알 수 없음"}
                 </TableCell>
-                <TableCell className="text-center">
+                <TableCell className="text-center px-2">
                   {lastChargedDate &&
                     formatDistanceToNow(lastChargedDate, {
                       addSuffix: true,
