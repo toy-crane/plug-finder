@@ -5,6 +5,14 @@ import { Tables } from "@/types/generated";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { unstable_noStore } from "next/cache";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type Charger = Tables<"chargers">;
 type ChargerStatus = {
@@ -69,51 +77,47 @@ const Chargers = async ({ chargers, stationId }: Props) => {
 
   return (
     <>
-      {chargers?.map((ch) => (
-        <Charger
-          key={ch.id}
-          charger={ch}
-          chargerStatus={chargersStatus?.find(
-            (cs) => cs.chgerId === ch.external_charger_id
-          )}
-        />
-      ))}
-    </>
-  );
-};
-
-const Charger = ({
-  charger,
-  chargerStatus,
-}: {
-  charger: Charger;
-  chargerStatus?: ChargerStatus;
-}) => {
-  const lastChargedDate = chargerStatus?.lastTsdt
-    ? getDate(chargerStatus.lastTsdt)
-    : undefined;
-
-  return (
-    <div key={charger.id} className="flex gap-2">
-      <div>충전 타입: {getChargerTypeDescription(charger.charger_type)}</div>
-      <div>충전 방식: {charger.method}</div>
-      <div>충전 속도: {charger.output}kW</div>
-      <div>
-        충전기 상태:{" "}
-        {chargerStatus
-          ? getStatusDescription(chargerStatus.stat)
-          : "알 수 없음"}
-      </div>
-      {lastChargedDate && (
-        <div>
-          마지막 충전 시간:
-          {formatDistanceToNow(lastChargedDate, {
-            addSuffix: true,
-            locale: ko,
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>충전 타입</TableHead>
+            <TableHead>충전 속도</TableHead>
+            <TableHead>충전기 상태</TableHead>
+            <TableHead className="text-center">마지막 충전시간</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {chargers?.map((ch) => {
+            const chargerStatus = chargersStatus?.find(
+              (cs) => cs.chgerId === ch.external_charger_id
+            );
+            const lastChargedDate = chargerStatus?.lastTsdt
+              ? getDate(chargerStatus.lastTsdt)
+              : undefined;
+            return (
+              <TableRow key={ch.id}>
+                <TableCell className="font-medium">
+                  {getChargerTypeDescription(ch.charger_type)}
+                </TableCell>
+                <TableCell>{ch.output}kW</TableCell>
+                <TableCell>
+                  {chargerStatus
+                    ? getStatusDescription(chargerStatus.stat)
+                    : "알 수 없음"}
+                </TableCell>
+                <TableCell className="text-center">
+                  {lastChargedDate &&
+                    formatDistanceToNow(lastChargedDate, {
+                      addSuffix: true,
+                      locale: ko,
+                    })}
+                </TableCell>
+              </TableRow>
+            );
           })}
-        </div>
-      )}
-    </div>
+        </TableBody>
+      </Table>
+    </>
   );
 };
 
