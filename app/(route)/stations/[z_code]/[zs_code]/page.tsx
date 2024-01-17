@@ -10,19 +10,16 @@ import Link from "next/link";
 import Map from "@/components/map";
 import { getChargerTypeDescription } from "@/constants/chager-type";
 import ShareButton from "./_component/share-button";
+import Pagination from "./_component/pagination";
 
 interface Props {
   params: { z_code: string; zs_code: string };
-  searchParams?: {
-    minLng: string;
-    minLat: string;
-    maxLng: string;
-    maxLat: string;
-    lng: string;
-    lat: string;
-    level: string;
+  searchParams: {
+    pageNo?: string;
   };
 }
+
+const MAX_DISPLAY_PAGES = 5;
 
 export async function generateMetadata(
   { params: { z_code, zs_code } }: Props,
@@ -76,13 +73,32 @@ export async function generateMetadata(
   }
 }
 
+const PER_PAGE = 20;
+
 const Page = async ({ params, searchParams }: Props) => {
   const { z_code, zs_code } = params;
+  const { pageNo = "1" } = searchParams;
   const supabase = await createSupabaseServerClientReadOnly();
+
+  const totalCountResponse = await supabase
+    .from("stations")
+    .select("*", {
+      count: "exact",
+    })
+    .eq("zs_code", zs_code);
+  if (totalCountResponse.error) throw totalCountResponse.error;
+  const totalCount = totalCountResponse.count;
+  if (!totalCount) throw new Error("Not Found");
+
+  const currentPage = parseInt(pageNo);
+  const startIndex = (currentPage - 1) * PER_PAGE;
+  const endIndex = startIndex + PER_PAGE - 1;
+
   const response = await supabase
     .from("stations")
     .select("*, chargers(*)")
-    .eq("zs_code", params.zs_code);
+    .eq("zs_code", params.zs_code)
+    .range(startIndex, endIndex);
   if (response.error) throw response.error;
   // 404 페이지 에러 추가
   const stations = response.data;
@@ -111,7 +127,7 @@ const Page = async ({ params, searchParams }: Props) => {
         ]}
       />
       <Map markers={markers} center={getDistrictPosition(zs_code)} />
-      <section className="mb-14">
+      <section className="mb-6">
         <div className="flex justify-between items-center my-6">
           <div>
             <h1 className="text-3xl font-semibold md:text-5xl mb-1">
@@ -147,6 +163,14 @@ const Page = async ({ params, searchParams }: Props) => {
             </Link>
           ))}
         </div>
+      </section>
+      <section className="mb-14">
+        <Pagination
+          currentPage={currentPage}
+          zCode={z_code}
+          zsCode={zs_code}
+          totalCount={totalCount}
+        />
       </section>
     </>
   );
