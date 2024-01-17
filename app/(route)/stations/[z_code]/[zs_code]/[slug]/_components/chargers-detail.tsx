@@ -4,7 +4,6 @@ import { getDate } from "@/lib/date";
 import { Tables } from "@/types/generated";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
-import { unstable_noStore } from "next/cache";
 import {
   Table,
   TableBody,
@@ -60,7 +59,9 @@ async function fetchChargersStatus(params: ChargerStatusRequestParams) {
     pageNo: "1",
   }).toString();
   try {
-    const response = await fetch(`${requestURL}&${queryParams}`);
+    const response = await fetch(`${requestURL}&${queryParams}`, {
+      next: { revalidate: 360 },
+    });
     const responseBody = await response.text(); // Get the response body as text
 
     const data: ChargerStatusResponse = JSON.parse(responseBody); // Parse the response body
@@ -72,7 +73,6 @@ async function fetchChargersStatus(params: ChargerStatusRequestParams) {
 }
 
 const ChargersDetail = async ({ chargers, stationId, className }: Props) => {
-  unstable_noStore();
   const chargersStatus = await fetchChargersStatus({
     stationId,
   });
