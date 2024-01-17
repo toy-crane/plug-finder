@@ -109,11 +109,12 @@ const ChargersDetail = async ({ chargers, stationId, className }: Props) => {
                     : "알 수 없음"}
                 </TableCell>
                 <TableCell className="text-center px-2">
-                  {lastChargedDate &&
-                    formatDistanceToNow(lastChargedDate, {
-                      addSuffix: true,
-                      locale: ko,
-                    })}
+                  {lastChargedDate
+                    ? formatDistanceToNow(lastChargedDate, {
+                        addSuffix: true,
+                        locale: ko,
+                      })
+                    : "정보 없음"}
                 </TableCell>
               </TableRow>
             );
