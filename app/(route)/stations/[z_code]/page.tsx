@@ -100,7 +100,6 @@ const Page = async ({ params }: Props) => {
             {count?.toLocaleString()}개 충전소
           </p>
         </div>
-
         <ShareButton />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
