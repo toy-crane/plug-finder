@@ -34,7 +34,7 @@ const NearStations = async ({ station, className, ...props }: CardProps) => {
             key={st.id}
           >
             <div className="flex flex-col gap-1">
-              <h2 className="text-2xl">{st.station_name}</h2>
+              <h3 className="text-2xl">{st.station_name}</h3>
               <div>
                 <p className="text-sm font-medium leading-none">{st.address}</p>
                 <p className="text-sm text-muted-foreground">
