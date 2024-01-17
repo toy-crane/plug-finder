@@ -203,7 +203,7 @@ const Page = async ({ params }: Props) => {
               주변 가까운 충전소
             </h2>
             <div className="space-y-2">
-              {[...Array(5)].map((_, index) => (
+              {[...Array(8)].map((_, index) => (
                 <Skeleton key={index} className="w-full h-[36px] rounded-md" />
               ))}
             </div>
