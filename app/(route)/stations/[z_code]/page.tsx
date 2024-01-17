@@ -9,6 +9,7 @@ import {
 } from "@/constants/districts";
 import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
 import { Metadata, ResolvingMetadata } from "next";
+import ShareButton from "./[zs_code]/_component/share-button";
 
 interface Props {
   params: { z_code: string };
@@ -68,30 +69,59 @@ const Page = async ({ params }: Props) => {
   const supabase = await createSupabaseServerClientReadOnly();
   const response = await supabase
     .from("stations")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("z_code", params.z_code)
     .order("zs_code");
   if (response.error) throw response.error;
 
+  const responseView = await supabase
+    .from("grouped_station_by_zscode")
+    .select("*");
+  if (responseView.error) throw responseView.error;
+  const groupedStationByZscode = responseView.data;
+
+  const count = response.count;
+
   // 섹션 출력
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-24">
       <BreadcrumbNavigation
         trail={[
           { title: "전국", link: "/stations" },
           { title: getRegionDescription(z_code), link: `/stations/${z_code}` },
         ]}
       />
-      <h1 className="text-[48px]">{getRegionDescription(z_code)}</h1>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex justify-between items-center my-6">
+        <div>
+          <h1 className="text-3xl font-semibold md:text-5xl mb-1">
+            {getRegionDescription(params.z_code)} 전기차 충전소
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            {count?.toLocaleString()}개 충전소
+          </p>
+        </div>
+
+        <ShareButton />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
         {getDistrictCodesInRegion(z_code).map((districtCode) => (
-          <Link
-            key={districtCode}
-            href={`/stations/${z_code}/${districtCode}`}
-            className="text-[36px]"
-          >
-            {getDistrictDescription(districtCode)}
-          </Link>
+          <>
+            <Link
+              href={`/stations/${z_code}/${districtCode}`}
+              className="flex justify-between space-x-4 cursor-pointer p-4 rounded-md hover:bg-stone-50 items-center"
+              key={districtCode}
+            >
+              <h2 className="text-2xl">
+                {getDistrictDescription(districtCode)}
+              </h2>
+              <div className="self-center text-xl">
+                {groupedStationByZscode
+                  ?.find((stations) => stations.zs_code === districtCode)
+                  ?.count?.toLocaleString()}
+                개
+              </div>
+            </Link>
+          </>
         ))}
       </div>
     </div>

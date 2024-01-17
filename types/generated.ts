@@ -136,7 +136,13 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      grouped_station_by_zscode: {
+        Row: {
+          count: number | null
+          zs_code: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       insert_or_update_stations_and_chargers: {
