@@ -74,7 +74,7 @@ export interface Database {
           parking_free: boolean
           slug: string
           station_name: string
-          usable_time: string | null
+          usable_time: string
           z_code: string
           zs_code: string
         }
@@ -101,7 +101,7 @@ export interface Database {
           parking_free: boolean
           slug: string
           station_name: string
-          usable_time?: string | null
+          usable_time: string
           z_code: string
           zs_code: string
         }
@@ -128,7 +128,7 @@ export interface Database {
           parking_free?: boolean
           slug?: string
           station_name?: string
-          usable_time?: string | null
+          usable_time?: string
           z_code?: string
           zs_code?: string
         }

@@ -1,74 +1,74 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { getChargerTypeDescription } from "@/constants/chager-type";
-import { cn } from "@/lib/utils";
 import { Tables } from "@/types/generated";
-import ShareDrawer from "./share-drawer";
 import { Suspense } from "react";
 import Chargers from "./chargers";
+import Label from "./label";
+import { Separator } from "@/components/ui/separator";
+import ShareDrawer from "./share-drawer";
 
-type CardProps = React.ComponentProps<typeof Card> & {
+type CardProps = {
   station: Tables<"stations"> & {
     chargers: Tables<"chargers">[];
   };
-};
-
-const groupByCharger = (
-  chargers: { charger_type: string }[]
-): Record<string, number> => {
-  return chargers.reduce((acc, charger) => {
-    acc[charger.charger_type] = (acc[charger.charger_type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  className?: string;
 };
 
 const StationDetail = ({ station, className, ...props }: CardProps) => {
-  const chargerGroup = groupByCharger(station.chargers);
   return (
-    <Card className={cn(className)} {...props}>
-      <CardHeader className="flex justify-between flex-row items-center space-y-0">
-        <CardTitle>{station.station_name}</CardTitle>
-        <ShareDrawer station={station} />
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="flex flex-col gap-4">
+    <>
+      <section className="flex flex-col gap-4">
+        <div className="flex justify-between items-center my-2">
           <div>
-            <div>{station.station_name}</div>
-            <div>
-              사용 가능 여부: {station.available ? "사용 가능" : "사용 불가"}
-            </div>
-            <div>
-              사용 제한 사유:{" "}
-              {station.available_detail ?? "사용 제한 사유 없음"}
-            </div>
-            <div>운영 회사: {station.org_name}</div>
-            <div>고객센터: {station.org_contact}</div>
-            <div>사용 가능 시간: {station.usable_time}</div>
-            <div>
-              주차비: {station.parking_free ? "주차비 없음" : "주차비 있음"}
-            </div>
-            <div className="flex gap-2">
-              {Object.entries(chargerGroup).map(([chargerType, count]) => (
-                <div key={chargerType}>
-                  {getChargerTypeDescription(chargerType)}: {count}대
-                </div>
-              ))}
-            </div>
+            <h1 className="text-3xl font-semibold md:text-5xl mb-1">
+              {station.station_name}
+            </h1>
+            <p className="text-muted-foreground text-lg text-wrap">
+              {station.address}
+            </p>
           </div>
+          <ShareDrawer station={station} />
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Chargers
-            chargers={station.chargers}
-            stationId={station.external_station_id}
-          />
-        </Suspense>
-      </CardContent>
-    </Card>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label
+              title="충전기 타입"
+              content={`${getChargerTypeDescription(station.charger_type)}`}
+            />
+            <Label title="충전기 출력" content={`${station.output}KW`} />
+            <Label title="충전기 수" content={`${station.chargers.length}대`} />
+            <Label title="운영 회사" content={station.org_name} />
+            {station.org_contact && (
+              <Label title="고객센터" content={station.org_contact} />
+            )}
+          </div>
+          <Separator />
+          <div className="flex flex-col gap-2">
+            <Label
+              title="주차비"
+              content={station.parking_free ? "무료" : "유료"}
+            />
+            <Label
+              title="사용 가능 여부"
+              content={station.available ? "사용 가능" : "사용 불가"}
+            />
+            <Label title="사용 가능 시간" content={station.usable_time} />
+            {station.available_detail && (
+              <Label
+                title="사용 제한 사유"
+                content={station.available_detail}
+              />
+            )}
+          </div>
+          <Separator />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Chargers
+              chargers={station.chargers}
+              stationId={station.external_station_id}
+            />
+          </Suspense>
+        </div>
+      </section>
+    </>
   );
 };
 

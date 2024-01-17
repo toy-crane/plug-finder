@@ -153,10 +153,12 @@ const Page = async ({ params, searchParams }: Props) => {
       <section className="mb-14">
         <div className="flex justify-between items-center my-6">
           <div>
-            <h1 className="text-3xl font-semibold md:text-5xl">
+            <h1 className="text-3xl font-semibold md:text-5xl mb-1">
               {getDistrictDescription(params.zs_code)} 전기차 충전소
             </h1>
-            <p className="text-muted-foreground">{stations.length}개 충전소</p>
+            <p className="text-lg text-muted-foreground">
+              {stations.length}개 충전소
+            </p>
           </div>
 
           <ShareButton />

@@ -169,7 +169,7 @@ const Page = async ({ params }: Props) => {
         markers={markers}
         center={currentStationPosition}
         level={3}
-        className="mb-8"
+        className="mb-4"
       />
       <StationDetail station={currentStation} className="mb-8" />
       <Suspense fallback={<div>Loading...</div>}>
