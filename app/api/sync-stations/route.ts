@@ -232,7 +232,7 @@ export async function GET(request: NextRequest) {
 
   const promises = districtCodes.map((zsCode) =>
     limiter.schedule(async () => {
-      if (!zsCode.startsWith("51")) return [];
+      if (!zsCode.startsWith("11")) return [];
       const stations = await getOfficialStations({ zsCode });
       const addChargerStations = addChargers(stations);
       const addDisplayNameStations = addDisplayStatNm(addChargerStations);
