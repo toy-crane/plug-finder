@@ -148,7 +148,7 @@ const Page = async ({ params }: Props) => {
   }));
 
   return (
-    <div>
+    <div className="mb-24">
       <BreadcrumbNavigation
         trail={[
           { title: "전국", link: "/stations" },
@@ -173,15 +173,15 @@ const Page = async ({ params }: Props) => {
         className="mb-4"
       />
       <StationDetail station={currentStation} className="mb-8" />
-      <Separator className="mb-4" />
+      <Separator className="mb-6" />
       <Suspense fallback={<div>Loading...</div>}>
         <ChargersDetail
           chargers={currentStation.chargers}
           stationId={currentStation.external_station_id}
-          className="mb-4"
+          className="mb-6"
         />
       </Suspense>
-      <Separator className="mb-4" />
+      <Separator className="mb-6" />
       <Suspense fallback={<div>Loading...</div>}>
         <NearStations station={currentStation} className="mb-14" />
       </Suspense>

@@ -79,7 +79,7 @@ const ChargersDetail = async ({ chargers, stationId, className }: Props) => {
 
   return (
     <section className={cn(className)}>
-      <h2 className="text-2xl font-semibold md:text-2xl mb-1">충전기 정보</h2>
+      <h2 className="text-3xl font-semibold md:text-3xl mb-5">충전기 정보</h2>
       <Table>
         <TableHeader>
           <TableRow>

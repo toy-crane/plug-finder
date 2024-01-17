@@ -22,21 +22,33 @@ const NearStations = async ({ station, className, ...props }: CardProps) => {
   const nearStations = response.data.filter((st) => st.id !== station.id);
 
   return (
-    <Card className={cn(className)} {...props}>
-      <CardHeader>
-        <CardTitle>주변 가까운 충전소</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <>
+      <h2 className="text-3xl font-semibold md:text-3xl mb-5">
+        주변 가까운 충전소
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
         {nearStations.map((st) => (
-          <div key={st.id}>
-            <Link href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}>
-              {st.station_name} ({getChargerTypeDescription(st.charger_type)}){" "}
-              {st.dist_meters.toFixed(0)}m
-            </Link>
-          </div>
+          <Link
+            href={`/stations/${st.z_code}/${st.zs_code}/${st.slug}`}
+            className="flex justify-between space-x-4 cursor-pointer p-2 rounded-md hover:bg-stone-50"
+            key={st.id}
+          >
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl">{st.station_name}</h2>
+              <div>
+                <p className="text-sm font-medium leading-none">{st.address}</p>
+                <p className="text-sm text-muted-foreground">
+                  {getChargerTypeDescription(st.charger_type)} / {st.output} kW
+                </p>
+              </div>
+            </div>
+            <div className="self-center text-xl">
+              {st.dist_meters.toFixed(0)}M 근처
+            </div>
+          </Link>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </>
   );
 };
 

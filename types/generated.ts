@@ -159,6 +159,8 @@ export interface Database {
           zs_code: string
           charger_type: string
           slug: string
+          address: string
+          output: string
         }[]
       }
       stations_in_view: {
