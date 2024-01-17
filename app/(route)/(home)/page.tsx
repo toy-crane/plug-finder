@@ -19,10 +19,10 @@ export default function Home({ searchParams }: Props) {
     lng: Number(searchParams?.lng ?? DEFAULT_POSITION.position.lng),
   };
   const bounds = {
-    minLng: Number(searchParams?.minLng ?? DEFAULT_POSITION.bounds.minLng),
-    maxLng: Number(searchParams?.maxLng ?? DEFAULT_POSITION.bounds.maxLng),
-    minLat: Number(searchParams?.minLat ?? DEFAULT_POSITION.bounds.minLat),
-    maxLat: Number(searchParams?.maxLat ?? DEFAULT_POSITION.bounds.maxLat),
+    minLng: Number(searchParams?.minLng ?? position.lng - 0.01),
+    maxLng: Number(searchParams?.maxLng ?? position.lng + 0.01),
+    minLat: Number(searchParams?.minLat ?? position.lat - 0.01),
+    maxLat: Number(searchParams?.maxLat ?? position.lat + 0.01),
   };
   const level = Number(searchParams?.level ?? DEFAULT_POSITION.level);
 

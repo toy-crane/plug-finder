@@ -55,31 +55,13 @@ const Map = ({ markers, center, level, className, size }: Props) => {
       }}
       level={level ?? 5} // 지도의 확대 레벨
     >
-      <MarkerClusterer
-        averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel={5} // 클러스터 할 최소 지도 레벨
-        styles={[
-          {
-            // calculator 각 사이 값 마다 적용될 스타일을 지정한다
-            width: "30px",
-            height: "30px",
-            background: "#9b45c3",
-            borderRadius: "15px",
-            color: "#ffffff",
-            textAlign: "center",
-            fontWeight: "bold",
-            lineHeight: "31px",
-          },
-        ]}
-      >
-        {markers.map((marker) => (
-          <Marker
-            onClick={() => router.push(marker.to)}
-            {...marker}
-            key={marker.to}
-          />
-        ))}
-      </MarkerClusterer>
+      {markers.map((marker) => (
+        <Marker
+          onClick={() => router.push(marker.to)}
+          {...marker}
+          key={marker.to}
+        />
+      ))}
     </KakaoMap>
   );
 };

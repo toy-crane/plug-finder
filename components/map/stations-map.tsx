@@ -1,5 +1,7 @@
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import Map from "./index";
+import { getDistrictPosition } from "@/constants/districts";
+import { headers } from "next/headers";
 
 type Props = {
   bounds: {
@@ -12,33 +14,76 @@ type Props = {
   level: number;
 };
 
-const StationsMap = async ({ bounds, position, level }: Props) => {
-  const supabase = await createSupabaseServerClientReadOnly();
-  const response = await supabase.rpc("stations_in_view", {
-    min_long: bounds.minLng,
-    min_lat: bounds.minLat,
-    max_long: bounds.maxLng,
-    max_lat: bounds.maxLat,
-  });
-  if (response.error) {
-    throw Error(response.error.message);
-  }
-  const stations = response.data;
-  const markers = stations.map((station) => ({
-    position: {
-      lat: station.lat,
-      lng: station.lng,
-    },
-    text: station.station_name,
-    to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
-  }));
+type Marker = {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  text: string;
+  to: string;
+  selected?: boolean | undefined;
+  isCluster?: boolean;
+};
 
-  console.log(markers.length);
+const StationsMap = async ({ bounds, position, level }: Props) => {
+  const headersList = headers();
+  const pathname = headersList.get("x-pathname") || "";
+  const queryParams = headersList.get("x-query-params") || "";
+
+  const supabase = await createSupabaseServerClientReadOnly();
+  let markers: Marker[];
+  if (level < 5) {
+    const response = await supabase.rpc("stations_in_view", {
+      min_long: bounds.minLng,
+      min_lat: bounds.minLat,
+      max_long: bounds.maxLng,
+      max_lat: bounds.maxLat,
+    });
+    if (response.error) {
+      throw Error(response.error.message);
+    }
+    const stations = response.data;
+    markers = stations.map((station) => ({
+      position: {
+        lat: station.lat,
+        lng: station.lng,
+      },
+      text: station.station_name,
+      isCluster: false,
+      to: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
+    }));
+  } else {
+    const response = await supabase
+      .from("grouped_station_by_zscode")
+      .select("*");
+    if (response.error) {
+      throw Error(response.error.message);
+    }
+    const stations = response.data;
+    markers = stations.map((station) => {
+      const params = new URLSearchParams(queryParams);
+      const position = getDistrictPosition(station.zs_code!);
+      params.set("level", String(4));
+      params.set("lng", String(position.lng));
+      params.set("lat", String(position.lat));
+      params.delete("minLng");
+      params.delete("minLat");
+      params.delete("maxLng");
+      params.delete("maxLat");
+      return {
+        position,
+        text: String(station.count),
+        isCluster: true,
+        to: `${pathname}?${params.toString()}`,
+      };
+    });
+  }
 
   return (
     <Map
       markers={markers}
       center={position}
+      level={level}
       size={{ width: "100%", height: "100vh" }}
     />
   );
