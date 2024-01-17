@@ -58,7 +58,6 @@ const StationDetail = ({ station, className, ...props }: CardProps) => {
               />
             )}
           </div>
-          <Separator />
         </div>
       </section>
     </>

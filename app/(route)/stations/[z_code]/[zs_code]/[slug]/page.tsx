@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 import ChargersDetail from "./_components/chargers-detail";
 import ShareDrawer from "./_components/share-drawer";
 import StationDetail from "./_components/station-detail";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -172,6 +173,7 @@ const Page = async ({ params }: Props) => {
         className="mb-4"
       />
       <StationDetail station={currentStation} className="mb-8" />
+      <Separator className="mb-4" />
       <Suspense fallback={<div>Loading...</div>}>
         <ChargersDetail
           chargers={currentStation.chargers}
@@ -179,6 +181,7 @@ const Page = async ({ params }: Props) => {
           className="mb-4"
         />
       </Suspense>
+      <Separator className="mb-4" />
       <Suspense fallback={<div>Loading...</div>}>
         <NearStations station={currentStation} className="mb-14" />
       </Suspense>
