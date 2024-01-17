@@ -15,9 +15,13 @@ type Props = {
   center: { lat: number; lng: number };
   level?: number;
   className?: string;
+  size?: {
+    width: string;
+    height: string;
+  };
 };
 
-const Map = ({ markers, center, level, className }: Props) => {
+const Map = ({ markers, center, level, className, size }: Props) => {
   const router = useRouter();
   const mapRef = useRef<kakao.maps.Map>(null);
   const searchParams = useSearchParams();
@@ -46,8 +50,8 @@ const Map = ({ markers, center, level, className }: Props) => {
       ref={mapRef}
       style={{
         // 지도의 크기
-        width: "100%",
-        height: "400px",
+        width: size?.width ?? "100%",
+        height: size?.height ?? "400px",
       }}
       level={level ?? 5} // 지도의 확대 레벨
     >
