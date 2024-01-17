@@ -111,21 +111,6 @@ const Page = async ({ params, searchParams }: Props) => {
       : getDistrictPosition(zs_code).lng,
   };
 
-  const bounds = {
-    minLng: searchParams?.minLng
-      ? Number(searchParams.minLng)
-      : getDefaultBounds(position).minLng,
-    maxLng: searchParams?.maxLng
-      ? Number(searchParams.maxLng)
-      : getDefaultBounds(position).maxLng,
-    minLat: searchParams?.minLat
-      ? Number(searchParams.minLat)
-      : getDefaultBounds(position).minLat,
-    maxLat: searchParams?.maxLat
-      ? Number(searchParams.maxLat)
-      : getDefaultBounds(position).maxLat,
-  };
-
   if (stations.length === 0) {
     return;
   }
