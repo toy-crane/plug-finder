@@ -19,8 +19,6 @@ interface Props {
   };
 }
 
-const MAX_DISPLAY_PAGES = 5;
-
 export async function generateMetadata(
   { params: { z_code, zs_code } }: Props,
   parent: ResolvingMetadata
@@ -134,7 +132,7 @@ const Page = async ({ params, searchParams }: Props) => {
               {getDistrictDescription(params.zs_code)} 전기차 충전소
             </h1>
             <p className="text-lg text-muted-foreground">
-              {stations.length}개 충전소
+              {totalCount}개 충전소
             </p>
           </div>
 
