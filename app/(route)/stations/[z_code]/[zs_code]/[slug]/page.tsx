@@ -13,6 +13,7 @@ import ChargersDetail from "./_components/chargers-detail";
 import ShareDrawer from "./_components/share-drawer";
 import StationDetail from "./_components/station-detail";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -174,7 +175,20 @@ const Page = async ({ params }: Props) => {
       />
       <StationDetail station={currentStation} className="mb-8" />
       <Separator className="mb-6" />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="mb-6">
+            <h2 className="text-3xl font-semibold md:text-3xl mb-5">
+              충전기 정보
+            </h2>
+            <div className="space-y-2">
+              {[...Array(3)].map((_, index) => (
+                <Skeleton key={index} className="w-full h-[36px] rounded-md" />
+              ))}
+            </div>
+          </div>
+        }
+      >
         <ChargersDetail
           chargers={currentStation.chargers}
           stationId={currentStation.external_station_id}
@@ -182,7 +196,20 @@ const Page = async ({ params }: Props) => {
         />
       </Suspense>
       <Separator className="mb-6" />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="mb-6">
+            <h2 className="text-3xl font-semibold md:text-3xl mb-5">
+              주변 가까운 충전소
+            </h2>
+            <div className="space-y-2">
+              {[...Array(5)].map((_, index) => (
+                <Skeleton key={index} className="w-full h-[36px] rounded-md" />
+              ))}
+            </div>
+          </div>
+        }
+      >
         <NearStations station={currentStation} className="mb-14" />
       </Suspense>
     </div>
