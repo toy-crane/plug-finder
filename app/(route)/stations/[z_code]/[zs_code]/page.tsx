@@ -8,10 +8,7 @@ import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import Map from "@/components/map";
-import StationsMap from "@/components/map/stations-map";
 import { getChargerTypeDescription } from "@/constants/chager-type";
-import { Share, ShareIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import ShareButton from "./_component/share-button";
 
 interface Props {
@@ -79,18 +76,6 @@ export async function generateMetadata(
   }
 }
 
-const getDefaultBounds = (position: { lat: number; lng: number }) => {
-  const { lat, lng } = position;
-  const lngLevel = 0.1;
-  const latLevel = 0.05;
-  return {
-    minLng: lng - lngLevel,
-    maxLng: lng + lngLevel,
-    minLat: lat - latLevel,
-    maxLat: lat + latLevel,
-  };
-};
-
 const Page = async ({ params, searchParams }: Props) => {
   const { z_code, zs_code } = params;
   const supabase = await createSupabaseServerClientReadOnly();
@@ -101,15 +86,6 @@ const Page = async ({ params, searchParams }: Props) => {
   if (response.error) throw response.error;
   // 404 페이지 에러 추가
   const stations = response.data;
-
-  const position = {
-    lat: searchParams?.lat
-      ? Number(searchParams.lat)
-      : getDistrictPosition(zs_code).lat,
-    lng: searchParams?.lng
-      ? Number(searchParams.lng)
-      : getDistrictPosition(zs_code).lng,
-  };
 
   if (stations.length === 0) {
     return;
