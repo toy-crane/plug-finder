@@ -46,9 +46,9 @@ export async function generateMetadata(
       zs_code
     )}의 모든 전기차 충전소`;
     const description = `
-      ${getDistrictDescription(
-        zs_code
-      )}에는 ${stationCount}개의 충전소가 있습니다.
+      ${getRegionDescription(z_code)} ${getDistrictDescription(
+      zs_code
+    )}에는 ${stationCount}개의 충전소가 있습니다.
       보다 자세한 정보가 궁금하다면? 플러그 파인더 홈페이지에서 확인하세요.
     `;
     return {
