@@ -136,6 +136,13 @@ export interface Database {
       }
     }
     Views: {
+      grouped_station_by_zcode: {
+        Row: {
+          count: number | null
+          z_code: string | null
+        }
+        Relationships: []
+      }
       grouped_station_by_zscode: {
         Row: {
           count: number | null
