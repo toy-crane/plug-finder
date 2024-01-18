@@ -187,7 +187,10 @@ const upsertStations = async (stations: AddDiplayNameStation[]) => {
     lat: station.lat,
     lng: station.lng,
     note: station.note,
-    org_contact: station.busiCall === "" ? undefined : station.busiCall,
+    org_contact:
+      station.busiCall === "" || station.busiCall === "null"
+        ? undefined
+        : station.busiCall,
     org_id: station.busiId,
     org_name: station.bnm,
     parking_free: station.parkingFree === "Y",
