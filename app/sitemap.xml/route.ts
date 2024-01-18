@@ -4,8 +4,9 @@ const addPathToBaseURL = (path: string) => `${siteConfig.url}${path}`;
 
 export async function GET() {
   const sitemaps = [
-    { url: "/stations/sitemap.xml/0" },
-    { url: "/stations/sitemap.xml/1" },
+    { url: "/stations/sitemap/0.xml" },
+    { url: "/stations/sitemap/1.xml" },
+    { url: "/stations/sitemap/2.xml" },
   ];
 
   const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>
