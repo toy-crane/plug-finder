@@ -10,7 +10,6 @@ import NearStations from "./_components/near-stations";
 import Map from "@/components/map";
 import { notFound } from "next/navigation";
 import ChargersDetail from "./_components/chargers-detail";
-import ShareDrawer from "./_components/share-drawer";
 import StationDetail from "./_components/station-detail";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -72,9 +71,9 @@ export async function generateMetadata(
   if (station) {
     const title = `${getRegionDescription(
       station.z_code
-    )} ${getDistrictDescription(station.zs_code)} ${
-      station.station_name
-    } 전기차 충전소`;
+    )} ${getDistrictDescription(station.zs_code)} ${station.station_name} ${
+      station.station_name.includes("주차장") ? "" : "주차장 "
+    }전기차 충전소`;
     const description = `
     주소 - ${station.address} \n 
     충전기 수 - ${chargerDescription} \n
