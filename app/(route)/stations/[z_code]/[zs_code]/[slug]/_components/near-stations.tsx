@@ -43,7 +43,9 @@ const NearStations = async ({ station, className, ...props }: CardProps) => {
               </div>
             </div>
             <div className="self-center text-xl">
-              {st.dist_meters.toFixed(0)}M 근처
+              {st.dist_meters > 1000
+                ? `${(st.dist_meters / 1000).toFixed(1)}KM 근처`
+                : `${st.dist_meters.toFixed(0)}M 근처`}
             </div>
           </Link>
         ))}
