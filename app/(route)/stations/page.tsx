@@ -6,6 +6,7 @@ import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 
 export async function generateMetadata(
+  _: {},
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const supabase = await createSupabaseServerClientReadOnly();
