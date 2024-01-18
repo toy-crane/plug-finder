@@ -78,7 +78,7 @@ export async function generateMetadata(
     ${title} \n
     주소 - ${station.address} \n 
     충전 커넥터(급속, 완속) - ${chargerDescription} \n
-    충전 속도 - ${station.output} \n
+    충전 속도 - ${station.output}KW \n
     사용 가능시간 - ${station.usable_time} \n 
     운영 기관 - ${station.org_name} \n
     운영 기관 연락처 - ${station.org_contact} \n
