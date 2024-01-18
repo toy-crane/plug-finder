@@ -3,10 +3,10 @@ import Navigation from "@/components/nav/navigation";
 const Layout = (props: { children: React.ReactNode }) => {
   return (
     <>
-      <header className="content-grid">
+      <header className="content-grid border-b">
         <Navigation />
       </header>
-      <main className="content-grid min-h-screen">{props.children}</main>
+      <main className="min-h-screen">{props.children}</main>
     </>
   );
 };

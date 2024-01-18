@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Logo = () => {
+const Logo = ({ className }: { className?: string }) => {
   return (
     <>
-      <Link href="/">
+      <Link href="/" className={className}>
         <Image
           src="/logo-filled.png"
           width={48}

@@ -58,7 +58,7 @@ const SearchBar = () => {
       <Button
         variant="outline"
         className={cn(
-          "relative h-12 w-full justify-start rounded-[0.5rem] bg-background text-md font-normal text-muted-foreground shadow-none sm:pr-12 w-full"
+          "relative h-12 justify-start rounded-3xl bg-neutral-50 text-md font-normal text-muted-foreground sm:pr-12 w-full shadow-sm"
         )}
         onClick={() => setOpen(true)}
       >
