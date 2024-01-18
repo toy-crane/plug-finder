@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/toaster";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -93,6 +94,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <Analytics />
+        <SpeedInsights />
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&libraries=services,clusterer&autoload=false`}
           strategy="beforeInteractive"
