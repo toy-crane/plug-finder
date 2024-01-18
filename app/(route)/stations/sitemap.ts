@@ -35,25 +35,32 @@ export default async function sitemap({
       `/stations/${st.z_code}/${st.zs_code}/${encodeURIComponent(st.slug)}`
     ),
     lastModified: new Date(),
-    priority: 0.8,
+    priority: 0.5,
     changeFrequency: "daily" as const,
   }));
 
   if (id === 0) {
+    const homeUrls = {
+      url: siteConfig.url,
+      lastModified: new Date().toISOString(),
+      priority: 1,
+      changeFrequency: "daily" as const,
+    };
+
     const regionUrls = regionCodes.map((code) => ({
       url: addPathToBaseURL(`/stations/${code}`),
-      lastModified: new Date("2024-01-10"),
+      lastModified: new Date().toISOString(),
       priority: 0.3,
       changeFrequency: "monthly" as const,
     }));
 
     const districtUrls = districtCodes.map((code) => ({
       url: addPathToBaseURL(`/stations/${code.substring(0, 2)}/${code}`),
-      lastModified: new Date("2024-01-10"),
+      lastModified: new Date().toISOString(),
       priority: 0.5,
       changeFrequency: "monthly" as const,
     }));
-    return [...regionUrls, ...districtUrls, ...stationDetailUrls];
+    return [homeUrls, ...regionUrls, ...districtUrls, ...stationDetailUrls];
   }
 
   return stationDetailUrls;
