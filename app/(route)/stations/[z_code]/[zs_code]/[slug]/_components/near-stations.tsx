@@ -38,7 +38,8 @@ const NearStations = async ({ station, className, ...props }: CardProps) => {
               <div>
                 <p className="text-sm font-medium leading-none">{st.address}</p>
                 <p className="text-sm text-muted-foreground">
-                  {getChargerTypeDescription(st.charger_type)} / {st.output} kW
+                  {getChargerTypeDescription(st.charger_type)}({st.output} kW) /{" "}
+                  {st.charger_count}대
                 </p>
               </div>
             </div>

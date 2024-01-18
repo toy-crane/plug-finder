@@ -174,6 +174,7 @@ export interface Database {
           slug: string
           address: string
           output: string
+          charger_count: number
         }[]
       }
       stations_in_view: {
