@@ -41,7 +41,7 @@ export async function generateMetadata(
     const description = `
       ${getRegionDescription(
         z_code
-      )}에는 전기차 충전소가 ${stationCount}개의 충전소(급속, 완속)가 있습니다.
+      )}에는 전기차 충전소가 ${stationCount.toLocaleString()}개의 충전소(급속, 완속)가 있습니다.
       보다 자세한 정보가 궁금하다면? 플러그 파인더 홈페이지에서 확인하세요.
       주차 가능 여부, 외부인 개방, 영업시간, 충전기 타입, 충전기 출력 등의 모든 정보를 확인 하실 수 있습니다.
     `;
