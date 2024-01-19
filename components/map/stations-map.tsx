@@ -88,6 +88,7 @@ const StationsMap = async ({ bounds, position, level }: Props) => {
         center={position}
         level={level}
         size={{ width: "100%", height: "100vh" }}
+        showCurrentPosition={true}
       />
     </div>
   );

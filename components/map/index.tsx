@@ -21,9 +21,17 @@ type Props = {
     width: string;
     height: string;
   };
+  showCurrentPosition?: boolean;
 };
 
-const Map = ({ markers, center, level, className, size }: Props) => {
+const Map = ({
+  markers,
+  center,
+  level,
+  className,
+  size,
+  showCurrentPosition,
+}: Props) => {
   const router = useRouter();
   const mapRef = useRef<kakao.maps.Map>(null);
   const searchParams = useSearchParams();
@@ -60,7 +68,7 @@ const Map = ({ markers, center, level, className, size }: Props) => {
       <div className="content-grid relative">
         <div className="absolute top-4 right-0 z-header">
           <div className="flex flex-col gap-4">
-            <CurrentPositionButton />
+            {showCurrentPosition && <CurrentPositionButton />}
             <ZoomControl zoomIn={zoomIn} zoomOut={zoomOut} />
           </div>
         </div>
