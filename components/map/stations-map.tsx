@@ -2,6 +2,7 @@ import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import Map from "./index";
 import { getDistrictPosition } from "@/constants/districts";
 import { headers } from "next/headers";
+import CurrentPositionButton from "./current-position-button";
 
 type Props = {
   bounds: {
@@ -80,12 +81,21 @@ const StationsMap = async ({ bounds, position, level }: Props) => {
   }
 
   return (
-    <Map
-      markers={markers}
-      center={position}
-      level={level}
-      size={{ width: "100%", height: "100vh" }}
-    />
+    <div>
+      <div className="content-grid relative">
+        <div className="absolute top-4 right-0 z-header">
+          <div className="flex flex-col">
+            <CurrentPositionButton />
+          </div>
+        </div>
+      </div>
+      <Map
+        markers={markers}
+        center={position}
+        level={level}
+        size={{ width: "100%", height: "100vh" }}
+      />
+    </div>
   );
 };
 
