@@ -3,6 +3,7 @@ import Map from "./index";
 import { getDistrictPosition } from "@/constants/districts";
 import { headers } from "next/headers";
 import CurrentPositionButton from "./current-position-button";
+import ZoomControl from "./zoom-control";
 
 type Props = {
   bounds: {
@@ -84,8 +85,9 @@ const StationsMap = async ({ bounds, position, level }: Props) => {
     <div>
       <div className="content-grid relative">
         <div className="absolute top-4 right-0 z-header">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
             <CurrentPositionButton />
+            <ZoomControl />
           </div>
         </div>
       </div>
