@@ -3,7 +3,9 @@ import Marker from "@/components/map/marker";
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { Map as KakaoMap, MarkerClusterer } from "react-kakao-maps-sdk";
+import { Map as KakaoMap } from "react-kakao-maps-sdk";
+import CurrentPositionButton from "./current-position-button";
+import ZoomControl from "./zoom-control";
 
 type Props = {
   markers: {
@@ -41,28 +43,50 @@ const Map = ({ markers, center, level, className, size }: Props) => {
     router.replace(`${pathname}?${params.toString()}`);
   };
 
+  const zoomIn = () => {
+    const map = mapRef.current;
+    if (!map) return;
+    map.setLevel(map.getLevel() - 1);
+  };
+
+  const zoomOut = () => {
+    const map = mapRef.current;
+    if (!map) return;
+    map.setLevel(map.getLevel() + 1);
+  };
+
   return (
-    <KakaoMap
-      className={cn("mb-2 round-md", className)}
-      onDragEnd={handleMove}
-      onZoomChanged={handleMove}
-      center={center}
-      ref={mapRef}
-      style={{
-        // 지도의 크기
-        width: size?.width ?? "100%",
-        height: size?.height ?? "400px",
-      }}
-      level={level ?? 5} // 지도의 확대 레벨
-    >
-      {markers.map((marker) => (
-        <Marker
-          onClick={() => router.push(marker.to)}
-          {...marker}
-          key={marker.to}
-        />
-      ))}
-    </KakaoMap>
+    <>
+      <div className="content-grid relative">
+        <div className="absolute top-4 right-0 z-header">
+          <div className="flex flex-col gap-4">
+            <CurrentPositionButton />
+            <ZoomControl zoomIn={zoomIn} zoomOut={zoomOut} />
+          </div>
+        </div>
+      </div>
+      <KakaoMap
+        className={cn("mb-2 round-md", className)}
+        onDragEnd={handleMove}
+        onZoomChanged={handleMove}
+        center={center}
+        ref={mapRef}
+        style={{
+          // 지도의 크기
+          width: size?.width ?? "100%",
+          height: size?.height ?? "400px",
+        }}
+        level={level ?? 5} // 지도의 확대 레벨
+      >
+        {markers.map((marker) => (
+          <Marker
+            onClick={() => router.push(marker.to)}
+            {...marker}
+            key={marker.to}
+          />
+        ))}
+      </KakaoMap>
+    </>
   );
 };
 

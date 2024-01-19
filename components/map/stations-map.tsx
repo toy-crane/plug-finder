@@ -83,14 +83,6 @@ const StationsMap = async ({ bounds, position, level }: Props) => {
 
   return (
     <div>
-      <div className="content-grid relative">
-        <div className="absolute top-4 right-0 z-header">
-          <div className="flex flex-col gap-4">
-            <CurrentPositionButton />
-            <ZoomControl />
-          </div>
-        </div>
-      </div>
       <Map
         markers={markers}
         center={position}
