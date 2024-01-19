@@ -24,6 +24,11 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.5rem;
+
+    /* z-index */
+    --header-z-index: 10;
+    --bottom-nav-z-index: 10;
+    --sheet-z-index: 15;
   }
 
   .dark {
