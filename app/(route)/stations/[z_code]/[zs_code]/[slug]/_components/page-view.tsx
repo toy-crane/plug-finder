@@ -29,6 +29,16 @@ async function incrementStationViewsByZsCode(
   }
 }
 
+async function increasePageViews(stationId: string) {
+  try {
+    const pageViewKey = `page:views:${stationId}`;
+    return await kv.zincrby(pageViewKey, 1, stationId);
+  } catch (error) {
+    console.error("Error incrementing page views:", error);
+    return undefined;
+  }
+}
+
 export default async function PageView({
   stationId,
   zCode,
@@ -38,13 +48,17 @@ export default async function PageView({
   zCode: string;
   zsCode: string;
 }) {
-  const totalViews = await kv.incr(`page:views:total:${stationId}`);
+  const totalViews = await increasePageViews(stationId);
   await incrementStationViewsByZCode(stationId, zCode);
   await incrementStationViewsByZsCode(stationId, zsCode);
 
   return (
-    <span className="text-sm text-gray-500">
-      조회 {totalViews.toLocaleString()}
-    </span>
+    <>
+      {totalViews && (
+        <span className="text-sm text-gray-500">
+          조회 {totalViews.toLocaleString()}
+        </span>
+      )}
+    </>
   );
 }
