@@ -79,7 +79,7 @@ const Page = async () => {
   return (
     <div className="mb-24">
       <BreadcrumbNavigation trail={[{ title: "전국", link: "/stations" }]} />
-      <div className="flex justify-between items-center my-6">
+      <section className="flex justify-between items-center my-6">
         <div>
           <h1 className="text-3xl font-semibold md:text-5xl mb-1">
             전국 전기차 충전소
@@ -89,7 +89,7 @@ const Page = async () => {
           </p>
         </div>
         <ShareButton />
-      </div>
+      </section>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
         {regionCodes.map((regionCode) => (
           <Link
