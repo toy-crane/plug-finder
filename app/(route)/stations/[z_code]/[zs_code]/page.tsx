@@ -12,6 +12,7 @@ import { getChargerTypeDescription } from "@/constants/chager-type";
 import ShareButton from "./_component/share-button";
 import Pagination from "./_component/pagination";
 import { siteConfig } from "@/config/site";
+import DistrictPopularStations from "./_component/district-popular-stations";
 
 interface Props {
   params: { z_code: string; zs_code: string };
@@ -138,14 +139,13 @@ const Page = async ({ params, searchParams }: Props) => {
         </div>
         <ShareButton />
       </section>
-      <section>
-        <div className="mb-6">
-          <h2 className="text-3xl font-semibold md:text-3xl mb-5">
-            {getDistrictDescription(params.zs_code)} 인기있는 충전소
-          </h2>
-        </div>
+      <section className="mb-8">
+        <DistrictPopularStations zsCode={zs_code} />
       </section>
-      <section className="mb-6">
+      <section className="mb-8">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-2">
+          {getDistrictDescription(zs_code)} 전체 충전소
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-4">
           {stations.map((st) => (
             <Link
@@ -154,7 +154,7 @@ const Page = async ({ params, searchParams }: Props) => {
               key={st.id}
             >
               <div className="flex flex-col gap-1">
-                <h2 className="text-2xl">{st.station_name}</h2>
+                <h2 className="text-xl md:text-2xl">{st.station_name}</h2>
                 <div>
                   <p className="text-sm font-medium leading-none">
                     {st.address}
