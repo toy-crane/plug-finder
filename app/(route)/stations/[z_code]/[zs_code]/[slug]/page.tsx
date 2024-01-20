@@ -76,13 +76,12 @@ export async function generateMetadata(
       station.station_name.includes("주차장") ? "" : "주차장 "
     }전기차 충전소`;
     const description = `
-    ${title} \n
     주소 - ${station.address} \n 
     충전 커넥터(급속, 완속) - ${chargerDescription} \n
     충전 속도 - ${station.output}KW \n
     사용 가능시간 - ${station.usable_time} \n 
     운영 기관 - ${station.org_name} \n
-    운영 기관 연락처 - ${station.org_contact} \n
+    연락처 - ${station.org_contact} \n
     `;
     const url = `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`;
     return {
