@@ -26,7 +26,11 @@ const StationDetail = ({ station, className, ...props }: CardProps) => {
               <p className="text-muted-foreground text-lg text-wrap">
                 {station.address}
               </p>
-              <PageView stationId={station.id} />
+              <PageView
+                stationId={station.id}
+                zCode={station.z_code}
+                zsCode={station.zs_code}
+              />
             </div>
           </div>
           <ShareDrawer station={station} />
