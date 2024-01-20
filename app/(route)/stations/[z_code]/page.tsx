@@ -10,6 +10,7 @@ import {
 import BreadcrumbNavigation from "@/components/nav/breadcrumb-nav";
 import { Metadata, ResolvingMetadata } from "next";
 import ShareButton from "./[zs_code]/_component/share-button";
+import { siteConfig } from "@/config/site";
 
 interface Props {
   params: { z_code: string };
@@ -45,12 +46,14 @@ export async function generateMetadata(
       보다 자세한 정보가 궁금하다면? 플러그 파인더 홈페이지에서 확인하세요.
       주차 가능 여부, 외부인 개방, 영업시간, 충전기 타입, 충전기 출력 등의 모든 정보를 확인 하실 수 있습니다.
     `;
+    const url = `${siteConfig.url}/stations/${z_code}`;
     return {
       title,
       description,
       openGraph: {
         title,
         description,
+        url,
         images: [...previousImages],
       },
       twitter: {
@@ -59,7 +62,7 @@ export async function generateMetadata(
         images: [...previousImages],
       },
       alternates: {
-        canonical: `/stations/${z_code}`,
+        canonical: url,
       },
     };
   } else {
