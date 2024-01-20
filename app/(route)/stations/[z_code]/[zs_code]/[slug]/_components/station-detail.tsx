@@ -4,6 +4,7 @@ import Label from "./label";
 import { Separator } from "@/components/ui/separator";
 import ShareDrawer from "./share-drawer";
 import { cn } from "@/lib/utils";
+import PageView from "./page-view";
 
 type CardProps = {
   station: Tables<"stations"> & {
@@ -21,9 +22,12 @@ const StationDetail = ({ station, className, ...props }: CardProps) => {
             <h1 className="text-3xl font-semibold md:text-5xl mb-1">
               {station.station_name}
             </h1>
-            <p className="text-muted-foreground text-lg text-wrap">
-              {station.address}
-            </p>
+            <div>
+              <p className="text-muted-foreground text-lg text-wrap">
+                {station.address}
+              </p>
+              <PageView stationId={station.id} />
+            </div>
           </div>
           <ShareDrawer station={station} />
         </div>
