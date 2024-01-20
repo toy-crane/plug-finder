@@ -97,7 +97,7 @@ const Page = async ({ params }: Props) => {
           { title: getRegionDescription(z_code), link: `/stations/${z_code}` },
         ]}
       />
-      <div className="flex justify-between items-center my-6">
+      <section className="flex justify-between items-center my-6">
         <div>
           <h1 className="text-3xl font-semibold md:text-5xl mb-1">
             {getRegionDescription(params.z_code)} 전기차 충전소
@@ -107,8 +107,8 @@ const Page = async ({ params }: Props) => {
           </p>
         </div>
         <ShareButton />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
+      </section>
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
         {getDistrictCodesInRegion(z_code).map((districtCode) => (
           <>
             <Link
@@ -128,7 +128,7 @@ const Page = async ({ params }: Props) => {
             </Link>
           </>
         ))}
-      </div>
+      </section>
     </div>
   );
 };
