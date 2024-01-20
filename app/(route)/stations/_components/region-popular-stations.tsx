@@ -4,10 +4,6 @@ import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { kv } from "@vercel/kv";
 import Link from "next/link";
 
-type Props = {
-  zCode: string;
-};
-
 function transformToObjects(
   arr: (string | number)[]
 ): { id: string; count: number }[] {
@@ -28,7 +24,7 @@ async function getPopularStations(limit: number) {
   try {
     // 'popular:z_code:[zCode]'에서 상위 limit개의 충전소 ID와 점수를 조회
     const popularStations: string[] = await kv.zrange(
-      `popular:z_code:${zCode}`,
+      `page:views`,
       0,
       limit - 1,
       { rev: true, withScores: true }
@@ -41,13 +37,12 @@ async function getPopularStations(limit: number) {
   }
 }
 
-const RegionPopularStations = async ({ zCode }: Props) => {
+const RegionPopularStations = async () => {
   const supabase = await createSupabaseServerClientReadOnly();
-  const poplurStations = await getPopularStationsByZCode(zCode, 5);
+  const poplurStations = await getPopularStations(10);
   const response = await supabase
     .from("stations")
     .select("*, chargers(*)")
-    .eq("z_code", zCode)
     .in(
       "id",
       poplurStations.map((st) => st.id)
@@ -60,7 +55,7 @@ const RegionPopularStations = async ({ zCode }: Props) => {
   if (poplurStations.length === 0) return null;
 
   return (
-    <div className="mb-6">
+    <div>
       <h2 className="text-2xl font-semibold md:text-3xl mb-2">
         많이 찾는 충전소 🔥
       </h2>

@@ -31,7 +31,7 @@ async function incrementStationViewsByZsCode(
 
 async function increasePageViews(stationId: string) {
   try {
-    const pageViewKey = `page:views:${stationId}`;
+    const pageViewKey = `page:views`;
     return await kv.zincrby(pageViewKey, 1, stationId);
   } catch (error) {
     console.error("Error incrementing page views:", error);

@@ -5,6 +5,7 @@ import ShareButton from "./[z_code]/[zs_code]/_component/share-button";
 import { createSupabaseServerClientReadOnly } from "@/supabase/server";
 import { Metadata, ResolvingMetadata } from "next";
 import { siteConfig } from "@/config/site";
+import RegionPopularStations from "./_components/region-popular-stations";
 
 export async function generateMetadata(
   _: {},
@@ -90,22 +91,28 @@ const Page = async () => {
         </div>
         <ShareButton />
       </section>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
-        {regionCodes.map((regionCode) => (
-          <Link
-            href={`/stations/${regionCode}`}
-            className="flex justify-between space-x-4 cursor-pointer p-4 rounded-md hover:bg-stone-50 items-center"
-            key={regionCode}
-          >
-            <h2 className="text-2xl">{getRegionDescription(regionCode)}</h2>
-            <div className="self-center text-xl">
-              {groupedStationByZcode
-                ?.find((stations) => stations.z_code === regionCode)
-                ?.count?.toLocaleString()}
-              개
-            </div>
-          </Link>
-        ))}
+      <section className="my-10">
+        <RegionPopularStations />
+      </section>
+      <section className="flex flex-col">
+        <h2 className="text-2xl font-semibold md:text-3xl mb-2">전체 충전소</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
+          {regionCodes.map((regionCode) => (
+            <Link
+              href={`/stations/${regionCode}`}
+              className="flex justify-between space-x-4 cursor-pointer p-4 rounded-md hover:bg-stone-50 items-center"
+              key={regionCode}
+            >
+              <h2 className="text-2xl">{getRegionDescription(regionCode)}</h2>
+              <div className="self-center text-xl">
+                {groupedStationByZcode
+                  ?.find((stations) => stations.z_code === regionCode)
+                  ?.count?.toLocaleString()}
+                개
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
     </div>
   );
