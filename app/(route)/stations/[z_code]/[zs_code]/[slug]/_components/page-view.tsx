@@ -3,7 +3,7 @@ import { kv } from "@vercel/kv";
 // zCode별 충전소 조회수 증가 함수에 만료 시간 설정 추가
 async function incrementStationViewsByZCode(stationId: string, zCode: string) {
   try {
-    const zCodeKey = `popular:z_code:${zCode}`;
+    const zCodeKey = `page:popluar:z_code:${zCode}`;
     await kv.zincrby(zCodeKey, 1, stationId);
   } catch (error) {
     console.error(
@@ -19,7 +19,7 @@ async function incrementStationViewsByZsCode(
   zsCode: string
 ) {
   try {
-    const zsCodeKey = `popular:zs_code:${zsCode}`;
+    const zsCodeKey = `page:popluar:zs_code:${zsCode}`;
     await kv.zincrby(zsCodeKey, 1, stationId);
   } catch (error) {
     console.error(
@@ -31,7 +31,7 @@ async function incrementStationViewsByZsCode(
 
 async function increasePageViews(stationId: string) {
   try {
-    const pageViewKey = `page:views`;
+    const pageViewKey = `page:station-detail:views`;
     return await kv.zincrby(pageViewKey, 1, stationId);
   } catch (error) {
     console.error("Error incrementing page views:", error);

@@ -28,7 +28,7 @@ async function getPopularStationsByZsCode(zsCode: string, limit: number) {
   try {
     // 'zs_code:[zsCode]'에서 상위 limit개의 충전소 ID와 점수를 조회
     const popularStations: string[] = await kv.zrange(
-      `popular:zs_code:${zsCode}`,
+      `page:popluar:zs_code:${zsCode}`,
       0,
       limit - 1,
       { rev: true, withScores: true }

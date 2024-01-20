@@ -22,9 +22,9 @@ function transformToObjects(
 // z_code별 인기 충전소 조회 함수
 async function getPopularStations(limit: number) {
   try {
-    // 'popular:z_code:[zCode]'에서 상위 limit개의 충전소 ID와 점수를 조회
+    // 'page:popluar:z_code:[zCode]'에서 상위 limit개의 충전소 ID와 점수를 조회
     const popularStations: string[] = await kv.zrange(
-      `page:views`,
+      `page:station-detail:views`,
       0,
       limit - 1,
       { rev: true, withScores: true }
