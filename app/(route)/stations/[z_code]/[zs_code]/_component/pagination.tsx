@@ -14,12 +14,19 @@ interface Props {
   zCode: string;
   zsCode: string;
   totalCount: number;
+  className?: string;
 }
 
 const MAX_DISPLAY_PAGES = 5;
 const PER_PAGE = 20;
 
-const Pagination = ({ currentPage, zsCode, zCode, totalCount }: Props) => {
+const Pagination = ({
+  currentPage,
+  zsCode,
+  zCode,
+  totalCount,
+  className,
+}: Props) => {
   const numPages = Math.ceil(totalCount / PER_PAGE);
   const calculatePaginationRange = () => {
     const sidePages = Math.floor(MAX_DISPLAY_PAGES / 2);
@@ -38,7 +45,7 @@ const Pagination = ({ currentPage, zsCode, zCode, totalCount }: Props) => {
 
   const paginationRange = calculatePaginationRange();
   return (
-    <PaginationRoot>
+    <PaginationRoot className={className}>
       <PaginationContent>
         <PaginationItem>
           {currentPage > 1 && (
