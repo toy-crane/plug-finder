@@ -100,7 +100,7 @@ export async function generateMetadata(
         images: [...previousImages],
       },
       alternates: {
-        canonical: `/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
+        canonical: `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
       },
     };
   } else {
