@@ -50,6 +50,27 @@ export interface Database {
           }
         ]
       }
+      district_station_statistics: {
+        Row: {
+          count: number
+          created_at: string
+          id: number
+          zs_code: string
+        }
+        Insert: {
+          count: number
+          created_at?: string
+          id?: number
+          zs_code: string
+        }
+        Update: {
+          count?: number
+          created_at?: string
+          id?: number
+          zs_code?: string
+        }
+        Relationships: []
+      }
       region_station_statistics: {
         Row: {
           count: number
