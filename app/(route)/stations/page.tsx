@@ -56,17 +56,18 @@ const Page = async () => {
     (_) => typeof Regions[_ as any] !== "number"
   );
   const supabase = await createSupabaseServerClientReadOnly();
-  const response = await supabase
-    .from("stations")
-    .select("*", { count: "exact" });
-  if (response.error) throw response.error;
-  const count = response.count;
 
-  const responseView = await supabase
-    .from("grouped_station_by_zcode")
+  const groupedStationByZcodeResponse = await supabase
+    .from("region_station_statistics")
     .select("*");
-  if (responseView.error) throw responseView.error;
-  const groupedStationByZcode = responseView.data;
+
+  if (groupedStationByZcodeResponse.error)
+    throw groupedStationByZcodeResponse.error;
+  const groupedStationByZcode = groupedStationByZcodeResponse.data;
+  const count = groupedStationByZcode.reduce(
+    (acc, cur) => acc + cur.count,
+    0
+  ) as number;
 
   return (
     <div className="mb-24">
