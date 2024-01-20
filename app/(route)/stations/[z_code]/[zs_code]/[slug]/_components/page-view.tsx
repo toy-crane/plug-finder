@@ -5,8 +5,6 @@ async function incrementStationViewsByZCode(stationId: string, zCode: string) {
   try {
     const zCodeKey = `popular:z_code:${zCode}`;
     await kv.zincrby(zCodeKey, 1, stationId);
-    // 24시간 후 만료되도록 설정 (48시간 * 60분 * 60초)
-    await kv.expire(zCodeKey, 24 * 60 * 60);
   } catch (error) {
     console.error(
       "Error incrementing station views with expiry for zCode:",
@@ -23,7 +21,6 @@ async function incrementStationViewsByZsCode(
   try {
     const zsCodeKey = `popular:zs_code:${zsCode}`;
     await kv.zincrby(zsCodeKey, 1, stationId);
-    await kv.expire(zsCodeKey, 24 * 60 * 60);
   } catch (error) {
     console.error(
       "Error incrementing station views with expiry for zsCode:",
