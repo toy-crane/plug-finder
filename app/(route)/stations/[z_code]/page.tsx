@@ -24,14 +24,16 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const supabase = await createSupabaseServerClientReadOnly();
-  const response = await supabase
-    .from("stations")
-    .select("*", { count: "exact" })
-    .eq("z_code", z_code);
-  if (response.error) {
-    throw Error(response.error.message);
-  }
-  const stationCount = response.count;
+
+  const groupedStationByZscodeResponse = await supabase
+    .from("district_station_statistics")
+    .select("*");
+  if (groupedStationByZscodeResponse.error)
+    throw groupedStationByZscodeResponse.error;
+  const groupedStationByZscode = groupedStationByZscodeResponse.data;
+  const stationCount = groupedStationByZscode
+    .filter((st) => st.zs_code.startsWith(z_code))
+    .reduce((acc, cur) => acc + cur.count, 0) as number;
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
@@ -81,13 +83,15 @@ const Page = async ({ params }: Props) => {
     .order("zs_code");
   if (response.error) throw response.error;
 
-  const responseView = await supabase
-    .from("grouped_station_by_zscode")
+  const groupedStationByZscodeResponse = await supabase
+    .from("district_station_statistics")
     .select("*");
-  if (responseView.error) throw responseView.error;
-  const groupedStationByZscode = responseView.data;
-
-  const count = response.count;
+  if (groupedStationByZscodeResponse.error)
+    throw groupedStationByZscodeResponse.error;
+  const groupedStationByZscode = groupedStationByZscodeResponse.data;
+  const count = groupedStationByZscode
+    .filter((st) => st.zs_code.startsWith(z_code))
+    .reduce((acc, cur) => acc + cur.count, 0) as number;
 
   // 섹션 출력
   return (
