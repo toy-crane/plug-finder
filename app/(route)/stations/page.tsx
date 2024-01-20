@@ -11,11 +11,18 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const supabase = await createSupabaseServerClientReadOnly();
-  const response = await supabase
-    .from("stations")
-    .select("*", { count: "exact" });
-  if (response.error) throw response.error;
-  const count = response.count;
+
+  const groupedStationByZcodeResponse = await supabase
+    .from("region_station_statistics")
+    .select("*");
+
+  if (groupedStationByZcodeResponse.error)
+    throw groupedStationByZcodeResponse.error;
+  const groupedStationByZcode = groupedStationByZcodeResponse.data;
+  const count = groupedStationByZcode.reduce(
+    (acc, cur) => acc + cur.count,
+    0
+  ) as number;
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
