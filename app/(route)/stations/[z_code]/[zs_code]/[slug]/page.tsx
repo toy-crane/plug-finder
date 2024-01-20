@@ -13,6 +13,7 @@ import ChargersDetail from "./_components/chargers-detail";
 import StationDetail from "./_components/station-detail";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { siteConfig } from "@/config/site";
 
 interface Props {
   params: { slug: string; z_code: string; zs_code: string };
@@ -83,12 +84,14 @@ export async function generateMetadata(
     운영 기관 - ${station.org_name} \n
     운영 기관 연락처 - ${station.org_contact} \n
     `;
+    const url = `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`;
     return {
       title,
       description,
       openGraph: {
         title,
         description,
+        url,
         images: [...previousImages],
       },
       twitter: {
