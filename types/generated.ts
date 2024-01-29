@@ -9,6 +9,60 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      cars: {
+        Row: {
+          battery_capacity: number
+          battery_type: Database["public"]["Enums"]["battery_type"]
+          brand: string
+          charging_type: string
+          created_at: string
+          id: string
+          image_url: string | null
+          model: string
+          range_summer: number
+          range_winter: number
+          seat: number
+          slug: string
+          top_speed: number
+          trim: string
+          year: number
+        }
+        Insert: {
+          battery_capacity: number
+          battery_type: Database["public"]["Enums"]["battery_type"]
+          brand: string
+          charging_type: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          model: string
+          range_summer: number
+          range_winter: number
+          seat: number
+          slug: string
+          top_speed: number
+          trim: string
+          year: number
+        }
+        Update: {
+          battery_capacity?: number
+          battery_type?: Database["public"]["Enums"]["battery_type"]
+          brand?: string
+          charging_type?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          model?: string
+          range_summer?: number
+          range_winter?: number
+          seat?: number
+          slug?: string
+          top_speed?: number
+          trim?: string
+          year?: number
+        }
+        Relationships: []
+      }
       chargers: {
         Row: {
           charger_type: string
@@ -238,7 +292,8 @@ export interface Database {
       }
     }
     Enums: {
-      [_ in never]: never
+      battery_type: "NCM" | "LFP"
+      car_maker: "tesla"
     }
     CompositeTypes: {
       [_ in never]: never
