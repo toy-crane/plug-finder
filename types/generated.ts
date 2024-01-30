@@ -17,7 +17,7 @@ export interface Database {
           charging_type: string
           created_at: string
           id: string
-          image_url: string | null
+          image_url: string
           model: string
           range_summer: number
           range_winter: number
@@ -34,7 +34,7 @@ export interface Database {
           charging_type: string
           created_at?: string
           id?: string
-          image_url?: string | null
+          image_url: string
           model: string
           range_summer: number
           range_winter: number
@@ -51,7 +51,7 @@ export interface Database {
           charging_type?: string
           created_at?: string
           id?: string
-          image_url?: string | null
+          image_url?: string
           model?: string
           range_summer?: number
           range_winter?: number
