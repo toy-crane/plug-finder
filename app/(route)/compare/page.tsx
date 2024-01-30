@@ -1,3 +1,4 @@
+import SupabaseImage from "@/supabase/image";
 import { createSupabaseServerClient } from "@/supabase/server";
 
 interface Props {
@@ -28,13 +29,29 @@ const Page = async ({
       <div>자동차 비교하기</div>
       <div className="flex">
         <div className="flex-1 items-center justify-center">
-          <div>
+          <div className="h-12 flex flex-col">
             {primaryCar?.model} {primaryCar?.slug}
+            <div>
+              <SupabaseImage
+                src={primaryCar.image_url}
+                alt="primary car Image"
+                width={400}
+                height={200}
+              />
+            </div>
           </div>
         </div>
         <div className="flex-1">
-          <div>
+          <div className="h-12 flex flex-col">
             {secondaryCar?.model} {secondaryCar?.slug}
+            <div>
+              <SupabaseImage
+                src={secondaryCar.image_url}
+                alt="primary car Image"
+                width={400}
+                height={200}
+              />
+            </div>
           </div>
         </div>
       </div>
