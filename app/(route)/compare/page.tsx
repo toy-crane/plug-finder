@@ -138,9 +138,9 @@ const Page = async ({
         </div>
       </div>
       <div>
-        <Accordion type="single" collapsible defaultValue="item-1">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>주요 제원</AccordionTrigger>
+        <Accordion type="single" collapsible defaultValue="basic-info">
+          <AccordionItem value="basic-info">
+            <AccordionTrigger>기본 정보</AccordionTrigger>
             <AccordionContent>
               <Table>
                 <TableBody>
@@ -160,6 +160,18 @@ const Page = async ({
                 </TableBody>
               </Table>
             </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="driving-performance">
+            <AccordionTrigger>주행 성능</AccordionTrigger>
+            <AccordionContent>주행성능</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="charging">
+            <AccordionTrigger>충전</AccordionTrigger>
+            <AccordionContent>충전</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="design">
+            <AccordionTrigger>내외부 디자인</AccordionTrigger>
+            <AccordionContent>내외부 디자인</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
