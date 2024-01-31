@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Car } from "lucide-react";
+import CarCard from "./_components/car-card";
 
 const isNumber = (value: any): value is number => typeof value === "number";
 
@@ -110,32 +112,8 @@ const Page = async ({
     <div>
       <div>자동차 비교하기</div>
       <div className="flex">
-        <div className="flex-1 items-center justify-center">
-          <div className="flex flex-col">
-            <div>{primaryCar?.model}</div>
-            <div>
-              <SupabaseImage
-                src={primaryCar.image_url}
-                alt="primary car Image"
-                width={400}
-                height={200}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex-1">
-          <div className="flex flex-col flex-1">
-            <div>{secondaryCar?.model}</div>
-            <div>
-              <SupabaseImage
-                src={secondaryCar.image_url}
-                alt="primary car Image"
-                width={400}
-                height={200}
-              />
-            </div>
-          </div>
-        </div>
+        <CarCard car={primaryCar} />
+        <CarCard car={secondaryCar} />
       </div>
       <div>
         <Accordion type="single" collapsible defaultValue="basic-info">
