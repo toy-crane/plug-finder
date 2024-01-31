@@ -7,7 +7,7 @@ import { CarComboBox } from "./car-combobox";
 const CarCard = ({ car }: { car: Tables<"cars"> }) => {
   return (
     <div className="flex-1 items-center justify-center">
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center justify-center">
         <CarComboBox model={car?.model} />
         <div>
           <SupabaseImage

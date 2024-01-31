@@ -126,23 +126,32 @@ const Page = async ({
           <AccordionItem value="summary">
             <AccordionTrigger>요약</AccordionTrigger>
             <AccordionContent>
-              <Table>
-                <TableBody>
-                  {specs.map((spec) => (
-                    <TableRow key={spec.field}>
-                      <TableCell className="text-center">
-                        {spec.primary}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {spec.label}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {spec.secondary}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <div className="grid grid-cols-2 grid-row-3 gap-y-6">
+                <div className="flex justify-center flex-col items-center">
+                  <div className="text-lg">여름철 주행거리</div>
+                  <div className="text-xl font-semibold">365KM</div>
+                </div>
+                <div className="flex justify-center flex-col items-center">
+                  <div className="text-lg">여름철 주행거리</div>
+                  <div className="text-xl font-semibold">365KM</div>
+                </div>
+                <div className="flex justify-center flex-col items-center">
+                  <div className="text-lg">겨울철 주행거리</div>
+                  <div className="text-xl font-semibold">365KM</div>
+                </div>
+                <div className="flex justify-center flex-col items-center">
+                  <div className="text-lg">겨울철 주행거리</div>
+                  <div className="text-xl font-semibold">365KM</div>
+                </div>
+                <div className="flex justify-center flex-col items-center">
+                  <div className="text-lg">연비</div>
+                  <div className="text-xl font-semibold">5.1km</div>
+                </div>
+                <div className="flex justify-center flex-col items-center">
+                  <div className="text-lg">연비</div>
+                  <div className="text-xl font-semibold">5.6km</div>
+                </div>
+              </div>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="basic-info">
