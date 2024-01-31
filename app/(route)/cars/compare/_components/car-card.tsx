@@ -16,7 +16,7 @@ const CarCard = async ({
   const car = cars.find((car) => car.slug === slug);
   if (car === undefined) throw new Error("Car not found");
   return (
-    <div className="flex-1 items-center justify-center">
+    <div className="flex-1 items-center justify-center bg-white rounded-2xl p-6 shadow-sm">
       <div className="flex flex-col items-center justify-center">
         <CarComboBox slug={slug} cars={cars} order={order} />
         <div>

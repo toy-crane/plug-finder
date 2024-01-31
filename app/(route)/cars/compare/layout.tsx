@@ -8,7 +8,9 @@ const Layout = (props: { children: React.ReactNode }) => {
           <Logo className="mr-2" />
         </nav>
       </header>
-      <main className="content-grid">{props.children}</main>
+      <main className="content-grid bg-[#fafafa] pt-20 min-h-screen pb-20">
+        {props.children}
+      </main>
     </>
   );
 };
