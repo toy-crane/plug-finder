@@ -118,8 +118,8 @@ const Page = async ({
         </Button>
       </div>
       <div className="flex gap-4">
-        <CarCard car={primaryCar} />
-        <CarCard car={secondaryCar} />
+        <CarCard />
+        <CarCard />
       </div>
       <div>
         <Accordion type="single" collapsible defaultValue="summary">
