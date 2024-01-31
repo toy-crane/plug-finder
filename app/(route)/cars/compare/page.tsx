@@ -1,4 +1,3 @@
-import SupabaseImage from "@/supabase/image";
 import { createSupabaseServerClient } from "@/supabase/server";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
