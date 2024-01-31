@@ -9,6 +9,50 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      car_performances: {
+        Row: {
+          created_at: string
+          drive_type: Database["public"]["Enums"]["drive_type"]
+          efficiency: number
+          id: string
+          max_range: number
+          motor_count: Database["public"]["Enums"]["motor_count"]
+          top_speed: number
+          winter_range: number | null
+          zero_to_hundred: number
+        }
+        Insert: {
+          created_at?: string
+          drive_type: Database["public"]["Enums"]["drive_type"]
+          efficiency: number
+          id: string
+          max_range: number
+          motor_count: Database["public"]["Enums"]["motor_count"]
+          top_speed: number
+          winter_range?: number | null
+          zero_to_hundred: number
+        }
+        Update: {
+          created_at?: string
+          drive_type?: Database["public"]["Enums"]["drive_type"]
+          efficiency?: number
+          id?: string
+          max_range?: number
+          motor_count?: Database["public"]["Enums"]["motor_count"]
+          top_speed?: number
+          winter_range?: number | null
+          zero_to_hundred?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_performances_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       cars: {
         Row: {
           brand: Database["public"]["Enums"]["car_maker"]
@@ -276,6 +320,8 @@ export interface Database {
     Enums: {
       battery_type: "NCM" | "LFP"
       car_maker: "tesla"
+      drive_type: "AWD" | "FWD" | "RWD"
+      motor_count: "sigle" | "dual" | "tri"
     }
     CompositeTypes: {
       [_ in never]: never
