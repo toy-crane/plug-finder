@@ -1,6 +1,12 @@
 import SupabaseImage from "@/supabase/image";
 import { createSupabaseServerClient } from "@/supabase/server";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const isNumber = (value: any): value is number => typeof value === "number";
 
@@ -132,17 +138,30 @@ const Page = async ({
         </div>
       </div>
       <div>
-        <Table>
-          <TableBody>
-            {specs.map((spec) => (
-              <TableRow key={spec.field}>
-                <TableCell className="text-center">{spec.primary}</TableCell>
-                <TableCell className="text-center">{spec.label}</TableCell>
-                <TableCell className="text-center">{spec.secondary}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>주요 제원</AccordionTrigger>
+            <AccordionContent>
+              <Table>
+                <TableBody>
+                  {specs.map((spec) => (
+                    <TableRow key={spec.field}>
+                      <TableCell className="text-center">
+                        {spec.primary}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {spec.label}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {spec.secondary}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );
