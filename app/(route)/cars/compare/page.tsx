@@ -99,15 +99,6 @@ const Page = async ({
     throw Error("Invalid car slug");
   }
 
-  const specs = specTypes.map((specType) => {
-    return {
-      primary: formatSpecValue(specType, primaryCar[specType]),
-      secondary: formatSpecValue(specType, secondaryCar[specType]),
-      field: specType,
-      label: specLabels[specType], // 한글 레이블 추가
-    };
-  });
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-12">
@@ -158,21 +149,7 @@ const Page = async ({
             <AccordionTrigger>기본 정보</AccordionTrigger>
             <AccordionContent>
               <Table>
-                <TableBody>
-                  {specs.map((spec) => (
-                    <TableRow key={spec.field}>
-                      <TableCell className="text-center">
-                        {spec.primary}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {spec.label}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {spec.secondary}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                <TableBody></TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>

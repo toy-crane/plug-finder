@@ -11,53 +11,32 @@ export interface Database {
     Tables: {
       cars: {
         Row: {
-          battery_capacity: number
-          battery_type: Database["public"]["Enums"]["battery_type"]
-          brand: string
-          charging_type: string
+          brand: Database["public"]["Enums"]["car_maker"]
           created_at: string
           id: string
           image_url: string
           model: string
-          range_summer: number
-          range_winter: number
-          seat: number
           slug: string
-          top_speed: number
           trim: string
           year: number
         }
         Insert: {
-          battery_capacity: number
-          battery_type: Database["public"]["Enums"]["battery_type"]
-          brand: string
-          charging_type: string
+          brand: Database["public"]["Enums"]["car_maker"]
           created_at?: string
           id?: string
           image_url: string
           model: string
-          range_summer: number
-          range_winter: number
-          seat: number
           slug: string
-          top_speed: number
           trim: string
           year: number
         }
         Update: {
-          battery_capacity?: number
-          battery_type?: Database["public"]["Enums"]["battery_type"]
-          brand?: string
-          charging_type?: string
+          brand?: Database["public"]["Enums"]["car_maker"]
           created_at?: string
           id?: string
           image_url?: string
           model?: string
-          range_summer?: number
-          range_winter?: number
-          seat?: number
           slug?: string
-          top_speed?: number
           trim?: string
           year?: number
         }
