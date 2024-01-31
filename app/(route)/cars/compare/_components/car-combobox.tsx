@@ -24,10 +24,8 @@ import { CommandLoading } from "cmdk";
 
 type Car = Tables<"cars">;
 
-export function CarComboBox({ slug }: { slug: string }) {
+export function CarComboBox({ slug, cars }: { slug: string; cars: Car[] }) {
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [cars, setCars] = React.useState<Car[]>([]);
   const [selectedCarSlug, setSelectedCarSlug] = React.useState<string | null>(
     slug
   );
@@ -41,21 +39,6 @@ export function CarComboBox({ slug }: { slug: string }) {
   const selectedCarLabel = carLabels.find(
     (car) => car.value === selectedCarSlug
   );
-
-  console.log(selectedCarSlug, carLabels);
-
-  React.useEffect(() => {
-    async function getCars() {
-      setLoading(true);
-      const supabase = createSupabaseBrowerClient();
-      const response = await supabase.from("cars").select("*");
-      if (response.error) throw response.error;
-      const cars = response.data;
-      setCars(cars);
-      setLoading(false);
-    }
-    getCars();
-  }, []);
 
   if (isDesktop) {
     return (
@@ -77,7 +60,6 @@ export function CarComboBox({ slug }: { slug: string }) {
         </PopoverTrigger>
         <PopoverContent className="m-w-[360px] p-0" align="start">
           <CarList
-            loading={loading}
             setOpen={setOpen}
             setSelectedCarSlug={setSelectedCarSlug}
             carLabels={carLabels}
@@ -107,7 +89,6 @@ export function CarComboBox({ slug }: { slug: string }) {
       <DrawerContent>
         <div className="mt-4 border-t">
           <CarList
-            loading={loading}
             setOpen={setOpen}
             setSelectedCarSlug={setSelectedCarSlug}
             carLabels={carLabels}
@@ -122,24 +103,15 @@ function CarList({
   setOpen,
   carLabels,
   setSelectedCarSlug,
-  loading,
 }: {
   setOpen: (open: boolean) => void;
   carLabels: { value: string; label: string }[];
   setSelectedCarSlug: (slug: string | null) => void;
-  loading: boolean;
 }) {
   return (
     <Command>
       <CommandInput placeholder="모델을 선택해 주세요." />
       <CommandList>
-        {loading && (
-          <CommandLoading>
-            <div className="flex justify-center items-center py-8">
-              <Loader2 className="h-6 w-6 animate-spin" />
-            </div>
-          </CommandLoading>
-        )}
         <CommandEmpty>결과가 없습니다.</CommandEmpty>
         <CommandGroup>
           {carLabels.map((label) => (
