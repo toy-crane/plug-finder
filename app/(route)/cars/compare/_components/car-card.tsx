@@ -1,7 +1,4 @@
-"use client";
-
 import SupabaseImage from "@/supabase/image";
-import { Tables } from "@/types/generated";
 import { CarComboBox } from "./car-combobox";
 
 const CarCard = () => {
