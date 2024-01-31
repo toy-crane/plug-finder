@@ -1,11 +1,11 @@
 import SupabaseImage from "@/supabase/image";
 import { CarComboBox } from "./car-combobox";
 
-const CarCard = () => {
+const CarCard = ({ slug }: { slug: string }) => {
   return (
     <div className="flex-1 items-center justify-center">
       <div className="flex flex-col items-center justify-center">
-        <CarComboBox model={"model-y"} />
+        <CarComboBox slug={slug} />
         <div>
           <SupabaseImage
             src={"cars/tesla/model-3.avif"}

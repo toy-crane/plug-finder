@@ -17,30 +17,43 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ChevronsUpDownIcon } from "lucide-react";
+import { ChevronsUpDownIcon, Loader2 } from "lucide-react";
+import createSupabaseBrowerClient from "@/supabase/client";
+import { Tables } from "@/types/generated";
+import { CommandLoading } from "cmdk";
 
-type Status = {
-  value: string;
-  label: string;
-};
+type Car = Tables<"cars">;
 
-const statuses: Status[] = [
-  {
-    value: "model-3",
-    label: "Model 3",
-  },
-  {
-    value: "model-y",
-    label: "Model Y",
-  },
-];
-
-export function CarComboBox({ model }: { model: string }) {
+export function CarComboBox({ slug }: { slug: string }) {
   const [open, setOpen] = React.useState(false);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    statuses.find((status) => status.value === model) || null
+  const [loading, setLoading] = React.useState(false);
+  const [cars, setCars] = React.useState<Car[]>([]);
+  const [selectedCarSlug, setSelectedCarSlug] = React.useState<string | null>(
+    slug
   );
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const carLabels = cars.map((car) => ({
+    value: car.slug,
+    label: `${car.display_model} ${car.trim} ${car.year}`,
+  }));
+
+  const selectedCarLabel = carLabels.find(
+    (car) => car.value === selectedCarSlug
+  );
+
+  React.useEffect(() => {
+    async function getCars() {
+      setLoading(true);
+      const supabase = createSupabaseBrowerClient();
+      const response = await supabase.from("cars").select("*");
+      if (response.error) throw response.error;
+      const cars = response.data;
+      setCars(cars);
+      setLoading(false);
+    }
+    getCars();
+  }, []);
 
   if (isDesktop) {
     return (
@@ -52,12 +65,21 @@ export function CarComboBox({ model }: { model: string }) {
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {selectedStatus ? <>{selectedStatus.label}</> : <>Set status</>}
+            {selectedCarLabel ? (
+              <>{selectedCarLabel.label}</>
+            ) : (
+              <>차종을 선택해 주세요.</>
+            )}
             <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="m-w-[360px] p-0" align="start">
-          <CarList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <CarList
+            loading={loading}
+            setOpen={setOpen}
+            setSelectedCarSlug={setSelectedCarSlug}
+            carLabels={carLabels}
+          />
         </PopoverContent>
       </Popover>
     );
@@ -72,13 +94,22 @@ export function CarComboBox({ model }: { model: string }) {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {selectedStatus ? <>{selectedStatus.label}</> : <>Set status</>}
+          {selectedCarLabel ? (
+            <>{selectedCarLabel.label}</>
+          ) : (
+            <>차종을 선택해 주세요.</>
+          )}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
-          <CarList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <CarList
+            loading={loading}
+            setOpen={setOpen}
+            setSelectedCarSlug={setSelectedCarSlug}
+            carLabels={carLabels}
+          />
         </div>
       </DrawerContent>
     </Drawer>
@@ -87,30 +118,40 @@ export function CarComboBox({ model }: { model: string }) {
 
 function CarList({
   setOpen,
-  setSelectedStatus,
+  carLabels,
+  setSelectedCarSlug,
+  loading,
 }: {
   setOpen: (open: boolean) => void;
-  setSelectedStatus: (status: Status | null) => void;
+  carLabels: { value: string; label: string }[];
+  setSelectedCarSlug: (slug: string | null) => void;
+  loading: boolean;
 }) {
   return (
     <Command>
       <CommandInput placeholder="모델을 선택해 주세요." />
       <CommandList>
+        {loading && (
+          <CommandLoading>
+            <div className="flex justify-center items-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+          </CommandLoading>
+        )}
         <CommandEmpty>결과가 없습니다.</CommandEmpty>
         <CommandGroup>
-          {statuses.map((status) => (
+          {carLabels.map((label) => (
             <CommandItem
-              key={status.value}
-              value={status.value}
+              key={label.value}
+              value={label.value}
               onSelect={(value) => {
-                console.log(value);
-                setSelectedStatus(
-                  statuses.find((priority) => priority.value === value) || null
-                );
+                if (value) {
+                  setSelectedCarSlug(value);
+                }
                 setOpen(false);
               }}
             >
-              {status.label}
+              {label.label}
             </CommandItem>
           ))}
         </CommandGroup>

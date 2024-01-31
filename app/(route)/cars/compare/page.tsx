@@ -82,8 +82,8 @@ function formatSpecValue(specType: string, value: any): string {
 
 const Page = async ({
   searchParams: {
-    primary = "tesla-model-y-rwd",
-    secondary = "tesla-model-3-long-range",
+    primary = "tesla-modely-performance-2023",
+    secondary = "tesla-models-awd-2023",
   },
 }: Props) => {
   const supabase = await createSupabaseServerClient();
@@ -109,8 +109,8 @@ const Page = async ({
         </Button>
       </div>
       <div className="flex gap-4">
-        <CarCard />
-        <CarCard />
+        <CarCard slug={primary} />
+        <CarCard slug={secondary} />
       </div>
       <div>
         <Accordion type="single" collapsible defaultValue="summary">

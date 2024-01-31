@@ -13,6 +13,7 @@ export interface Database {
         Row: {
           brand: Database["public"]["Enums"]["car_maker"]
           created_at: string
+          display_model: string | null
           id: string
           image_url: string
           model: string
@@ -23,6 +24,7 @@ export interface Database {
         Insert: {
           brand: Database["public"]["Enums"]["car_maker"]
           created_at?: string
+          display_model?: string | null
           id?: string
           image_url: string
           model: string
@@ -33,6 +35,7 @@ export interface Database {
         Update: {
           brand?: Database["public"]["Enums"]["car_maker"]
           created_at?: string
+          display_model?: string | null
           id?: string
           image_url?: string
           model?: string
