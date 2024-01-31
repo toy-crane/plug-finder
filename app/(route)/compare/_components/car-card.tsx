@@ -2,7 +2,7 @@
 
 import SupabaseImage from "@/supabase/image";
 import { Tables } from "@/types/generated";
-import { CarComboBox, ComboBox } from "./car-combobox";
+import { CarComboBox } from "./car-combobox";
 
 type Status = {
   value: string;
