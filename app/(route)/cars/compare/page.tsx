@@ -7,8 +7,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Car } from "lucide-react";
+import { Car, Share2Icon } from "lucide-react";
 import CarCard from "./_components/car-card";
+import { Button } from "@/components/ui/button";
 
 const isNumber = (value: any): value is number => typeof value === "number";
 
@@ -109,8 +110,14 @@ const Page = async ({
   });
 
   return (
-    <div>
-      <div>자동차 비교하기</div>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center mb-12">
+        <h1 className="text-3xl font-semibold md:text-6xl">전기차 비교하기</h1>
+        <Button variant="ghost">
+          <span className="hidden md:block">공유하기</span>
+          <Share2Icon className="md:ml-2 h-4 w-4" />
+        </Button>
+      </div>
       <div className="flex gap-4">
         <CarCard car={primaryCar} />
         <CarCard car={secondaryCar} />
