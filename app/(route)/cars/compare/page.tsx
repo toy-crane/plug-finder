@@ -145,11 +145,11 @@ const Page = async ({
                 </div>
                 <div className="flex justify-center flex-col items-center">
                   <div className="text-lg">연비</div>
-                  <div className="text-xl font-semibold">5.1km</div>
+                  <div className="text-xl font-semibold">5.7km/kWh</div>
                 </div>
                 <div className="flex justify-center flex-col items-center">
                   <div className="text-lg">연비</div>
-                  <div className="text-xl font-semibold">5.6km</div>
+                  <div className="text-xl font-semibold">5.7km/kWh</div>
                 </div>
               </div>
             </AccordionContent>
