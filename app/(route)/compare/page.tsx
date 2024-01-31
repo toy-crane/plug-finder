@@ -111,12 +111,34 @@ const Page = async ({
   return (
     <div>
       <div>자동차 비교하기</div>
-      <div className="flex">
+      <div className="flex gap-4">
         <CarCard car={primaryCar} />
         <CarCard car={secondaryCar} />
       </div>
       <div>
-        <Accordion type="single" collapsible defaultValue="basic-info">
+        <Accordion type="single" collapsible defaultValue="summary">
+          <AccordionItem value="summary">
+            <AccordionTrigger>요약</AccordionTrigger>
+            <AccordionContent>
+              <Table>
+                <TableBody>
+                  {specs.map((spec) => (
+                    <TableRow key={spec.field}>
+                      <TableCell className="text-center">
+                        {spec.primary}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {spec.label}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {spec.secondary}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </AccordionContent>
+          </AccordionItem>
           <AccordionItem value="basic-info">
             <AccordionTrigger>기본 정보</AccordionTrigger>
             <AccordionContent>
