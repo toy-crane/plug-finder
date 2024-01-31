@@ -12,33 +12,42 @@ export interface Database {
       car_performances: {
         Row: {
           created_at: string
+          drag_coefficient: number | null
           drive_type: Database["public"]["Enums"]["drive_type"]
           efficiency: number
           id: string
+          max_power: number
           max_range: number
-          motor_count: Database["public"]["Enums"]["motor_count"]
+          max_torque: number
+          motor_type: Database["public"]["Enums"]["motor_type"]
           top_speed: number
           winter_range: number | null
           zero_to_hundred: number
         }
         Insert: {
           created_at?: string
+          drag_coefficient?: number | null
           drive_type: Database["public"]["Enums"]["drive_type"]
           efficiency: number
           id: string
+          max_power: number
           max_range: number
-          motor_count: Database["public"]["Enums"]["motor_count"]
+          max_torque: number
+          motor_type: Database["public"]["Enums"]["motor_type"]
           top_speed: number
           winter_range?: number | null
           zero_to_hundred: number
         }
         Update: {
           created_at?: string
+          drag_coefficient?: number | null
           drive_type?: Database["public"]["Enums"]["drive_type"]
           efficiency?: number
           id?: string
+          max_power?: number
           max_range?: number
-          motor_count?: Database["public"]["Enums"]["motor_count"]
+          max_torque?: number
+          motor_type?: Database["public"]["Enums"]["motor_type"]
           top_speed?: number
           winter_range?: number | null
           zero_to_hundred?: number
@@ -321,7 +330,7 @@ export interface Database {
       battery_type: "NCM" | "LFP"
       car_maker: "tesla"
       drive_type: "AWD" | "FWD" | "RWD"
-      motor_count: "sigle" | "dual" | "tri"
+      motor_type: "single-motor" | "dual-motor" | "tri-motor"
     }
     CompositeTypes: {
       [_ in never]: never

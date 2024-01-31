@@ -9,6 +9,7 @@ import {
 import { Share2Icon } from "lucide-react";
 import CarCard from "./_components/car-card";
 import { Button } from "@/components/ui/button";
+import Performance from "./_components/performance";
 
 const isNumber = (value: any): value is number => typeof value === "number";
 
@@ -153,9 +154,14 @@ const Page = async ({
               </Table>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="driving-performance">
+          <AccordionItem value="performance">
             <AccordionTrigger>주행 성능</AccordionTrigger>
-            <AccordionContent>주행성능</AccordionContent>
+            <AccordionContent>
+              <Performance
+                primaryId={primaryCar.id}
+                secondaryId={secondaryCar.id}
+              />
+            </AccordionContent>
           </AccordionItem>
           <AccordionItem value="charging">
             <AccordionTrigger>충전</AccordionTrigger>
