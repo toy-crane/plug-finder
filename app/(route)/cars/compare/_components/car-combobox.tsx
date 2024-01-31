@@ -26,11 +26,11 @@ type Status = {
 
 const statuses: Status[] = [
   {
-    value: "Model 3",
+    value: "model-3",
     label: "Model 3",
   },
   {
-    value: "Model Y",
+    value: "model-y",
     label: "Model Y",
   },
 ];
@@ -56,8 +56,8 @@ export function CarComboBox({ model }: { model: string }) {
             <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[100%] p-0" align="start">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+        <PopoverContent className="m-w-[360px] p-0" align="start">
+          <CarList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
         </PopoverContent>
       </Popover>
     );
@@ -78,14 +78,14 @@ export function CarComboBox({ model }: { model: string }) {
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <CarList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
         </div>
       </DrawerContent>
     </Drawer>
   );
 }
 
-function StatusList({
+function CarList({
   setOpen,
   setSelectedStatus,
 }: {
@@ -94,15 +94,16 @@ function StatusList({
 }) {
   return (
     <Command>
-      <CommandInput placeholder="Filter status..." />
+      <CommandInput placeholder="모델을 선택해 주세요." />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>결과가 없습니다.</CommandEmpty>
         <CommandGroup>
           {statuses.map((status) => (
             <CommandItem
               key={status.value}
               value={status.value}
               onSelect={(value) => {
+                console.log(value);
                 setSelectedStatus(
                   statuses.find((priority) => priority.value === value) || null
                 );
