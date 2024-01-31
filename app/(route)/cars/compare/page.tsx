@@ -109,8 +109,8 @@ const Page = async ({
         </Button>
       </div>
       <div className="flex gap-4">
-        <CarCard slug={primary} />
-        <CarCard slug={secondary} />
+        <CarCard slug={primary} order="primary" />
+        <CarCard slug={secondary} order="secondary" />
       </div>
       <div>
         <Accordion type="single" collapsible defaultValue="summary">

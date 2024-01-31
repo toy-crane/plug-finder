@@ -17,18 +17,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ChevronsUpDownIcon, Loader2 } from "lucide-react";
-import createSupabaseBrowerClient from "@/supabase/client";
+import { ChevronsUpDownIcon } from "lucide-react";
 import { Tables } from "@/types/generated";
-import { CommandLoading } from "cmdk";
+import { useSearchParams, useRouter } from "next/navigation";
 
 type Car = Tables<"cars">;
 
-export function CarComboBox({ slug, cars }: { slug: string; cars: Car[] }) {
+export function CarComboBox({
+  slug,
+  cars,
+  order,
+}: {
+  slug: string;
+  cars: Car[];
+  order: "primary" | "secondary";
+}) {
   const [open, setOpen] = React.useState(false);
-  const [selectedCarSlug, setSelectedCarSlug] = React.useState<string | null>(
-    slug
-  );
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const carLabels = cars.map((car) => ({
@@ -36,9 +43,13 @@ export function CarComboBox({ slug, cars }: { slug: string; cars: Car[] }) {
     label: `${car.display_model} ${car.trim} ${car.year}`,
   }));
 
-  const selectedCarLabel = carLabels.find(
-    (car) => car.value === selectedCarSlug
-  );
+  const handleSelectedCar = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(order, value);
+    router.replace(`?${params.toString()}`);
+  };
+
+  const selectedCarLabel = carLabels.find((car) => car.value === slug);
 
   if (isDesktop) {
     return (
@@ -61,7 +72,7 @@ export function CarComboBox({ slug, cars }: { slug: string; cars: Car[] }) {
         <PopoverContent className="m-w-[360px] p-0" align="start">
           <CarList
             setOpen={setOpen}
-            setSelectedCarSlug={setSelectedCarSlug}
+            onSelectedCar={handleSelectedCar}
             carLabels={carLabels}
           />
         </PopoverContent>
@@ -90,7 +101,7 @@ export function CarComboBox({ slug, cars }: { slug: string; cars: Car[] }) {
         <div className="mt-4 border-t">
           <CarList
             setOpen={setOpen}
-            setSelectedCarSlug={setSelectedCarSlug}
+            onSelectedCar={handleSelectedCar}
             carLabels={carLabels}
           />
         </div>
@@ -102,11 +113,11 @@ export function CarComboBox({ slug, cars }: { slug: string; cars: Car[] }) {
 function CarList({
   setOpen,
   carLabels,
-  setSelectedCarSlug,
+  onSelectedCar,
 }: {
   setOpen: (open: boolean) => void;
   carLabels: { value: string; label: string }[];
-  setSelectedCarSlug: (slug: string | null) => void;
+  onSelectedCar: (value: string) => void;
 }) {
   return (
     <Command>
@@ -120,7 +131,7 @@ function CarList({
               value={label.value}
               onSelect={(value) => {
                 if (value) {
-                  setSelectedCarSlug(value);
+                  onSelectedCar(value);
                 }
                 setOpen(false);
               }}
