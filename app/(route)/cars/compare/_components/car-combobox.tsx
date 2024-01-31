@@ -42,6 +42,8 @@ export function CarComboBox({ slug }: { slug: string }) {
     (car) => car.value === selectedCarSlug
   );
 
+  console.log(selectedCarSlug, carLabels);
+
   React.useEffect(() => {
     async function getCars() {
       setLoading(true);
