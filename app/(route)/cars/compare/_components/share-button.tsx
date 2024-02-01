@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Share2Icon } from "lucide-react";
 import { track } from "@vercel/analytics";
+import { useMediaQuery } from "@/lib/hooks";
 
 const ShareButton = () => {
   const { toast } = useToast();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <Button
       onClick={async () => {
@@ -18,6 +20,7 @@ const ShareButton = () => {
         });
         track("car-compare-shared");
       }}
+      size={isDesktop ? "default" : "icon"}
     >
       <span className="hidden md:block">공유하기</span>
       <Share2Icon className="md:ml-2 h-4 w-4" />
