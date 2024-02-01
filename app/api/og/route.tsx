@@ -2,10 +2,17 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
+const PRIMARY_DEFAULT = "모델3";
+const SECONDARY_DEFAULT = "모델Y";
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const primary = searchParams.get("primary");
-  const secondary = searchParams.get("primary");
+  const primary = decodeURIComponent(
+    searchParams.get("primary") ?? PRIMARY_DEFAULT
+  );
+  const secondary = decodeURIComponent(
+    searchParams.get("secondary") ?? SECONDARY_DEFAULT
+  );
 
   return new ImageResponse(
     (
@@ -39,7 +46,7 @@ export async function GET(request: Request) {
         </svg>
         <div tw="flex text-[36px] text-white">전기차 스펙 비교</div>
         <div tw="flex text-white text-[92px] mb-3 leading-none">
-          모델3 <span tw="px-12">vs</span> 모델Y
+          {primary} <span tw="px-12">vs</span> {secondary}
         </div>
         <svg
           width="641"
