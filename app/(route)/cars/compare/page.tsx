@@ -60,6 +60,13 @@ export async function generateMetadata(
   현대, 기아, BMW, 벤츠, 아우디, 포르쉐, 폴스타 등 다양한 브랜드 전기차도 곧 추가됩니다.`;
   const url = `${siteConfig.url}/cars/compare?primary=${primary}&secondary=${secondary}`;
 
+  const image = {
+    url: `${siteConfig.url}/api/og?primary=${primaryCar.display_model}&secondary=${secondaryCar.display_model}`,
+    width: 1200,
+    height: 630,
+    alt: `${primaryCar.display_model} vs ${secondaryCar.display_model} 전기차 비교하기`,
+  };
+
   return {
     title,
     description,
@@ -67,12 +74,12 @@ export async function generateMetadata(
       title,
       description,
       url,
-      images: [...previousImages],
+      images: [image, ...previousImages],
     },
     twitter: {
       title,
       description,
-      images: [...previousImages],
+      images: [image, ...previousImages],
     },
     alternates: {
       canonical: url,
