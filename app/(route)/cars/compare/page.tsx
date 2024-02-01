@@ -45,7 +45,9 @@ const Page = async ({
           <CarCard imageUrl={primaryCar.image_url} />
           <CarCard imageUrl={secondaryCar.image_url} />
         </div>
-        <Spec primaryCarId={primaryCar.id} secondaryCarId={secondaryCar.id} />
+        <div className="pb-24">
+          <Spec primaryCarId={primaryCar.id} secondaryCarId={secondaryCar.id} />
+        </div>
       </div>
     </>
   );
