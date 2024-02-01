@@ -1,18 +1,124 @@
-import { createSupabaseServerClient } from "@/supabase/server";
+import {
+  createSupabaseServerClient,
+  createSupabaseServerClientReadOnly,
+} from "@/supabase/server";
 import CarCard from "./_components/car-card";
 import Spec from "./_components/spec";
 import ShareButton from "./_components/share-button";
 import { CarComboBox } from "./_components/car-combobox";
+import { siteConfig } from "@/config/site";
+import { Metadata, ResolvingMetadata } from "next/types";
+import { notFound } from "next/navigation";
+import CarMakerMappings from "@/constants/brand";
+
+const PRIMARY_DEFAULT = "tesla-modely-performance-2023";
+const SECONDARY_DEFAULT = "tesla-models-awd-2023";
 
 interface Props {
-  searchParams: { primary?: string; secondary?: string };
+  searchParams: { primary: string; secondary: string };
 }
 
+export async function generateMetadata(
+  { searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const supabase = await createSupabaseServerClientReadOnly();
+  const primary = decodeURIComponent(searchParams.primary ?? PRIMARY_DEFAULT);
+  const secondary = decodeURIComponent(
+    searchParams.secondary ?? SECONDARY_DEFAULT
+  );
+  const response = await supabase
+    .from("cars")
+    .select("*")
+    .in("slug", [primary, secondary]);
+
+  if (response.error) {
+    if (response.error.code === "PGRST116") {
+      notFound();
+    } else {
+      throw Error(response.error.message);
+    }
+  }
+
+  const cars = response.data;
+  const primaryCar = cars.find((car) => car.slug === primary);
+  const secondaryCar = cars.find((car) => car.slug === secondary);
+
+  if (primaryCar === undefined || secondaryCar === undefined) {
+    throw Error("Invalid car slug");
+  }
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images ?? [];
+  const title = `${CarMakerMappings[primaryCar.brand]} ${
+    primaryCar?.display_model
+  } ${primaryCar?.trim} VS ${CarMakerMappings[secondaryCar?.brand]} ${
+    secondaryCar?.display_model
+  } ${secondaryCar?.trim}`;
+
+  const description = `model X, model 3, model S, model Y 등 한국에서 판매되는 모든 tesla 전기차의 성능, 가격, 특징을 깊이있게 비교해 보세요.
+  현대, 기아, BMW, 벤츠, 아우디, 포르쉐, 폴스타 등 다양한 브랜드 전기차도 곧 추가됩니다.`;
+  const url = `${siteConfig.url}/cars/compare?primary=${primary}&secondary=${secondary}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      images: [...previousImages],
+    },
+    twitter: {
+      title,
+      description,
+      images: [...previousImages],
+    },
+    alternates: {
+      canonical: url,
+    },
+  };
+}
+
+// if (station) {
+//   const title = `${getRegionDescription(
+//     station.z_code
+//   )} ${getDistrictDescription(station.zs_code)} ${station.station_name} ${
+//     station.station_name.includes("주차장") ? "" : "주차장 "
+//   }전기차 충전소`;
+//   const description = `
+//   주소 - ${station.address} \n
+//   충전 커넥터(급속, 완속) - ${chargerDescription} \n
+//   충전 속도 - ${station.output}KW \n
+//   사용 가능시간 - ${station.usable_time} \n
+//   운영 기관 - ${station.org_name} \n
+//   연락처 - ${station.org_contact} \n
+//   `;
+//   const url = `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`;
+//   return {
+//     title,
+//     description,
+//     openGraph: {
+//       title,
+//       description,
+//       url,
+//       images: [...previousImages],
+//     },
+//     twitter: {
+//       title,
+//       description,
+//       images: [...previousImages],
+//     },
+//     alternates: {
+//       canonical: `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
+//     },
+//   };
+// } else {
+//   return {};
+// }
+
 const Page = async ({
-  searchParams: {
-    primary = "tesla-modely-performance-2023",
-    secondary = "tesla-models-awd-2023",
-  },
+  searchParams: { primary = PRIMARY_DEFAULT, secondary = SECONDARY_DEFAULT },
 }: Props) => {
   const supabase = await createSupabaseServerClient();
   const response = await supabase.from("cars").select("*");
