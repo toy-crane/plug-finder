@@ -9,6 +9,7 @@ import Performance from "./performance";
 import Battery from "./battery";
 import Warranty from "./warranty";
 import Dimension from "./dimension";
+import Summary from "./summary";
 
 const Spec = ({
   primaryCarId,
@@ -22,32 +23,7 @@ const Spec = ({
       <AccordionItem value="summary">
         <AccordionTrigger>요약</AccordionTrigger>
         <AccordionContent>
-          <div className="grid grid-cols-2 grid-row-3 gap-y-6">
-            <div className="flex justify-center flex-col items-center">
-              <div className="text-lg">여름철 주행거리</div>
-              <div className="text-xl font-semibold">365KM</div>
-            </div>
-            <div className="flex justify-center flex-col items-center">
-              <div className="text-lg">여름철 주행거리</div>
-              <div className="text-xl font-semibold">365KM</div>
-            </div>
-            <div className="flex justify-center flex-col items-center">
-              <div className="text-lg">겨울철 주행거리</div>
-              <div className="text-xl font-semibold">365KM</div>
-            </div>
-            <div className="flex justify-center flex-col items-center">
-              <div className="text-lg">겨울철 주행거리</div>
-              <div className="text-xl font-semibold">365KM</div>
-            </div>
-            <div className="flex justify-center flex-col items-center">
-              <div className="text-lg">연비</div>
-              <div className="text-xl font-semibold">5.7km/kWh</div>
-            </div>
-            <div className="flex justify-center flex-col items-center">
-              <div className="text-lg">연비</div>
-              <div className="text-xl font-semibold">5.7km/kWh</div>
-            </div>
-          </div>
+          <Summary primaryId={primaryCarId} secondaryId={secondaryCarId} />
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="performance">
