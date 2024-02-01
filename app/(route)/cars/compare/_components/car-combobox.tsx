@@ -59,7 +59,7 @@ export function CarComboBox({
             variant="ghost"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between overflow-hidden"
+            className="w-full justify-between overflow-hidden sticky top-0 z-10 bg-white"
           >
             <span className="text-ellipsis whitespace-nowrap overflow-hidden">
               {selectedCarLabel ? (
@@ -89,7 +89,7 @@ export function CarComboBox({
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between sticky top-0 z-10 bg-white"
         >
           <span className="text-ellipsis whitespace-nowrap overflow-hidden">
             {selectedCarLabel ? (

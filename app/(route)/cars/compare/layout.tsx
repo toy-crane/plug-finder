@@ -12,7 +12,7 @@ const Layout = (props: { children: React.ReactNode }) => {
           </Link>
         </nav>
       </header>
-      <main className="content-grid flex-grow pb-36">{props.children}</main>
+      <main className="content-grid flex-grow">{props.children}</main>
     </div>
   );
 };
