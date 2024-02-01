@@ -79,8 +79,8 @@ const Performance = async ({ primaryId, secondaryId }: Props) => {
       : secondary[key];
     return {
       label,
-      primaryValue, // primary 차량의 해당 데이터 값
-      secondaryValue, // secondary 차량의 해당 데이터 값
+      primaryValue: primaryValue + (unit ? ` ${unit}` : ""),
+      secondaryValue: secondaryValue + (unit ? ` ${unit}` : ""),
     };
   });
 
