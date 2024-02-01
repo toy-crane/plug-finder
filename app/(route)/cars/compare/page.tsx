@@ -28,22 +28,22 @@ const Page = async ({
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mb-12">
+    <>
+      <div className="flex justify-between items-center my-8">
         <h1 className="text-3xl font-semibold md:text-6xl">전기차 비교하기</h1>
         <Button>
           <span className="hidden md:block">공유하기</span>
           <Share2Icon className="md:ml-2 h-4 w-4" />
         </Button>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 mb-4">
         <CarCard slug={primary} order="primary" />
         <CarCard slug={secondary} order="secondary" />
       </div>
       <div>
         <Spec primaryCarId={primaryCar.id} secondaryCarId={secondaryCar.id} />
       </div>
-    </div>
+    </>
   );
 };
 
