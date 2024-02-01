@@ -165,8 +165,8 @@ const Page = async ({
               />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="design">
-            <AccordionTrigger>내외부 디자인</AccordionTrigger>
+          <AccordionItem value="warranty">
+            <AccordionTrigger>차량 보증</AccordionTrigger>
             <AccordionContent>내외부 디자인</AccordionContent>
           </AccordionItem>
         </Accordion>
