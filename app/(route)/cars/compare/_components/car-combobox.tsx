@@ -39,17 +39,21 @@ export function CarComboBox({
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const carLabels = cars.map((car) => ({
-    value: car.slug,
+    value: `${car.slug} ${car.brand} ${car.display_model} ${car.trim} ${car.year}`,
     label: `${car.display_model} ${car.trim} ${car.year}`,
   }));
 
   const handleSelectedCar = (value: string) => {
     const params = new URLSearchParams(searchParams);
-    params.set(order, value);
+    const slug = value.split(" ")[0];
+    console.log(slug, value);
+    params.set(order, slug);
     router.replace(`?${params.toString()}`);
   };
 
-  const selectedCarLabel = carLabels.find((car) => car.value === slug);
+  const selectedCarLabel = carLabels.find(
+    (car) => car.value.split(" ")[0] === slug
+  );
 
   if (isDesktop) {
     return (
