@@ -9,6 +9,38 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      car_batteries: {
+        Row: {
+          battery_type: Database["public"]["Enums"]["battery_type"]
+          capacity: number
+          charging_type: Database["public"]["Enums"]["charging_type"]
+          created_at: string
+          id: string
+        }
+        Insert: {
+          battery_type: Database["public"]["Enums"]["battery_type"]
+          capacity: number
+          charging_type: Database["public"]["Enums"]["charging_type"]
+          created_at?: string
+          id: string
+        }
+        Update: {
+          battery_type?: Database["public"]["Enums"]["battery_type"]
+          capacity?: number
+          charging_type?: Database["public"]["Enums"]["charging_type"]
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_batteries_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       car_performances: {
         Row: {
           created_at: string
@@ -329,6 +361,7 @@ export interface Database {
     Enums: {
       battery_type: "NCM" | "LFP"
       car_maker: "tesla"
+      charging_type: "NACS" | "DC_COMBO"
       drive_type: "AWD" | "FWD" | "RWD"
       motor_type: "single-motor" | "dual-motor" | "tri-motor"
     }
