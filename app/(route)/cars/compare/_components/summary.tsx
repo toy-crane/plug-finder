@@ -52,13 +52,13 @@ const determineClasses = (
   if (key === "zero_to_hundred") {
     classes.push(
       primaryValue < secondaryValue
-        ? "underline underline-offset-4 decoration-[#C454FA]"
+        ? "underline underline-offset-4 decoration-[#C454FA] decoration-4"
         : ""
     );
   } else if (key === "efficiency" || key === "max_range") {
     classes.push(
       primaryValue > secondaryValue
-        ? "underline underline-offset-4 decoration-[#C454FA]"
+        ? "underline underline-offset-4 decoration-[#C454FA] decoration-4"
         : ""
     );
   }
