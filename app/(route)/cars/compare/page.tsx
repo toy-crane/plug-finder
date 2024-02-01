@@ -1,7 +1,5 @@
 import { createSupabaseServerClient } from "@/supabase/server";
-import { Share2Icon } from "lucide-react";
 import CarCard from "./_components/car-card";
-import { Button } from "@/components/ui/button";
 import Spec from "./_components/spec";
 import ShareButton from "./_components/share-button";
 import { CarComboBox } from "./_components/car-combobox";
