@@ -80,43 +80,6 @@ export async function generateMetadata(
   };
 }
 
-// if (station) {
-//   const title = `${getRegionDescription(
-//     station.z_code
-//   )} ${getDistrictDescription(station.zs_code)} ${station.station_name} ${
-//     station.station_name.includes("주차장") ? "" : "주차장 "
-//   }전기차 충전소`;
-//   const description = `
-//   주소 - ${station.address} \n
-//   충전 커넥터(급속, 완속) - ${chargerDescription} \n
-//   충전 속도 - ${station.output}KW \n
-//   사용 가능시간 - ${station.usable_time} \n
-//   운영 기관 - ${station.org_name} \n
-//   연락처 - ${station.org_contact} \n
-//   `;
-//   const url = `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`;
-//   return {
-//     title,
-//     description,
-//     openGraph: {
-//       title,
-//       description,
-//       url,
-//       images: [...previousImages],
-//     },
-//     twitter: {
-//       title,
-//       description,
-//       images: [...previousImages],
-//     },
-//     alternates: {
-//       canonical: `${siteConfig.url}/stations/${station.z_code}/${station.zs_code}/${station.slug}`,
-//     },
-//   };
-// } else {
-//   return {};
-// }
-
 const Page = async ({
   searchParams: { primary = PRIMARY_DEFAULT, secondary = SECONDARY_DEFAULT },
 }: Props) => {
