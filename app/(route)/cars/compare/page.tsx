@@ -17,10 +17,7 @@ const Page = async ({
   },
 }: Props) => {
   const supabase = await createSupabaseServerClient();
-  const response = await supabase
-    .from("cars")
-    .select("*")
-    .in("slug", [primary, secondary]);
+  const response = await supabase.from("cars").select("*");
   if (response.error) throw response.error;
   const cars = response.data;
   const primaryCar = cars.find((car) => car.slug === primary);
@@ -36,9 +33,13 @@ const Page = async ({
         <ShareButton />
       </div>
       <div className="flex flex-col">
-        <div className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-2">
+        <div className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1">
           <CarComboBox slug={primaryCar.slug} cars={cars} order={"primary"} />
-          <CarComboBox slug={primaryCar.slug} cars={cars} order={"secondary"} />
+          <CarComboBox
+            slug={secondaryCar.slug}
+            cars={cars}
+            order={"secondary"}
+          />
         </div>
         <div className="grid grid-cols-2 gap-4 mb-8">
           <CarCard imageUrl={primaryCar.image_url} />
