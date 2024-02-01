@@ -3,13 +3,14 @@ import _ from "lodash";
 
 import { Tables } from "@/types/generated";
 import { AudioWaveform, BatteryMedium, Gauge } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   primaryId: string;
   secondaryId: string;
 };
 
-type Cars = Tables<"cars"> & {
+type Cars = {
   max_range: number;
   zero_to_hundred: number;
   efficiency: number;
@@ -20,7 +21,6 @@ const COLUMNS: {
   key: keyof Cars;
   icon?: React.ReactNode;
   unit?: string;
-  transform?: (value: string | number | null | number[]) => string;
 }[] = [
   {
     label: "제로백",
@@ -41,6 +41,30 @@ const COLUMNS: {
     icon: <BatteryMedium size={28} />,
   },
 ];
+
+// 클래스 결정 로직을 관리하는 함수
+const determineClasses = (
+  key: keyof Cars,
+  primaryValue: number,
+  secondaryValue: number
+) => {
+  const classes = [];
+  if (key === "zero_to_hundred") {
+    classes.push(
+      primaryValue < secondaryValue
+        ? "underline underline-offset-4 decoration-[#C454FA]"
+        : ""
+    );
+  } else if (key === "efficiency" || key === "max_range") {
+    classes.push(
+      primaryValue > secondaryValue
+        ? "underline underline-offset-4 decoration-[#C454FA]"
+        : ""
+    );
+  }
+
+  return classes;
+};
 
 const Summary = async ({ primaryId, secondaryId }: Props) => {
   const supabase = await createSupabaseServerClient();
@@ -68,10 +92,19 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
   const dataRows = COLUMNS.map(({ label, key, unit, icon }) => {
     const primaryValue = primary[key];
     const secondaryValue = secondary[key];
+    const primaryClasses = determineClasses(key, primaryValue, secondaryValue);
+    const secondaryClasses = determineClasses(
+      key,
+      secondaryValue,
+      primaryValue
+    );
+
     return {
       label,
       primaryValue: primaryValue + (unit ? ` ${unit}` : ""),
+      primaryClass: primaryClasses,
       secondaryValue: secondaryValue + (unit ? ` ${unit}` : ""),
+      secondaryClass: secondaryClasses,
       icon,
     };
   });
@@ -82,12 +115,16 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
         <>
           <div className="flex justify-center flex-col items-center">
             <div className="text-lg">{row.label}</div>
-            <div className="text-xl font-semibold">{row.primaryValue}</div>
+            <div className={cn("text-xl font-semibold", row.primaryClass)}>
+              {row.primaryValue}
+            </div>
           </div>
           <div className="justify-self-center self-center">{row.icon}</div>
           <div className="flex justify-center flex-col items-center">
             <div className="text-lg">{row.label}</div>
-            <div className="text-xl font-semibold">{row.secondaryValue}</div>
+            <div className={cn("text-xl font-semibold", row.secondaryClass)}>
+              {row.secondaryValue}
+            </div>
           </div>
         </>
       ))}
