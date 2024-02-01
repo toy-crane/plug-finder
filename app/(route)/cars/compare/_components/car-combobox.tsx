@@ -81,7 +81,7 @@ export function CarComboBox({
             />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="m-w-[360px] p-0" align="start">
+        <PopoverContent className="w-[360px] p-0" align="start">
           <CarList
             setOpen={setOpen}
             onSelectedCar={handleSelectedCar}
@@ -138,7 +138,7 @@ function CarList({
 }) {
   return (
     <Command>
-      <CommandInput placeholder="모델을 선택해 주세요." />
+      <CommandInput placeholder="모델을 선택해 주세요." className="text-base" />
       <CommandList>
         <CommandEmpty>결과가 없습니다.</CommandEmpty>
         <CommandGroup>
@@ -146,6 +146,7 @@ function CarList({
             <CommandItem
               key={label.value}
               value={label.value}
+              className="text-base py-3"
               onSelect={(value) => {
                 if (value) {
                   onSelectedCar(value);
