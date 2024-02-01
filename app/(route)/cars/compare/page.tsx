@@ -100,21 +100,21 @@ const Page = async ({
         <ShareButton />
       </div>
       <div className="flex flex-col">
-        <div className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1">
+        <section className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1">
           <CarComboBox slug={primaryCar.slug} cars={cars} order={"primary"} />
           <CarComboBox
             slug={secondaryCar.slug}
             cars={cars}
             order={"secondary"}
           />
-        </div>
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        </section>
+        <section className="grid grid-cols-2 gap-4 mb-8">
           <CarCard imageUrl={primaryCar.image_url} />
           <CarCard imageUrl={secondaryCar.image_url} />
-        </div>
-        <div className="pb-24">
+        </section>
+        <section className="pb-24">
           <Spec primaryCarId={primaryCar.id} secondaryCarId={secondaryCar.id} />
-        </div>
+        </section>
       </div>
     </>
   );

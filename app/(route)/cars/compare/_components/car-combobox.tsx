@@ -68,13 +68,13 @@ export function CarComboBox({
             aria-expanded={open}
             className="w-full justify-between overflow-hidden bg-white"
           >
-            <span className="text-ellipsis whitespace-nowrap overflow-hidden">
+            <h2 className="text-ellipsis whitespace-nowrap overflow-hidden">
               {selectedCarLabel ? (
                 <>{selectedCarLabel.label}</>
               ) : (
                 <>차종을 선택해 주세요.</>
               )}
-            </span>
+            </h2>
             <ChevronsUpDownIcon
               className="ml-2 h-4 w-4 shrink-0"
               color={"#b31ff7"}
@@ -101,13 +101,13 @@ export function CarComboBox({
           aria-expanded={open}
           className="w-full justify-between bg-white overflow-hidden"
         >
-          <span className="text-ellipsis whitespace-nowrap overflow-hidden">
+          <h2 className="text-ellipsis whitespace-nowrap overflow-hidden">
             {selectedCarLabel ? (
               <>{selectedCarLabel.label}</>
             ) : (
               <>차종을 선택해 주세요.</>
             )}
-          </span>
+          </h2>
           <ChevronsUpDownIcon
             className="ml-2 h-4 w-4 shrink-0"
             color={"#b31ff7"}
