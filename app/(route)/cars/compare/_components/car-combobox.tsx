@@ -59,7 +59,7 @@ export function CarComboBox({
             variant="ghost"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between overflow-hidden sticky top-0 z-10 bg-white"
+            className="w-full justify-between overflow-hidden bg-white"
           >
             <span className="text-ellipsis whitespace-nowrap overflow-hidden">
               {selectedCarLabel ? (
@@ -68,7 +68,10 @@ export function CarComboBox({
                 <>차종을 선택해 주세요.</>
               )}
             </span>
-            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDownIcon
+              className="ml-2 h-4 w-4 shrink-0"
+              color={"#b31ff7"}
+            />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="m-w-[360px] p-0" align="start">
@@ -89,7 +92,7 @@ export function CarComboBox({
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between sticky top-0 z-10 bg-white"
+          className="w-full justify-between bg-white"
         >
           <span className="text-ellipsis whitespace-nowrap overflow-hidden">
             {selectedCarLabel ? (
@@ -98,7 +101,10 @@ export function CarComboBox({
               <>차종을 선택해 주세요.</>
             )}
           </span>
-          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDownIcon
+            className="ml-2 h-4 w-4 shrink-0"
+            color={"#b31ff7"}
+          />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
