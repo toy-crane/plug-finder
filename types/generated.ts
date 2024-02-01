@@ -41,6 +41,56 @@ export interface Database {
           }
         ]
       }
+      car_dimensions: {
+        Row: {
+          cargo: number
+          created_at: string
+          display: string | null
+          id: string
+          overall_height: number
+          overall_length: number
+          overall_width: number
+          seating: number[]
+          weight: number
+          wheel_base: number
+          wheels: number[]
+        }
+        Insert: {
+          cargo: number
+          created_at?: string
+          display?: string | null
+          id: string
+          overall_height: number
+          overall_length: number
+          overall_width: number
+          seating: number[]
+          weight: number
+          wheel_base: number
+          wheels: number[]
+        }
+        Update: {
+          cargo?: number
+          created_at?: string
+          display?: string | null
+          id?: string
+          overall_height?: number
+          overall_length?: number
+          overall_width?: number
+          seating?: number[]
+          weight?: number
+          wheel_base?: number
+          wheels?: number[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_dimensions_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       car_performances: {
         Row: {
           created_at: string
@@ -53,7 +103,6 @@ export interface Database {
           max_torque: number
           motor_type: Database["public"]["Enums"]["motor_type"]
           top_speed: number
-          winter_range: number | null
           zero_to_hundred: number
         }
         Insert: {
@@ -67,7 +116,6 @@ export interface Database {
           max_torque: number
           motor_type: Database["public"]["Enums"]["motor_type"]
           top_speed: number
-          winter_range?: number | null
           zero_to_hundred: number
         }
         Update: {
@@ -81,7 +129,6 @@ export interface Database {
           max_torque?: number
           motor_type?: Database["public"]["Enums"]["motor_type"]
           top_speed?: number
-          winter_range?: number | null
           zero_to_hundred?: number
         }
         Relationships: [

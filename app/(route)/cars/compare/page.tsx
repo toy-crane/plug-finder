@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import Performance from "./_components/performance";
 import Battery from "./_components/battery";
 import Warranty from "./_components/warranty";
+import Dimension from "./_components/dimension";
 
 const isNumber = (value: any): value is number => typeof value === "number";
 
@@ -161,6 +162,15 @@ const Page = async ({
             <AccordionTrigger>충전</AccordionTrigger>
             <AccordionContent>
               <Battery
+                primaryId={primaryCar.id}
+                secondaryId={secondaryCar.id}
+              />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="dimension">
+            <AccordionTrigger>차량 크기</AccordionTrigger>
+            <AccordionContent>
+              <Dimension
                 primaryId={primaryCar.id}
                 secondaryId={secondaryCar.id}
               />
