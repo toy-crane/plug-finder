@@ -16,15 +16,15 @@ const CarCard = async ({
   const car = cars.find((car) => car.slug === slug);
   if (car === undefined) throw new Error("Car not found");
   return (
-    <div className="flex-1 items-center justify-center bg-white rounded-2xl p-6 shadow-sm">
+    <div className="items-center justify-center bg-white rounded-2xl py-6 shadow-sm px-1">
       <div className="flex flex-col items-center justify-center">
         <CarComboBox slug={slug} cars={cars} order={order} />
-        <div>
+        <div className="w-full relative h-36 md:h-56">
           <SupabaseImage
             src={`cars/${car?.image_url}`}
             alt="car Image"
-            width={400}
-            height={200}
+            fill
+            className="object-contain w-full h-full"
           />
         </div>
       </div>

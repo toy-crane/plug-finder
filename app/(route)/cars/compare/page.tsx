@@ -36,7 +36,7 @@ const Page = async ({
           <Share2Icon className="md:ml-2 h-4 w-4" />
         </Button>
       </div>
-      <div className="flex gap-4 mb-4">
+      <div className="grid grid-cols-2 gap-4">
         <CarCard slug={primary} order="primary" />
         <CarCard slug={secondary} order="secondary" />
       </div>

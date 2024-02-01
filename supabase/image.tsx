@@ -6,20 +6,8 @@ const SupabaseImage = (props: ImageProps) => {
     <Image
       {...props}
       alt={props.alt}
-      loader={({
-        src,
-        width,
-        quality,
-      }: {
-        src: string;
-        width: number;
-        quality?: number;
-      }) => {
-        return `${
-          process.env.NEXT_PUBLIC_SUPABASE_URL
-        }/storage/v1/render/image/public/${src}?width=${width}&quality=${
-          quality || 75
-        }&resize=contain`;
+      loader={({ src }: { src: string }) => {
+        return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/render/image/public/${src}`;
       }}
     />
   );
