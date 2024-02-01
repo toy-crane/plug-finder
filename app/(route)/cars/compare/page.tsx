@@ -3,6 +3,7 @@ import { Share2Icon } from "lucide-react";
 import CarCard from "./_components/car-card";
 import { Button } from "@/components/ui/button";
 import Spec from "./_components/spec";
+import ShareButton from "./_components/share-button";
 
 interface Props {
   searchParams: { primary?: string; secondary?: string };
@@ -31,10 +32,7 @@ const Page = async ({
     <>
       <div className="flex justify-between items-center my-8">
         <h1 className="text-3xl font-semibold md:text-6xl">전기차 비교하기</h1>
-        <Button>
-          <span className="hidden md:block">공유하기</span>
-          <Share2Icon className="md:ml-2 h-4 w-4" />
-        </Button>
+        <ShareButton />
       </div>
       <div className="grid grid-cols-2 gap-4 mb-8">
         <CarCard slug={primary} order="primary" />
