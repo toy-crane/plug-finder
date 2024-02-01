@@ -94,6 +94,38 @@ export interface Database {
           }
         ]
       }
+      car_warranties: {
+        Row: {
+          battery: string
+          created_at: string
+          id: string
+          powertrain: string
+          vehicle: string
+        }
+        Insert: {
+          battery: string
+          created_at?: string
+          id: string
+          powertrain: string
+          vehicle: string
+        }
+        Update: {
+          battery?: string
+          created_at?: string
+          id?: string
+          powertrain?: string
+          vehicle?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_warranties_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       cars: {
         Row: {
           brand: Database["public"]["Enums"]["car_maker"]

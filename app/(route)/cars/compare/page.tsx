@@ -11,6 +11,7 @@ import CarCard from "./_components/car-card";
 import { Button } from "@/components/ui/button";
 import Performance from "./_components/performance";
 import Battery from "./_components/battery";
+import Warranty from "./_components/warranty";
 
 const isNumber = (value: any): value is number => typeof value === "number";
 
@@ -167,7 +168,12 @@ const Page = async ({
           </AccordionItem>
           <AccordionItem value="warranty">
             <AccordionTrigger>차량 보증</AccordionTrigger>
-            <AccordionContent>내외부 디자인</AccordionContent>
+            <AccordionContent>
+              <Warranty
+                primaryId={primaryCar.id}
+                secondaryId={secondaryCar.id}
+              />
+            </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
