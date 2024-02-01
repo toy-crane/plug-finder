@@ -16,8 +16,8 @@ const driveTypeMappings = {
 };
 
 const motorTypeMappings = {
-  "single-motor": "싱글모터",
-  "dual-motor": "듀얼모터",
+  "single-motor": "싱글 모터",
+  "dual-motor": "듀얼 모터",
   "tri-motor": "트라이 모터",
 };
 
