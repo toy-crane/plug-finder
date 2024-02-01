@@ -9,25 +9,6 @@ type Props = {
 
 type CarDimension = Tables<"car_dimensions">;
 // 구동 방식 및 모터 개수 변환을 위한 맵핑 객체
-const driveTypeMappings = {
-  AWD: "사륜 구동",
-  RWD: "후륜 구동",
-  FWD: "전륜 구동",
-};
-
-const motorTypeMappings = {
-  "single-motor": "싱글모터",
-  "dual-motor": "듀얼모터",
-  "tri-motor": "트라이 모터",
-};
-
-// 데이터 변환 함수
-const transformValue = (
-  value: string | number | null,
-  mappings: { [key: string]: string }
-): string => {
-  return value ? mappings[value.toString()] ?? value.toString() : "";
-};
 
 const COLUMNS: {
   label: string;
