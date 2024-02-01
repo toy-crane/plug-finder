@@ -20,6 +20,7 @@ import {
 import { ChevronsUpDownIcon } from "lucide-react";
 import { Tables } from "@/types/generated";
 import { useSearchParams, useRouter } from "next/navigation";
+import CarMakerMappings from "@/constants/brand";
 
 type Car = Tables<"cars">;
 
@@ -39,7 +40,9 @@ export function CarComboBox({
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const carLabels = cars.map((car) => ({
-    value: `${car.slug} ${car.brand} ${car.display_model} ${car.trim} ${car.year}`,
+    value: `${car.slug} ${car.brand} ${CarMakerMappings[car.brand]} ${
+      car.display_model
+    } ${car.trim} ${car.year}`,
     label: `${car.display_model} ${car.trim} ${car.year}`,
   }));
 
