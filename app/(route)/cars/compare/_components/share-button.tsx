@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Share2Icon } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 const ShareButton = () => {
   const { toast } = useToast();
@@ -15,6 +16,7 @@ const ShareButton = () => {
           description: "원하는 곳에 붙여넣기(Ctrl+V)해주세요.",
           duration: 1000,
         });
+        track("car-compare-shared");
       }}
     >
       <span className="hidden md:block">공유하기</span>
