@@ -46,7 +46,7 @@ export async function generateMetadata(
   const secondaryCar = cars.find((car) => car.slug === secondary);
 
   if (primaryCar === undefined || secondaryCar === undefined) {
-    throw Error("Invalid car slug");
+    return {};
   }
 
   // optionally access and extend (rather than replace) parent metadata
@@ -102,7 +102,7 @@ const Page = async ({
     secondaryCar === undefined ||
     primary === secondary
   ) {
-    throw Error("Invalid car slug");
+    notFound();
   }
 
   return (
