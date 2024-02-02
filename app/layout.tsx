@@ -95,10 +95,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
-        <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&libraries=services,clusterer&autoload=false`}
-          strategy="beforeInteractive"
-        />
+        
         <Toaster />
       </body>
     </html>
