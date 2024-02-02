@@ -43,7 +43,7 @@ export function CarComboBox({
     value: `${car.slug} ${car.brand} ${CarMakerMappings[car.brand]} ${
       car.display_model
     } ${car.trim} ${car.year}`,
-    label: `${car.display_model} ${car.trim} ${car.year}`,
+    label: `${car.display_model} ${car.display_trim} ${car.year}`,
   }));
 
   const handleSelectedCar = (value: string) => {
