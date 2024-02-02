@@ -54,7 +54,7 @@ export async function GET(request: Request) {
           />
         </svg>
         <div tw="flex text-[36px] text-white mb-2">전기차 스펙 비교</div>
-        <div tw="text-white mb-5 leading-none w-full flex items-center px-52">
+        <div tw="text-white mb-5 leading-none w-full flex items-center px-64">
           <div tw="flex flex-col flex-1">
             <span tw="text-[92px] self-center">{primary}</span>
             <div tw="flex text-[24px] font-semibold self-center">
