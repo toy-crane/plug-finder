@@ -107,7 +107,7 @@ const Page = async ({
         <ShareButton />
       </div>
       <div className="flex flex-col">
-        <section className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1">
+        <section className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1 bg-[#FAFAFA]">
           <CarComboBox slug={primaryCar.slug} cars={cars} order={"primary"} />
           <CarComboBox
             slug={secondaryCar.slug}
