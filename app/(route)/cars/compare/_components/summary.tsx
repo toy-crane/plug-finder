@@ -4,6 +4,7 @@ import _ from "lodash";
 import { Tables } from "@/types/generated";
 import { AudioWaveform, BatteryMedium, Gauge } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Fragment } from "react";
 
 type Props = {
   primaryId: string;
@@ -112,7 +113,7 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
   return (
     <div className="grid grid-cols-spec-summary grid-row-3 gap-y-6">
       {dataRows.map((row, _) => (
-        <div key={row.primaryValue}>
+        <Fragment key={row.label}>
           <div className="flex justify-center flex-col items-center">
             <div className="text-lg">{row.label}</div>
             <div className={cn("text-xl font-semibold", row.primaryClass)}>
@@ -126,7 +127,7 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
               {row.secondaryValue}
             </div>
           </div>
-        </div>
+        </Fragment>
       ))}
     </div>
   );
