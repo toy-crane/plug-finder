@@ -47,7 +47,7 @@ const COLUMNS: {
   },
   { label: "제로백", key: "zero_to_hundred", unit: "초" },
   { label: "최고 속도", key: "top_speed", unit: "km/h" },
-  { label: "최대 파워", key: "max_power", unit: "PS" },
+  { label: "최대 파워", key: "max_power", unit: "HP" },
   { label: "최대 토크", key: "max_torque", unit: "kgf.m" },
   { label: "주행 거리", key: "max_range", unit: "km" },
   { label: "전비", key: "efficiency", unit: "km/kWh" },
