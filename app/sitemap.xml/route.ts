@@ -7,6 +7,7 @@ export async function GET() {
     { url: "/stations/sitemap/0.xml" },
     { url: "/stations/sitemap/1.xml" },
     { url: "/stations/sitemap/2.xml" },
+    { url: "/cars/compare/sitemap.xml" },
   ];
 
   const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>
