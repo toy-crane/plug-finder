@@ -88,8 +88,8 @@ const Performance = async ({ primaryId, secondaryId }: Props) => {
     <>
       <Table>
         <TableBody>
-          {dataRows.map((row, index) => (
-            <TableRow key={index} className="grid grid-cols-3">
+          {dataRows.map((row) => (
+            <TableRow className="grid grid-cols-3" key={row.label}>
               <TableCell className="text-center">{row.primaryValue}</TableCell>
               <TableCell className="text-center font-bold">
                 {row.label}

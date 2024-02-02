@@ -112,7 +112,7 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
   return (
     <div className="grid grid-cols-spec-summary grid-row-3 gap-y-6">
       {dataRows.map((row, _) => (
-        <>
+        <div key={row.primaryValue}>
           <div className="flex justify-center flex-col items-center">
             <div className="text-lg">{row.label}</div>
             <div className={cn("text-xl font-semibold", row.primaryClass)}>
@@ -126,7 +126,7 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
               {row.secondaryValue}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

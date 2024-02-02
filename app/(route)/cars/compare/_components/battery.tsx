@@ -79,8 +79,8 @@ const Battery = async ({ primaryId, secondaryId }: Props) => {
     <>
       <Table>
         <TableBody>
-          {dataRows.map((row, index) => (
-            <TableRow key={index} className="grid grid-cols-3">
+          {dataRows.map((row) => (
+            <TableRow key={row.label} className="grid grid-cols-3">
               <TableCell className="text-center">{row.primaryValue}</TableCell>
               <TableCell className="text-center font-bold">
                 {row.label}
