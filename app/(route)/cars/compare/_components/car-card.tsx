@@ -7,7 +7,7 @@ const CarCard = ({ imageUrl }: { imageUrl: string }) => {
         <div className="w-full relative h-36 md:h-56">
           <SupabaseImage
             src={`cars/${imageUrl}`}
-            quality={60}
+            quality={50}
             alt="car Image"
             fill
             className="object-contain w-full h-full"
