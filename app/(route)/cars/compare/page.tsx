@@ -96,7 +96,11 @@ const Page = async ({
   const cars = response.data;
   const primaryCar = cars.find((car) => car.slug === primary);
   const secondaryCar = cars.find((car) => car.slug === secondary);
-  if (primaryCar === undefined || secondaryCar === undefined) {
+  if (
+    primaryCar === undefined ||
+    secondaryCar === undefined ||
+    primary === secondary
+  ) {
     throw Error("Invalid car slug");
   }
 
@@ -108,10 +112,14 @@ const Page = async ({
       </div>
       <div className="flex flex-col">
         <section className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1 bg-[#FAFAFA]">
-          <CarComboBox slug={primaryCar.slug} cars={cars} order={"primary"} />
+          <CarComboBox
+            slug={primaryCar.slug}
+            cars={cars.filter((car) => car.slug !== secondary)}
+            order={"primary"}
+          />
           <CarComboBox
             slug={secondaryCar.slug}
-            cars={cars}
+            cars={cars.filter((car) => car.slug !== primary)}
             order={"secondary"}
           />
         </section>
