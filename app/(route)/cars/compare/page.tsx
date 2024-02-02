@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { notFound } from "next/navigation";
 import CarMakerMappings from "@/constants/brand";
+import { Button } from "@/components/ui/button";
 
 const PRIMARY_DEFAULT = "tesla-modely-performance-2023";
 const SECONDARY_DEFAULT = "tesla-models-awd-2023";
@@ -127,7 +128,21 @@ const Page = async ({
           <CarCard imageUrl={primaryCar.image_url} />
           <CarCard imageUrl={secondaryCar.image_url} />
         </section>
-        <section className="pb-24">
+        <section></section>
+        <section className="pb-24 flex flex-col">
+          <Button
+            asChild
+            variant="link"
+            className="self-end text-neutral-500 pr-0"
+          >
+            <a
+              href={"https://forms.gle/b9MdhUGPUKBqyw8X9"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              제작자에게 피드백 남기기
+            </a>
+          </Button>
           <Spec primaryCarId={primaryCar.id} secondaryCarId={secondaryCar.id} />
         </section>
       </div>
