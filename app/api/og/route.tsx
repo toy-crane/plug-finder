@@ -1,17 +1,26 @@
+import { de } from "date-fns/locale";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-const PRIMARY_DEFAULT = "모델3";
-const SECONDARY_DEFAULT = "모델Y";
+const PRIMARY_DEFAULT = "모델 3";
+const SECONDARY_DEFAULT = "모델 Y";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const primary = decodeURIComponent(
     searchParams.get("primary") ?? PRIMARY_DEFAULT
   );
+  const primary_trim = decodeURIComponent(
+    searchParams.get("primary_trim") ?? "Standard Range Plus"
+  );
+
   const secondary = decodeURIComponent(
     searchParams.get("secondary") ?? SECONDARY_DEFAULT
+  );
+
+  const secondary_trim = decodeURIComponent(
+    searchParams.get("secondary_trim") ?? "Long Range"
   );
 
   return new ImageResponse(
@@ -44,9 +53,21 @@ export async function GET(request: Request) {
             fill="white"
           />
         </svg>
-        <div tw="flex text-[36px] text-white">전기차 스펙 비교</div>
-        <div tw="flex text-white text-[92px] mb-3 leading-none">
-          {primary} <span tw="px-12">vs</span> {secondary}
+        <div tw="flex text-[36px] text-white mb-2">전기차 스펙 비교</div>
+        <div tw="text-white mb-5 leading-none w-full flex items-center px-40">
+          <div tw="flex flex-col flex-1">
+            <span tw="text-[92px] self-center">{primary}</span>
+            <div tw="flex text-[24px] font-semibold self-center">
+              {primary_trim}
+            </div>
+          </div>
+          <div tw="text-[54px] flex flex-basis">VS</div>
+          <div tw="flex flex-col flex-1">
+            <span tw="text-[92px] self-center">{secondary}</span>
+            <div tw="flex text-[24px] font-semibold self-center">
+              {secondary_trim}
+            </div>
+          </div>
         </div>
         <svg
           width="641"

@@ -61,7 +61,7 @@ export async function generateMetadata(
   const url = `${siteConfig.url}/cars/compare?primary=${primary}&secondary=${secondary}`;
 
   const image = {
-    url: `${siteConfig.url}/api/og?primary=${primaryCar.display_model}&secondary=${secondaryCar.display_model}`,
+    url: `${siteConfig.url}/api/og?primary=${primaryCar.display_model}&secondary=${secondaryCar.display_model}&primary_trim=${primaryCar.display_trim}&secondary_trim=${secondaryCar.display_trim}`,
     width: 1200,
     height: 630,
     alt: `${primaryCar.display_model} vs ${secondaryCar.display_model} 전기차 비교하기`,
