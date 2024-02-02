@@ -178,6 +178,7 @@ export interface Database {
           brand: Database["public"]["Enums"]["car_maker"]
           created_at: string
           display_model: string | null
+          display_trim: string | null
           id: string
           image_url: string
           model: string
@@ -189,6 +190,7 @@ export interface Database {
           brand: Database["public"]["Enums"]["car_maker"]
           created_at?: string
           display_model?: string | null
+          display_trim?: string | null
           id?: string
           image_url: string
           model: string
@@ -200,6 +202,7 @@ export interface Database {
           brand?: Database["public"]["Enums"]["car_maker"]
           created_at?: string
           display_model?: string | null
+          display_trim?: string | null
           id?: string
           image_url?: string
           model?: string

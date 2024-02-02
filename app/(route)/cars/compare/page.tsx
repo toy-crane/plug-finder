@@ -52,9 +52,9 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images ?? [];
   const title = `${CarMakerMappings[primaryCar.brand]} ${
     primaryCar?.display_model
-  } ${primaryCar?.trim} VS ${CarMakerMappings[secondaryCar?.brand]} ${
+  } ${primaryCar?.display_trim} VS ${CarMakerMappings[secondaryCar?.brand]} ${
     secondaryCar?.display_model
-  } ${secondaryCar?.trim}`;
+  } ${secondaryCar?.display_trim}`;
 
   const description = `model X, model 3, model S, model Y 등 한국에서 판매되는 모든 tesla 전기차의 성능, 가격, 특징을 깊이있게 비교해 보세요.
   현대, 기아, BMW, 벤츠, 아우디, 포르쉐, 폴스타 등 다양한 브랜드 전기차도 곧 추가됩니다.`;
