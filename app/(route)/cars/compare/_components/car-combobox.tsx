@@ -49,7 +49,6 @@ export function CarComboBox({
   const handleSelectedCar = (value: string) => {
     const params = new URLSearchParams(searchParams);
     const slug = value.split(" ")[0];
-    console.log(slug, value);
     params.set(order, slug);
     router.replace(`?${params.toString()}`);
   };
