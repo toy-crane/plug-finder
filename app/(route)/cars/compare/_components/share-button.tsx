@@ -9,6 +9,7 @@ import { useMediaQuery } from "@/lib/hooks";
 const ShareButton = () => {
   const { toast } = useToast();
   const isDesktop = useMediaQuery("(min-width: 768px)");
+
   return (
     <Button
       onClick={async () => {
@@ -22,8 +23,8 @@ const ShareButton = () => {
       }}
       size={isDesktop ? "default" : "icon"}
     >
-      <span className="hidden md:block">공유하기</span>
-      <Share2Icon className="md:ml-2 h-4 w-4" />
+      {isDesktop && <span className="hidden md:block md:mr-2">공유하기</span>}
+      <Share2Icon className="h-4 w-4" />
     </Button>
   );
 };

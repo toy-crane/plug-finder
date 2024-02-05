@@ -11,6 +11,7 @@ import { Metadata, ResolvingMetadata } from "next/types";
 import { notFound } from "next/navigation";
 import CarMakerMappings from "@/constants/brand";
 import { Button } from "@/components/ui/button";
+import PageView from "./_components/page-view";
 
 const PRIMARY_DEFAULT = "tesla-modely-performance-2023";
 const SECONDARY_DEFAULT = "tesla-models-awd-2023";
@@ -112,6 +113,9 @@ const Page = async ({
         <ShareButton />
       </div>
       <div className="flex flex-col">
+        <section className="flex justify-end">
+          <PageView pageUniqueKey={`${primaryCar.slug}-${secondaryCar.slug}`} />
+        </section>
         <section className="sticky top-0 z-10 flex mb-4 gap-4 mt-4 pt-1 bg-[#FAFAFA]">
           <CarComboBox
             slug={primaryCar.slug}
@@ -128,7 +132,6 @@ const Page = async ({
           <CarCard imageUrl={primaryCar.image_url} />
           <CarCard imageUrl={secondaryCar.image_url} />
         </section>
-        <section></section>
         <section className="pb-24 flex flex-col">
           <Button
             asChild
