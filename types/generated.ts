@@ -141,6 +141,35 @@ export interface Database {
           }
         ]
       }
+      car_prices: {
+        Row: {
+          car_id: string
+          created_at: string
+          id: number
+          price: number
+        }
+        Insert: {
+          car_id: string
+          created_at?: string
+          id?: number
+          price: number
+        }
+        Update: {
+          car_id?: string
+          created_at?: string
+          id?: number
+          price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_prices_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       car_warranties: {
         Row: {
           battery: string
