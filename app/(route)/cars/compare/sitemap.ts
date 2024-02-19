@@ -35,6 +35,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const allCars = response.data;
   const sitemapUrls = createSitemapUrls(allCars);
-  console.log(sitemapUrls.length, sitemapUrls[0]);
   return sitemapUrls;
 }

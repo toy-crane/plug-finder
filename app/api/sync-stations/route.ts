@@ -105,7 +105,6 @@ const getOfficialStations = async ({ zsCode }: { zsCode: string }) => {
   // Append serviceKey without encoding
   const queryString = `${searchParams.toString()}&serviceKey=${serviceKey}&dataType=JSON`;
   const requestUrl = `${url}?${queryString}`;
-  console.log(requestUrl);
 
   let stations: OfficialStation[] = []; // stations를 여기서 선언 및 초기화
   try {
