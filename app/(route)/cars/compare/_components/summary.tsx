@@ -93,6 +93,7 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
     .select(
       "*, car_performances(max_range, zero_to_hundred, efficiency), car_prices(*)"
     )
+    .order("created_at", { referencedTable: "car_prices", ascending: false })
     .eq("id", primaryId)
     .single();
   if (primaryResponse.error) throw primaryResponse.error;
@@ -101,6 +102,7 @@ const Summary = async ({ primaryId, secondaryId }: Props) => {
     .select(
       "*, car_performances(max_range, zero_to_hundred, efficiency), car_prices(*)"
     )
+    .order("created_at", { referencedTable: "car_prices", ascending: false })
     .eq("id", secondaryId)
     .single();
   if (secondaryResponse.error) throw secondaryResponse.error;
