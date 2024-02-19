@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 const BottomNav = () => {
   const pathname = headers().get("x-pathname") ?? "";
   const isHome = pathname === "/";
-  const isTrending = pathname === "/stations";
-  const isCompare = pathname === "/cars/compare";
+  const isTrending = pathname.startsWith("/stations");
+  const isCompare = pathname.startsWith("/cars/compare");
 
   return (
     <footer className="content-grid z-bottom-nav h-bottom-nav fixed bottom-0 w-full border-t bg-white">
