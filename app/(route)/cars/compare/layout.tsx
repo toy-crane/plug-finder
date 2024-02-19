@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import BottomNav from "@/components/nav/bottom-nav";
 import Logo from "@/components/nav/logo";
 import Link from "next/link";
 
@@ -13,6 +14,7 @@ const Layout = (props: { children: React.ReactNode }) => {
         </nav>
       </header>
       <main className="content-grid flex-grow">{props.children}</main>
+      <BottomNav />
     </div>
   );
 };
