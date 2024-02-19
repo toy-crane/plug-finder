@@ -29,6 +29,10 @@
     --header-z-index: 10;
     --bottom-nav-z-index: 10;
     --sheet-z-index: 15;
+
+    /* component height */
+    --header-height: 64px;
+    --bottom-nav-height: 64px;
   }
 
   .dark {

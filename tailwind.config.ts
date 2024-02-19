@@ -67,6 +67,12 @@ const config = {
         "bottom-nav": "var(--bottom-nav-z-index)",
         sheet: "var(--sheet-z-index)",
       },
+      height: {
+        header: "var(--header-height)",
+        "bottom-nav": "var(--bottom-nav-height)",
+        "dynamic-screen": "100dvh",
+        "short-screen": "98svh",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

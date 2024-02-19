@@ -1,3 +1,4 @@
+import BottomNav from "@/components/nav/bottom-nav";
 import Navigation from "@/components/nav/navigation";
 
 const Layout = (props: { children: React.ReactNode }) => {
@@ -7,6 +8,7 @@ const Layout = (props: { children: React.ReactNode }) => {
         <Navigation />
       </header>
       <main className="min-h-screen">{props.children}</main>
+      <BottomNav />
     </>
   );
 };
